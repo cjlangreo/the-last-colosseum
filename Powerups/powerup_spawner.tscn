@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://h6ud3vqtgp4i"]
+
+[ext_resource type="Script" uid="uid://dub5r2je2t3ha" path="res://Powerups/PowerupSpawner.cs" id="1_0owbs"]
+[ext_resource type="Texture2D" uid="uid://bo23lu6mia1p3" path="res://icon.svg" id="2_06isb"]
+[ext_resource type="PackedScene" uid="uid://du3a2otxlmqn5" path="res://Powerups/powerup.tscn" id="2_gh3xx"]
+
+[node name="PowerupSpawner" type="Node2D" unique_id=400439980 node_paths=PackedStringArray("Timer")]
+script = ExtResource("1_0owbs")
+PowerupScene = ExtResource("2_gh3xx")
+Timer = NodePath("Timer")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=325162861]
+scale = Vector2(0.110395804, 0.110395804)
+texture = ExtResource("2_06isb")
+
+[node name="Timer" type="Timer" parent="." unique_id=1154898230]
+one_shot = true

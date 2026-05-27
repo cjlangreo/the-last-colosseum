@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cge7nvfr3svut"]
+
+[ext_resource type="Script" uid="uid://bvgtn0ixugeaf" path="res://AudioManager/AudioManager.cs" id="1_eufxx"]
+
+[node name="AudioManager" type="Node" unique_id=687675056 node_paths=PackedStringArray("StreamPlayer1", "StreamPlayer2")]
+script = ExtResource("1_eufxx")
+StreamPlayer1 = NodePath("StreamPlayer1")
+StreamPlayer2 = NodePath("StreamPlayer2")
+
+[node name="StreamPlayer1" type="AudioStreamPlayer" parent="." unique_id=1707600705]
+max_polyphony = 5
+
+[node name="StreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=1998274068]
+max_polyphony = 5

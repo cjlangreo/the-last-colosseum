@@ -1,0 +1,65 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Random Battles"
+run/main_scene="uid://cvm744nadmvf2"
+config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
+config/icon="res://icon.svg"
+
+[autoload]
+
+AudioManager="*uid://cge7nvfr3svut"
+
+[display]
+
+window/size/viewport_width=180
+window/size/viewport_height=320
+window/size/window_width_override=540
+window/size/window_height_override=1200
+window/stretch/mode="canvas_items"
+
+[dotnet]
+
+project/assembly_name="Random Battles"
+
+[editor]
+
+movie_writer/movie_file="movie.avi"
+
+[global_group]
+
+"Team A"=""
+"Team B"=""
+
+[gui]
+
+theme/custom="uid://cptk3xsrgblp1"
+
+[layer_names]
+
+2d_physics/layer_1="Fighter"
+2d_physics/layer_2="HurtBox"
+2d_physics/layer_3="HitBox"
+2d_physics/layer_4="DangerArea"
+2d_physics/layer_5="Wall"
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+2d/snap/snap_2d_transforms_to_pixel=true

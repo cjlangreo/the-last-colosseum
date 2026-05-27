@@ -1,0 +1,7 @@
+[gd_resource type="Theme" format=3 uid="uid://cptk3xsrgblp1"]
+
+[ext_resource type="FontFile" uid="uid://ydfcwg5nfgh1" path="res://Assets/PublicPixel.ttf" id="1_e7bfs"]
+
+[resource]
+Label/font_sizes/font_size = 8
+Label/fonts/font = ExtResource("1_e7bfs")
