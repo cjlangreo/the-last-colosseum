@@ -33,15 +33,13 @@ public partial class Fighter : CharacterBody2D, ICanDie
   [Export] public AnimationPlayer r_WeaponAnimPlayer;
   [Export] public Area2D AttackTrigger;
   [Export] public Team team = Team.A;
-  [Export] public AudioStream HitSound;
-  protected AudioStreamPlayer HitAudioPlayer;
   private Tween _hitFeedbackTween;
-  protected AudioManager _audioManager;
   public Fighter Enemy;
   protected Vector2 Direction { get; set; }
   private Tween _modulateTween;
   private Random _random;
   public bool Dead = false;
+  public Color DeadColor = new(0.3f,0.3f,0.3f);
   public enum Team
   {
     A,
@@ -57,6 +55,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
   public enum HitStatus
   {
     Hit,
+    Block,
     Evade
   }
 
@@ -69,10 +68,6 @@ public partial class Fighter : CharacterBody2D, ICanDie
     }
 
     _random = new();
-    _audioManager = GetNode<AudioManager>("/root/AudioManager");
-    HitAudioPlayer = new() { MaxPolyphony = 10, Stream = HitSound };
-    _audioManager.AddChild(HitAudioPlayer);
-
 
     Direction = GetRandomDirection();
 
@@ -102,14 +97,8 @@ public partial class Fighter : CharacterBody2D, ICanDie
   public virtual void Die()
   {
     Dead = true;
-
-    Color deadColor = new(.3f, .3f, .3f);
-    AttackTrigger.Monitoring = false;
-    r_Weapon.HitBox.Monitoring = false;
-    r_WeaponAnimPlayer.Active = false;
-
-    r_Weapon.Modulate = deadColor;
-    r_Sprite.Modulate = deadColor;
+    r_Weapon.Disable();
+    r_Sprite.Modulate = DeadColor;
 
     SetCollisionLayerValue((int)(team == Team.A ? ColLayer.A : ColLayer.B), false);
 
@@ -119,7 +108,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
     Tween deathSpriteTween = CreateTween().SetTrans(Tween.TransitionType.Elastic).SetEase(Tween.EaseType.Out);
     deathSpriteTween.TweenProperty(_deathSprite, "scale", new Vector2(1, 1), 1);
 
-    EventManager.RoundEnd.Invoke(team);
+    // EventManager.RoundEnd.Invoke(team);
   }
 
   public virtual HitStatus TakeDamage(double damage, bool isCrit)

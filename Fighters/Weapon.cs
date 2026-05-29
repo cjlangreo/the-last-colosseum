@@ -4,12 +4,16 @@ using System.Linq;
 
 public partial class Weapon : Node2D
 {
-  [Export] public AnimationPlayer AttkAnimPlayer;
-  [Export] public Area2D AttkTrigger;
+  [Export] public bool Enabled = true;
+  [Export] public AnimationPlayer AtkAnimPlayer;
+  [Export] public Area2D AtkTrigger;
   [Export] public Area2D HitBox;
   [Export] public float Weight = 1f;
   [Export] public float BaseDmg = 15f;
   [Export] public float CritMult = 1.5f;
+  [Export] public AudioStream HitSound;
+  [Export] public AudioStream BlockSound;
+  private AudioManager _audioManager;
 
   private double Damage
   {
@@ -27,9 +31,10 @@ public partial class Weapon : Node2D
   public override void _Ready()
   {
     _parentFighter = GetParent<Fighter>();
+    InitSounds();
 
-    AttkAnimPlayer.SpeedScale = (float)(0.5 + (_parentFighter.Agility * 0.1f / Weight));
-    AttkAnimPlayer.AnimationFinished += OnAttkAnimTimeout;
+    AtkAnimPlayer.SpeedScale = (float)(0.5 + (_parentFighter.Agility * 0.1f / Weight));
+    AtkAnimPlayer.AnimationFinished += OnAttkAnimTimeout;
 
     if (_parentFighter.team == Fighter.Team.A)
     {
@@ -47,16 +52,40 @@ public partial class Weapon : Node2D
     HitBox.BodyEntered += OnAttackHit;
   }
 
+  public void Disable()
+  {
+    AtkTrigger.Monitoring = false;
+    HitBox.Monitoring = false;
+    AtkAnimPlayer.Active = false;
+    Modulate = _parentFighter.DeadColor;
+  }
+
+  private void InitSounds()
+  {
+    _audioManager = GetNode<AudioManager>("/root/AudioManager");
+    if (_parentFighter.team == Fighter.Team.A)
+    {
+      _audioManager.TeamA.HitSoundPlayer.Stream = HitSound;
+      _audioManager.TeamA.BlockSoundPlayer.Stream = BlockSound;
+    }
+    else
+    {
+      _audioManager.TeamB.HitSoundPlayer.Stream = HitSound;
+      _audioManager.TeamB.BlockSoundPlayer.Stream = BlockSound;
+    }
+  }
+
+
   private void SetCollisions(Fighter.ColLayer layer)
   {
-    AttkTrigger.SetCollisionMaskValue((int)layer, true);
+    AtkTrigger.SetCollisionMaskValue((int)layer, true);
     HitBox.SetCollisionMaskValue((int)layer, true);
   }
 
   public override void _ExitTree()
   {
     HitBox.BodyEntered -= OnAttackHit;
-    AttkAnimPlayer.AnimationFinished -= OnAttkAnimTimeout;
+    AtkAnimPlayer.AnimationFinished -= OnAttkAnimTimeout;
   }
 
   private bool IsCrit()
@@ -69,15 +98,44 @@ public partial class Weapon : Node2D
     foreach (Fighter fighter in HitBox.GetOverlappingBodies().OfType<Fighter>())
     {
       Fighter.HitStatus hitStatus = fighter.TakeDamage(_isCrit ? Damage * CritMult : Damage, _isCrit);
+      PlaySound(hitStatus, _parentFighter.team);
+    }
+  }
+
+  private void PlaySound(Fighter.HitStatus hitStatus, Fighter.Team team)
+  {
+    if (team == Fighter.Team.A)
+    {
+      if (hitStatus == Fighter.HitStatus.Hit)
+      {
+        _audioManager.TeamA.HitSoundPlayer.Play();
+      }
+      else if (hitStatus == Fighter.HitStatus.Block)
+      {
+        _audioManager.TeamA.BlockSoundPlayer.Play();
+      }
+    }
+    else
+    {
+      if (hitStatus == Fighter.HitStatus.Hit)
+      {
+        _audioManager.TeamB.HitSoundPlayer.Play();
+      }
+      else if (hitStatus == Fighter.HitStatus.Block)
+      {
+        _audioManager.TeamB.BlockSoundPlayer.Play();
+      }
     }
   }
 
 
   public override void _PhysicsProcess(double delta)
   {
-    if (_canAttack && AttkTrigger.Monitoring && AttkTrigger.HasOverlappingBodies())
+    if (!Enabled) return;
+
+    if (_canAttack && AtkTrigger.Monitoring && AtkTrigger.HasOverlappingBodies())
     {
-      foreach (Fighter fighter in AttkTrigger.GetOverlappingBodies().OfType<Fighter>())
+      foreach (Fighter fighter in AtkTrigger.GetOverlappingBodies().OfType<Fighter>())
       {
         if (!fighter.Dead) Attack();
       }
@@ -93,7 +151,7 @@ public partial class Weapon : Node2D
 
   private void Attack()
   {
-    AttkAnimPlayer.Play("Attack");
+    AtkAnimPlayer.Play("attack");
     _canAttack = false;
   }
 }

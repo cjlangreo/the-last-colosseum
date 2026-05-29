@@ -6,12 +6,10 @@ public partial class Crusader : Fighter, IHasAbility, ICanDie
 {
   [Export] public float AbilityCooldownBase { set; get; } = 10;
   [Export] public float AbilityDuration { set; get; } = 10;
-  [Export] public AudioStream InvincibleHitSound;
   [Export] public Sprite2D InvincibleShield;
 
   private Timer _abilityCooldownTimer;
   private Timer _abilityTimer;
-  private AudioStreamPlayer _iHitAudioPlayer;
   private bool _isInvincible;
   private Tween _invincibleShieldTween;
   private double _abilityCooldown;
@@ -20,16 +18,12 @@ public partial class Crusader : Fighter, IHasAbility, ICanDie
   {
     base._Ready();
     InitAbility();
-
-    _iHitAudioPlayer = new() { MaxPolyphony = 10, Stream = InvincibleHitSound };
-    _audioManager.AddChild(_iHitAudioPlayer);
-
   }
 
   public void InitAbility()
   {
-    _abilityCooldownTimer = new() { OneShot = false };
-    _abilityTimer = new() { OneShot = false };
+    _abilityCooldownTimer = new() { OneShot = true };
+    _abilityTimer = new() { OneShot = true };
     AddChild(_abilityCooldownTimer);
     AddChild(_abilityTimer);
 
@@ -89,28 +83,17 @@ public partial class Crusader : Fighter, IHasAbility, ICanDie
   public override HitStatus TakeDamage(double damage, bool isCrit)
   {
     HitStatus hitStatus = base.TakeDamage(_isInvincible ? 0 : damage, isCrit);
-    if (hitStatus == HitStatus.Evade)
+    if (_isInvincible)
     {
-      HitAudioPlayer.Play();
-      return hitStatus;
+      if (IsInstanceValid(_invincibleShieldTween)) _invincibleShieldTween.Kill();
+      _invincibleShieldTween = CreateTween();
+      InvincibleShield.Modulate = Colors.White;
+      _invincibleShieldTween.TweenProperty(InvincibleShield, "modulate", Colors.Transparent, 0.5);
+      return HitStatus.Block;
     }
     else
     {
-      if (_isInvincible)
-      {
-        _iHitAudioPlayer.Play();
-
-        if (IsInstanceValid(_invincibleShieldTween)) _invincibleShieldTween.Kill();
-        _invincibleShieldTween = CreateTween();
-        InvincibleShield.Modulate = Colors.White;
-        _invincibleShieldTween.TweenProperty(InvincibleShield, "modulate", Colors.Transparent, 0.5);
-        return HitStatus.Hit;
-      }
-      else
-      {
-        HitAudioPlayer.Play();
-        return HitStatus.Hit;
-      }
+      return HitStatus.Hit;
     }
   }
 }

@@ -15,7 +15,7 @@ public partial class HealthBar : ProgressBar
 
     public override void _Process(double delta)
     {
-        Value = Mathf.Lerp(Value, Health, delta * 10);
-        DamageBar.Value = Mathf.Lerp(DamageBar.Value, Health, delta * 3);
+        Value = Health;
+        DamageBar.Value = Mathf.Lerp(DamageBar.Value, Health, delta * 2);
     }
 }
