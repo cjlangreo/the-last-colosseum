@@ -6,25 +6,16 @@ public partial class Camera : Camera2D
   private Fighter _fighter1;
   private Fighter _fighter2;
 
-  private enum FighterTeam
+  private Fighter GetFighter(Fighter.Team fighter)
   {
-    A,
-    B
-  }
-
-  private Fighter GetFighter(FighterTeam fighter)
-  {
-    return (Fighter)GetTree().GetFirstNodeInGroup(fighter == FighterTeam.A ? "Team A" : "Team B");
-  }
-
-  public override void _Ready()
-  {
-    _fighter1 = GetFighter(FighterTeam.A);
-    _fighter2 = GetFighter(FighterTeam.B);
+    return (Fighter)GetTree().GetFirstNodeInGroup(fighter == Fighter.Team.A ? "Team A" : "Team B");
   }
 
   public override void _Process(double delta)
   {
+    _fighter1 ??= GetFighter(Fighter.Team.A);
+    _fighter2 ??= GetFighter(Fighter.Team.B);
+
     bool isFighter1Alive = IsInstanceValid(_fighter1);
     bool isFighter2Alive = IsInstanceValid(_fighter2);
     

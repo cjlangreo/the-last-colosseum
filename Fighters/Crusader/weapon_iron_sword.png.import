@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bltixp8bd61yr"
-path="res://.godot/imported/cross.png-e5e619ca3cd1e7081f70d4df42ce4b54.ctex"
+uid="uid://dpe5jcu5typ1b"
+path="res://.godot/imported/weapon_iron_sword.png-64aed5d11e8fb21d5aced08e394e63b4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Entities/cross.png"
-dest_files=["res://.godot/imported/cross.png-e5e619ca3cd1e7081f70d4df42ce4b54.ctex"]
+source_file="res://Fighters/Crusader/weapon_iron_sword.png"
+dest_files=["res://.godot/imported/weapon_iron_sword.png-64aed5d11e8fb21d5aced08e394e63b4.ctex"]
 
 [params]
 

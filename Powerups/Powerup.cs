@@ -54,13 +54,13 @@ public partial class Powerup : Area2D
     switch (Type)
     {
       case PowerupType.Speed:
-        fighter.Speed += 100;
+        fighter.Agility += 100;
         break;
       case PowerupType.Health:
         fighter.Heal(50);
         break;
       case PowerupType.Damage:
-        fighter.Damage += 10;
+        fighter.Strength += 10;
         break;
     }
     PickedUp.Invoke();

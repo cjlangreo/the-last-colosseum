@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cowoght32q2j7"
-path="res://.godot/imported/crusader_hand.png-3b5bf78a4c65cd6cbf88a391c62c6ec4.ctex"
+uid="uid://baadbcertd0o8"
+path="res://.godot/imported/invincible_shield.png-4372ecfc79aaaf67dbe36b50cedfcd40.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Entities/Fighters/Crusader/crusader_hand.png"
-dest_files=["res://.godot/imported/crusader_hand.png-3b5bf78a4c65cd6cbf88a391c62c6ec4.ctex"]
+source_file="res://Fighters/Crusader/invincible_shield.png"
+dest_files=["res://.godot/imported/invincible_shield.png-4372ecfc79aaaf67dbe36b50cedfcd40.ctex"]
 
 [params]
 

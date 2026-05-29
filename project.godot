@@ -17,14 +17,14 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-AudioManager="*uid://cge7nvfr3svut"
+AudioManager="*uid://dagkre88lsv"
 
 [display]
 
 window/size/viewport_width=180
 window/size/viewport_height=320
-window/size/window_width_override=540
-window/size/window_height_override=1200
+window/size/window_width_override=720
+window/size/window_height_override=1280
 window/stretch/mode="canvas_items"
 
 [dotnet]
@@ -51,6 +51,8 @@ theme/custom="uid://cptk3xsrgblp1"
 2d_physics/layer_3="HitBox"
 2d_physics/layer_4="DangerArea"
 2d_physics/layer_5="Wall"
+2d_physics/layer_31="Team A"
+2d_physics/layer_32="Team B"
 
 [physics]
 

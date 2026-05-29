@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dn0okupfebabb"
-path="res://.godot/imported/fighter_crusader-export.png-3e92ec7e1be539850e9e812230a6b868.ctex"
+uid="uid://bltixp8bd61yr"
+path="res://.godot/imported/cross.png-8d682c6a9e81378e82683d53e2669c20.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Entities/Fighters/Crusader/fighter_crusader-export.png"
-dest_files=["res://.godot/imported/fighter_crusader-export.png-3e92ec7e1be539850e9e812230a6b868.ctex"]
+source_file="res://Fighters/cross.png"
+dest_files=["res://.godot/imported/cross.png-8d682c6a9e81378e82683d53e2669c20.ctex"]
 
 [params]
 

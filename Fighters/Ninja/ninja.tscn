@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://d3e0poyqwacgf"]
+
+[node name="Ninja" type="CharacterBody2D" unique_id=155666014]

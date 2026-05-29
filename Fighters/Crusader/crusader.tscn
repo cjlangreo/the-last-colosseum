@@ -1,18 +1,18 @@
 [gd_scene format=3 uid="uid://racm6yfyhyrf"]
 
-[ext_resource type="Script" uid="uid://b6jr8p00670rc" path="res://Entities/Fighters/Crusader/Crusader.cs" id="1_1o14u"]
-[ext_resource type="Shader" uid="uid://dyrxsvx04xljg" path="res://Entities/Fighters/Crusader/crusader.gdshader" id="1_5k4fk"]
-[ext_resource type="Texture2D" uid="uid://crwgmllmetb2k" path="res://Entities/Fighters/Crusader/fighter_crusader.png" id="2_3ypa3"]
-[ext_resource type="Script" uid="uid://c1gmc7u677lq2" path="res://Entities/Fighters/Weapon.cs" id="3_l3gly"]
+[ext_resource type="Script" uid="uid://b6jr8p00670rc" path="res://Fighters/Crusader/Crusader.cs" id="1_1o14u"]
+[ext_resource type="Shader" uid="uid://dyrxsvx04xljg" path="res://Fighters/Crusader/crusader.gdshader" id="1_5k4fk"]
+[ext_resource type="Texture2D" uid="uid://crwgmllmetb2k" path="res://Fighters/Crusader/fighter_crusader.png" id="2_3ypa3"]
+[ext_resource type="Script" uid="uid://c1gmc7u677lq2" path="res://Fighters/Weapon.cs" id="3_l3gly"]
 [ext_resource type="AudioStream" uid="uid://cxyanssn0ucpg" path="res://invincible_hit.mp3" id="3_xgsbv"]
-[ext_resource type="Texture2D" uid="uid://dpe5jcu5typ1b" path="res://Entities/Fighters/Crusader/weapon_iron_sword.png" id="4_l3gly"]
+[ext_resource type="Texture2D" uid="uid://dpe5jcu5typ1b" path="res://Fighters/Crusader/weapon_iron_sword.png" id="4_l3gly"]
 [ext_resource type="AudioStream" uid="uid://bt32s3ahww5ex" path="res://Assets/Sounds/sword_slice.mp3" id="5_3ypa3"]
-[ext_resource type="Texture2D" uid="uid://cowoght32q2j7" path="res://Entities/Fighters/Crusader/crusader_hand.png" id="5_qb5y8"]
-[ext_resource type="Script" uid="uid://yc2u2ae27n16" path="res://Entities/HealthBar.cs" id="6_ithyc"]
-[ext_resource type="Texture2D" uid="uid://bltixp8bd61yr" path="res://Entities/cross.png" id="10_4qeao"]
-[ext_resource type="Texture2D" uid="uid://baadbcertd0o8" path="res://Entities/Fighters/Crusader/invincible_shield.png" id="11_cfwy4"]
+[ext_resource type="Texture2D" uid="uid://cowoght32q2j7" path="res://Fighters/Crusader/crusader_hand.png" id="5_qb5y8"]
+[ext_resource type="PackedScene" uid="uid://cigdb1c0d5tou" path="res://Fighters/Crusader/health_bar.tscn" id="9_cic6y"]
+[ext_resource type="Texture2D" uid="uid://baadbcertd0o8" path="res://Fighters/Crusader/invincible_shield.png" id="11_cfwy4"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xgsbv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cfwy4"]
+resource_local_to_scene = true
 shader = ExtResource("1_5k4fk")
 shader_parameter/shine_color = Color(1, 0.8333334, 0, 0.4392157)
 shader_parameter/alpha_limit = 0.0
@@ -35,14 +35,14 @@ step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Hand:rotation")
+tracks/0/path = NodePath("HandPivot/Hand:rotation")
 tracks/0/interp = 4
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.06, 0.3, 0.53),
+"times": PackedFloat32Array(0, 0.06999999, 0.25, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [0.0, 0.6981317007977318, -0.8848819307611249, 0.0]
+"values": [0.0, 2.3701571242083, 1.5707963267948966, 0.0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -71,14 +71,26 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Hand:position")
+tracks/3/path = NodePath("HandPivot:rotation")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.67, 1),
+"times": PackedFloat32Array(0, 0.14, 0.45, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 20), Vector2(40, 0), Vector2(0, -20), Vector2(0, 20)]
+"values": [0.0, -1.5707963267948966, -3.141592653589793, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HandPivot:position")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.14, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(11, 0), Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_3ypa3"]
@@ -86,7 +98,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Hand:rotation")
+tracks/0/path = NodePath("HandPivot/Hand:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -105,7 +117,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -117,19 +129,31 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Hand:position")
+tracks/3/path = NodePath("HandPivot:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 20)]
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HandPivot:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_f18uy"]
@@ -146,38 +170,34 @@ point_count = 2
 curve = SubResource("Curve_qb5y8")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qb5y8"]
+resource_local_to_scene = true
 particle_flag_disable_z = true
 emission_shape = 1
 emission_sphere_radius = 15.72
 direction = Vector3(0, 0, 0)
-spread = 180.0
-initial_velocity_min = 65.25
-initial_velocity_max = 238.93999
+spread = 60.0
+initial_velocity_max = 235.68
 gravity = Vector3(0, 0, 0)
 scale_min = 3.33
 scale_max = 3.33
 scale_curve = SubResource("CurveTexture_ig7h8")
 color = Color(0.71, 0, 0, 1)
 
-[node name="FCrusader" type="CharacterBody2D" unique_id=1585473059 node_paths=PackedStringArray("AbilityCooldownTimer", "AbilityTimer", "InvincibleShield", "Weapon", "BloodParticles", "DeathSprite", "animationPlayer", "AttackTrigger", "healthBar", "InvincibilityTimer", "Sprite")]
-material = SubResource("ShaderMaterial_xgsbv")
-collision_mask = 17
+[node name="FCrusader" type="CharacterBody2D" unique_id=1585473059 node_paths=PackedStringArray("InvincibleShield", "r_HealthBar", "r_Sprite", "r_Weapon", "r_BloodSplatter", "r_WeaponAnimPlayer", "AttackTrigger")]
+material = SubResource("ShaderMaterial_cfwy4")
+collision_layer = 0
+collision_mask = 16
 script = ExtResource("1_1o14u")
-AbilityCooldown = 5.0
-AbilityCooldownTimer = NodePath("AbilityCooldownTimer")
-AbilityTimer = NodePath("AbilityTimer")
 AbilityDuration = 5.0
 InvincibleHitSound = ExtResource("3_xgsbv")
 InvincibleShield = NodePath("InvincibleShield")
-Weapon = NodePath("Weapon")
-BloodParticles = NodePath("GPUParticles2D")
-HitSound = ExtResource("5_3ypa3")
-DeathSprite = NodePath("DeathSprite")
-animationPlayer = NodePath("Weapon/AnimationPlayer")
+r_HealthBar = NodePath("HealthBar")
+r_Sprite = NodePath("Sprite2D")
+r_Weapon = NodePath("Weapon")
+r_BloodSplatter = NodePath("BloodSplatter")
+r_WeaponAnimPlayer = NodePath("Weapon/AnimationPlayer")
 AttackTrigger = NodePath("Weapon/AttackTrigger")
-healthBar = NodePath("HealthBar")
-InvincibilityTimer = NodePath("InvincibilityTimer")
-Sprite = NodePath("Sprite2D")
+HitSound = ExtResource("5_3ypa3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1109516803]
 shape = SubResource("CircleShape2D_7dm0k")
@@ -186,19 +206,21 @@ shape = SubResource("CircleShape2D_7dm0k")
 use_parent_material = true
 texture = ExtResource("2_3ypa3")
 
-[node name="Weapon" type="Node2D" parent="." unique_id=457120604 node_paths=PackedStringArray("AnimPlayer", "AttackTrigger", "HitBox", "AttackTimer")]
+[node name="Weapon" type="Node2D" parent="." unique_id=457120604 node_paths=PackedStringArray("AttkAnimPlayer", "AttkTrigger", "HitBox")]
 show_behind_parent = true
 script = ExtResource("3_l3gly")
-AnimPlayer = NodePath("AnimationPlayer")
-AttackTrigger = NodePath("AttackTrigger")
+AttkAnimPlayer = NodePath("AnimationPlayer")
+AttkTrigger = NodePath("AttackTrigger")
 HitBox = NodePath("HitBox")
-AttackTimer = NodePath("AttackTimer")
+Weight = 0.7
 
-[node name="Hand" type="Sprite2D" parent="Weapon" unique_id=1807510941]
+[node name="HandPivot" type="Node2D" parent="Weapon" unique_id=1631549207]
+
+[node name="Hand" type="Sprite2D" parent="Weapon/HandPivot" unique_id=1807510941]
 position = Vector2(0, 20)
 texture = ExtResource("5_qb5y8")
 
-[node name="WeaponSprite" type="Sprite2D" parent="Weapon/Hand" unique_id=1216539222]
+[node name="WeaponSprite" type="Sprite2D" parent="Weapon/HandPivot/Hand" unique_id=1216539222]
 show_behind_parent = true
 position = Vector2(17, 0)
 texture = ExtResource("4_l3gly")
@@ -206,6 +228,7 @@ texture = ExtResource("4_l3gly")
 [node name="AttackTrigger" type="Area2D" parent="Weapon" unique_id=610579059]
 position = Vector2(38, 0)
 collision_layer = 0
+collision_mask = 0
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon/AttackTrigger" unique_id=951074215]
@@ -213,8 +236,11 @@ position = Vector2(14, 0)
 shape = SubResource("RectangleShape2D_l3gly")
 
 [node name="HitBox" type="Area2D" parent="Weapon" unique_id=1232459078]
+visible = false
 position = Vector2(42, 0)
 collision_layer = 0
+collision_mask = 0
+monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Weapon/HitBox" unique_id=1223323931]
@@ -224,6 +250,7 @@ debug_color = Color(0.9119315, 0.21274698, 0.5199066, 0.41960785)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon" unique_id=984594255]
 libraries/ = SubResource("AnimationLibrary_f18uy")
+speed_scale = 0.5
 
 [node name="AttackTimer" type="Timer" parent="Weapon" unique_id=59606448]
 autostart = true
@@ -243,38 +270,17 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 8
 text = "Crusader"
 
-[node name="HealthBar" type="ProgressBar" parent="." unique_id=1402247134]
-process_mode = 3
-modulate = Color(1, 0, 0, 1)
-z_index = 50
-offset_left = -31.0
-offset_top = -28.0
-offset_right = 31.0
-offset_bottom = -19.0
-value = 100.0
-fill_mode = 1
-show_percentage = false
-script = ExtResource("6_ithyc")
+[node name="HealthBar" parent="." unique_id=1271995170 instance=ExtResource("9_cic6y")]
+offset_top = -27.0
+offset_bottom = -17.0
 
-[node name="InvincibilityTimer" type="Timer" parent="." unique_id=1109124229]
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1968562095]
+[node name="BloodSplatter" type="GPUParticles2D" parent="." unique_id=1968562095]
 emitting = false
 amount = 25
 lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_qb5y8")
-
-[node name="AbilityCooldownTimer" type="Timer" parent="." unique_id=965848258]
-one_shot = true
-
-[node name="AbilityTimer" type="Timer" parent="." unique_id=1386781309]
-one_shot = true
-
-[node name="DeathSprite" type="Sprite2D" parent="." unique_id=1912892245]
-visible = false
-texture = ExtResource("10_4qeao")
 
 [node name="InvincibleShield" type="Sprite2D" parent="." unique_id=1686347956]
 modulate = Color(1, 1, 1, 0)

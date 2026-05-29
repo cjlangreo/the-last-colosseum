@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://crwgmllmetb2k"
-path="res://.godot/imported/fighter_crusader.png-07009da2dc94cc6e1579be36cbc97b48.ctex"
+path="res://.godot/imported/fighter_crusader.png-0f2b8058f97426c288653a8d4cd9e21f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Entities/Fighters/Crusader/fighter_crusader.png"
-dest_files=["res://.godot/imported/fighter_crusader.png-07009da2dc94cc6e1579be36cbc97b48.ctex"]
+source_file="res://Fighters/Crusader/fighter_crusader.png"
+dest_files=["res://.godot/imported/fighter_crusader.png-0f2b8058f97426c288653a8d4cd9e21f.ctex"]
 
 [params]
 
