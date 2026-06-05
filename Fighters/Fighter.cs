@@ -1,151 +1,272 @@
 using Godot;
+using Godot.Collections;
 using System;
+using System.Linq;
+
+
+namespace RandomBattles.Fighters;
+
+public enum Team
+{
+  A,
+  B
+}
+
+public enum ColLayer
+{
+  A = 31,
+  B = 32,
+  Wall = 5
+}
+
+public enum HitStatus
+{
+  Hit,
+  Block,
+  Evade
+}
+
+public enum Stat
+{
+  Strength,
+  Agility,
+  Intelligence
+}
+
 
 public partial class Fighter : CharacterBody2D, ICanDie
 {
-  [Export] public int Strength { get; set; } = 3;
-  [Export] public int Agility { get; set; } = 3;
-  [Export] public int Intelligence { get; set; } = 2;
-  protected double MovementSpeed
+  [Export] public int Strength { get; private set; } = 3;
+  [Export]
+  public int Agility
   {
-    get => 40 + Agility * 40;
+    get; set
+    {
+      field = value;
+      StatUpdated?.Invoke(Stat.Agility, field);
+    }
+  } = 3;
+  [Export]
+  public int Intelligence
+  {
+    get; set
+    {
+      field = value;
+      StatUpdated?.Invoke(Stat.Intelligence, field);
+    }
+  } = 3;
+
+  public Action<Stat, int> StatUpdated;
+
+  protected float MovementSpeed
+  {
+    get => 20 + Agility * 45;
   }
   protected float Evasion
   {
-    get => Agility * 0.1f;
+    get => Agility * 0.11f;
   }
   public double Health { get; set; }
   public double MaxHealth
   {
-    get => Strength * 30 + 50;
+    get => GetMaxHealth(Strength);
   }
   public float CritChance
   {
     get => Intelligence * 0.18f;
   }
 
+  public float TrueStrike
+  {
+    get => Intelligence * 0.02f;
+  }
+
   [ExportGroup("Refs", "r_")]
-  [Export] public HealthBar r_HealthBar;
+  public StatusBar StatusBar;
   [Export] public Sprite2D r_Sprite;
-  [Export] public Weapon r_Weapon;
+  public Weapon r_Weapon => GetChildren().OfType<Weapon>().FirstOrDefault();
   [Export] public GpuParticles2D r_BloodSplatter;
-  protected Sprite2D _deathSprite;
-  [Export] public AnimationPlayer r_WeaponAnimPlayer;
-  [Export] public Area2D AttackTrigger;
-  [Export] public Team team = Team.A;
+  [Export] public CompressedTexture2D HandSprite;
+  public Ability Ability => GetChildren().OfType<Ability>().FirstOrDefault();
+  public Team team;
+  public bool HasAbility => Ability != null;
   private Tween _hitFeedbackTween;
+  protected Sprite2D _deathSprite;
   public Fighter Enemy;
   protected Vector2 Direction { get; set; }
   private Tween _modulateTween;
   private Random _random;
   public bool Dead = false;
-  public Color DeadColor = new(0.3f,0.3f,0.3f);
-  public enum Team
-  {
-    A,
-    B
-  }
+  public Color DeadColor = new(0.3f, 0.3f, 0.3f);
 
-  public enum ColLayer
-  {
-    A = 31,
-    B = 32
-  }
-
-  public enum HitStatus
-  {
-    Hit,
-    Block,
-    Evade
-  }
-
+  private const string CrossSpriteUID = "uid://bltixp8bd61yr";
+  public const int MaxTotalAbilityPoints = 9;
+  public const int MaxAbilityPoints = 5;
 
   public override void _Ready()
   {
-    if ((Agility + Strength + Intelligence) != 8)
-    {
-      GD.PrintErr("Stats does not add up to 8!");
-    }
+    StatusBar = GetNode<StatusBar>("StatusBar");
+    StatusBar.SetAbilityStatus(HasAbility);
+
 
     _random = new();
+    ValidateStats();
+    InitHealth();
 
     Direction = GetRandomDirection();
-
-    SetTeamGroup();
-
-    SetCollisionLayerValue((int)(team == Team.A ? ColLayer.A : ColLayer.B), true);
-    SetCollisionMaskValue((int)(team == Team.A ? ColLayer.B : ColLayer.A), true);
-
-    Health = MaxHealth;
-    r_HealthBar.Health = MaxHealth;
-    r_HealthBar.SetMaxValue(MaxHealth);
+    StatusBar.SetHealthColor(team);
 
     _deathSprite = new()
     {
-      Texture = (CompressedTexture2D)GD.Load("uid://bltixp8bd61yr"),
+      Texture = (CompressedTexture2D)GD.Load(CrossSpriteUID),
       Visible = false
     };
     AddChild(_deathSprite);
 
   }
 
-  private void SetTeamGroup()
+  private void InitHealth()
   {
-    AddToGroup(team == Team.A ? "Team A" : "Team B");
+    Health = MaxHealth;
+    StatusBar.Health = MaxHealth;
+    StatusBar.SetMaxHealth(MaxHealth);
   }
+
+
+
+  private void ValidateStats()
+  {
+    GD.Print(Name, " Stats: ", Strength, Agility, Intelligence);
+    if ((Agility + Strength + Intelligence) != MaxTotalAbilityPoints)
+    {
+      GD.PrintErr(Name, $" Stats does not add up to {MaxTotalAbilityPoints}!");
+    }
+
+    if (Agility > MaxAbilityPoints || Strength > MaxAbilityPoints || Intelligence > MaxAbilityPoints)
+    {
+      GD.PrintErr(Name, " Stat overflow!");
+    }
+  }
+  public void SetStrength(int newStrength)
+  {
+    double healthPercent = Health / GetMaxHealth(Strength);
+    Health = GetMaxHealth(newStrength) * healthPercent;
+    Strength = newStrength;
+    StatusBar.Health = Health;
+    StatusBar.SetMaxHealth(GetMaxHealth(Strength));
+    StatUpdated?.Invoke(Stat.Strength, Strength);
+  }
+
+  private double GetMaxHealth(int strength)
+  {
+    return strength * 50 + 50;
+  }
+
+
+
+  public void InitTeam(Team _team)
+  {
+    team = _team;
+    AddToGroup(team == Team.A ? "Team A" : "Team B");
+    SetCollisionLayerValue((int)(team == Team.A ? ColLayer.A : ColLayer.B), false);
+    SetCollisionMaskValue((int)(team == Team.A ? ColLayer.B : ColLayer.A), false);
+    SetCollisionLayerValue((int)(team == Team.A ? ColLayer.A : ColLayer.B), true);
+    SetCollisionMaskValue((int)(team == Team.A ? ColLayer.B : ColLayer.A), true);
+    SetCollisionMaskValue((int)ColLayer.Wall, true);
+    if (team == Team.A)
+    {
+      EventBus.FighterA = this;
+    }
+    else
+    {
+      EventBus.FighterB = this;
+    }
+  }
+
 
   public virtual void Die()
   {
     Dead = true;
     r_Weapon.Disable();
-    r_Sprite.Modulate = DeadColor;
-
+    Ability?.FighterDie();
     SetCollisionLayerValue((int)(team == Team.A ? ColLayer.A : ColLayer.B), false);
-
-
+    SetCollisionMaskValue((int)(team == Team.A ? ColLayer.B : ColLayer.A), false);
+    r_Sprite.Modulate = DeadColor;
     _deathSprite.Scale = new(0, 0);
     _deathSprite.Show();
     Tween deathSpriteTween = CreateTween().SetTrans(Tween.TransitionType.Elastic).SetEase(Tween.EaseType.Out);
     deathSpriteTween.TweenProperty(_deathSprite, "scale", new Vector2(1, 1), 1);
-
-    // EventManager.RoundEnd.Invoke(team);
   }
 
-  public virtual HitStatus TakeDamage(double damage, bool isCrit)
+  public virtual HitStatus HitRequest(double damage, bool isCrit, float trueStrike)
   {
-    bool evade = _random.NextDouble() <= Evasion;
-    if (evade)
+    HitStatus hitStatus = _random.NextDouble() <= Evasion - trueStrike ? HitStatus.Evade : HitStatus.Hit;
+
+    if (Ability != null && Ability.Active && Ability.HasBeforeDamageEffect)
     {
-      DisplayDamageNumber("evade", Colors.Gray);
-      return HitStatus.Evade;
+      (hitStatus, damage) = Ability.AbilityBeforeDamage(hitStatus, damage);
     }
-    else
+
+    switch (hitStatus)
     {
-      string text = damage > 0 ? $"-{Math.Round(damage, 2)}" : Math.Round(damage, 2).ToString();
-      Color color = damage > 0 ? isCrit ? Colors.Yellow : Colors.Red : Colors.White;
-      DisplayDamageNumber(text, color);
+      case HitStatus.Hit:
+        TakeDamage(damage, isCrit);
+        break;
+      case HitStatus.Block:
+        DisplayDamageNumber("block", Colors.White);
+        EmitHitParticles(Colors.Yellow);
+        break;
+      case HitStatus.Evade:
+        DisplayDamageNumber("evade", Colors.Gray);
+        hitStatus = HitStatus.Evade;
+        break;
+    }
 
-      ((ParticleProcessMaterial)r_BloodSplatter.ProcessMaterial).Direction = new(
-        (float)_random.NextDouble(),
-        (float)_random.NextDouble(),
-        0
-      );
-      r_BloodSplatter.Restart();
-
-      _hitFeedbackTween?.Kill();
-      _hitFeedbackTween = CreateTween();
-      r_Sprite.SelfModulate = Colors.Red;
-      _hitFeedbackTween.TweenProperty(r_Sprite, "self_modulate", Colors.White, 0.3);
-      Health -= (float)damage;
-      r_HealthBar.Health = Health;
-      if (Health <= 0) Die();
-      return HitStatus.Hit;
-    };
+    return hitStatus;
   }
+
+  private void EmitHitParticles(Color color)
+  {
+    ParticleProcessMaterial processMaterial = (ParticleProcessMaterial)r_BloodSplatter.ProcessMaterial;
+    processMaterial.Direction = new(
+      (float)_random.NextDouble(),
+      (float)_random.NextDouble(),
+      0
+    );
+    processMaterial.Color = color;
+    r_BloodSplatter.Restart();
+  }
+
+  private void TakeDamage(double damage, bool isCrit)
+  {
+    string text = damage > 0 ? $"-{Math.Round(damage, 2)}" : Math.Round(damage, 2).ToString();
+    Color color = damage > 0 ? isCrit ? Colors.Yellow : Colors.Red : Colors.White;
+    DisplayDamageNumber(text, color);
+
+    EmitHitParticles(Colors.Red);
+
+    if (IsInstanceValid(_hitFeedbackTween))
+    {
+      _hitFeedbackTween.Kill();
+    }
+    _hitFeedbackTween = CreateTween();
+    r_Sprite.SelfModulate = Colors.Red;
+    _hitFeedbackTween.TweenProperty(r_Sprite, "self_modulate", Colors.White, 0.3);
+
+    SetHealth(Health - (float)damage);
+
+    if (Health <= 0) Die();
+  }
+
+  private void SetHealth(double value)
+  {
+    Health = value;
+    StatusBar.Health = Health;
+  }
+
 
   private void DisplayDamageNumber(string text, Color color)
   {
-    Tween damageNumberTween = CreateTween().SetParallel();
     Label damageNumberLabel = new()
     {
       Text = text,
@@ -155,6 +276,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
       PivotOffset = new(0.5f, 0.5f),
       HorizontalAlignment = HorizontalAlignment.Center
     };
+    Tween damageNumberTween = damageNumberLabel.CreateTween().SetParallel();
 
     GetTree().CurrentScene.AddChild(damageNumberLabel);
     damageNumberTween.TweenProperty(
@@ -172,43 +294,54 @@ public partial class Fighter : CharacterBody2D, ICanDie
       Callable.From(() => damageNumberLabel.QueueFree())
     );
   }
-
-
   public void Heal(float value)
   {
     Health += value;
   }
-
   public override void _Process(double delta)
   {
     Enemy ??= GetEnemy();
+
+    if (HasAbility)
+    {
+      StatusBar.AbilityBarValue =
+            Ability.Active ?
+            Ability.AbTimeRemainPercent :
+            Ability.AbCooldownTimeRemainPercent;
+    }
   }
+
 
   public override void _PhysicsProcess(double delta)
   {
-    if (Dead) return;
-
-    if (IsInstanceValid(Enemy))
+    if (Dead)
     {
-      float targetAngle = GetAngleTo(Enemy.GlobalPosition);
-      r_Weapon.Rotation = Mathf.LerpAngle(r_Weapon.Rotation, targetAngle, (Agility + 2) * (float)delta);
+      Velocity = Vector2.Zero;
+    }
+    else
+    {
+      Velocity = Direction.Normalized() * (float)(MovementSpeed * delta);
+      if (IsInstanceValid(Enemy))
+      {
+        float targetAngle = GetAngleTo(Enemy.GlobalPosition);
+        r_Weapon?.Rotation = Mathf.LerpAngle(r_Weapon.Rotation, targetAngle, (Agility + 2) * (float)delta);
+      }
     }
 
-    KinematicCollision2D collision = MoveAndCollide(Direction.Normalized() * (float)(MovementSpeed * delta));
+    KinematicCollision2D collision = MoveAndCollide(Velocity);
     if (collision != null)
     {
       Direction = Direction.Bounce(collision.GetNormal());
-    }
-    ;
+    };
+    GD.Print(Velocity);
   }
 
   public Vector2 GetRandomDirection()
   {
-    Random random = new();
     Vector2 newDirection = new()
     {
-      X = (float)random.NextDouble(),
-      Y = (float)random.NextDouble()
+      X = (float)_random.NextDouble(),
+      Y = (float)_random.NextDouble()
     };
     return newDirection;
   }

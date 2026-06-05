@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using System.Linq;
+using RandomBattles.Fighters;
+
 
 public partial class Weapon : Node2D
 {
@@ -8,16 +10,18 @@ public partial class Weapon : Node2D
   [Export] public AnimationPlayer AtkAnimPlayer;
   [Export] public Area2D AtkTrigger;
   [Export] public Area2D HitBox;
-  [Export] public float Weight = 1f;
-  [Export] public float BaseDmg = 15f;
-  [Export] public float CritMult = 1.5f;
+  [Export] public WeaponStats Stats;
   [Export] public AudioStream HitSound;
+  [Export] public AudioStream SwingSound;
   [Export] public AudioStream BlockSound;
+  [Export] public float HitBoxLifeSpan = 0.2f;
+  [Export] public Sprite2D MainSprite;
+  private Sprite2D[] Hands => GetTree().GetNodesInGroup("Hands").Cast<Sprite2D>().ToArray();
   private AudioManager _audioManager;
 
   private double Damage
   {
-    get => BaseDmg + (BaseDmg * _parentFighter.Strength * 0.15);
+    get => Stats.BaseDmg + (Stats.BaseDmg * _parentFighter.Strength * 0.15);
   }
 
   private bool _canAttack = true;
@@ -27,22 +31,44 @@ public partial class Weapon : Node2D
   private Random _random;
 
   private bool _isCrit;
+  private float AtkSpeed
+  {
+    get => 0.25f + (_parentFighter.Agility * 0.15f / Stats.Weight);
+  }
+  public double AtkCooldownPercent
+  {
+    get
+    {
+      return AtkAnimPlayer.IsPlaying() ? AtkAnimPlayer.CurrentAnimationPosition / AtkAnimPlayer.CurrentAnimationLength : 1.0;
+    }
+  }
+
+
+  private bool _hasHitFighter = false;
+
+  private AudioManager.Team _teamAudioPlayer;
 
   public override void _Ready()
   {
     _parentFighter = GetParent<Fighter>();
     InitSounds();
 
-    AtkAnimPlayer.SpeedScale = (float)(0.5 + (_parentFighter.Agility * 0.1f / Weight));
+    foreach (Sprite2D hand in Hands)
+    {
+      hand.Texture = _parentFighter.HandSprite;
+    }
+
+
+    AtkAnimPlayer.SpeedScale = AtkSpeed;
     AtkAnimPlayer.AnimationFinished += OnAttkAnimTimeout;
 
-    if (_parentFighter.team == Fighter.Team.A)
+    if (_parentFighter.team == Team.A)
     {
-      SetCollisions(Fighter.ColLayer.B);
+      SetCollisions(ColLayer.B);
     }
     else
     {
-      SetCollisions(Fighter.ColLayer.A);
+      SetCollisions(ColLayer.A);
     }
 
 
@@ -51,6 +77,12 @@ public partial class Weapon : Node2D
 
     HitBox.BodyEntered += OnAttackHit;
   }
+  public override void _ExitTree()
+  {
+    HitBox.BodyEntered -= OnAttackHit;
+    AtkAnimPlayer.AnimationFinished -= OnAttkAnimTimeout;
+  }
+
 
   public void Disable()
   {
@@ -63,30 +95,43 @@ public partial class Weapon : Node2D
   private void InitSounds()
   {
     _audioManager = GetNode<AudioManager>("/root/AudioManager");
-    if (_parentFighter.team == Fighter.Team.A)
-    {
-      _audioManager.TeamA.HitSoundPlayer.Stream = HitSound;
-      _audioManager.TeamA.BlockSoundPlayer.Stream = BlockSound;
-    }
-    else
-    {
-      _audioManager.TeamB.HitSoundPlayer.Stream = HitSound;
-      _audioManager.TeamB.BlockSoundPlayer.Stream = BlockSound;
-    }
+    _teamAudioPlayer = _parentFighter.team == Team.A ? _audioManager.TeamA : _audioManager.TeamB;
+    _teamAudioPlayer.HitSoundPlayer.Stream = HitSound;
+    _teamAudioPlayer.BlockSoundPlayer.Stream = BlockSound;
+    _teamAudioPlayer.SwingSoundPlayer.Stream = SwingSound;
   }
 
 
-  private void SetCollisions(Fighter.ColLayer layer)
+  private void PlaySwingSound()
+  {
+    _teamAudioPlayer.SwingSoundPlayer.Play();
+  }
+
+
+  private void SetCollisions(ColLayer layer)
   {
     AtkTrigger.SetCollisionMaskValue((int)layer, true);
     HitBox.SetCollisionMaskValue((int)layer, true);
   }
 
-  public override void _ExitTree()
+
+  private async void ToggleHitBox(bool value)
   {
-    HitBox.BodyEntered -= OnAttackHit;
-    AtkAnimPlayer.AnimationFinished -= OnAttkAnimTimeout;
+
+    HitBox.Monitoring = value;
+    HitBox.Visible = value;
+    if (value)
+    {
+      await ToSignal(GetTree().CreateTimer(HitBoxLifeSpan), Timer.SignalName.Timeout);
+      HitBox.Monitoring = false;
+      HitBox.Visible = false;
+    }
+    else
+    {
+      _hasHitFighter = false;
+    }
   }
+
 
   private bool IsCrit()
   {
@@ -95,36 +140,25 @@ public partial class Weapon : Node2D
 
   public void OnAttackHit(Node2D _)
   {
+    if (_hasHitFighter) return;
     foreach (Fighter fighter in HitBox.GetOverlappingBodies().OfType<Fighter>())
     {
-      Fighter.HitStatus hitStatus = fighter.TakeDamage(_isCrit ? Damage * CritMult : Damage, _isCrit);
-      PlaySound(hitStatus, _parentFighter.team);
+      HitStatus hitStatus = fighter.HitRequest(_isCrit ? Damage * Stats.CritMult : Damage, _isCrit, _parentFighter.TrueStrike);
+
+      PlaySound(hitStatus);
+      _hasHitFighter = true;
     }
   }
 
-  private void PlaySound(Fighter.HitStatus hitStatus, Fighter.Team team)
+  private void PlaySound(HitStatus hitStatus)
   {
-    if (team == Fighter.Team.A)
+    if (hitStatus == HitStatus.Hit)
     {
-      if (hitStatus == Fighter.HitStatus.Hit)
-      {
-        _audioManager.TeamA.HitSoundPlayer.Play();
-      }
-      else if (hitStatus == Fighter.HitStatus.Block)
-      {
-        _audioManager.TeamA.BlockSoundPlayer.Play();
-      }
+      _teamAudioPlayer.HitSoundPlayer.Play();
     }
-    else
+    else if (hitStatus == HitStatus.Block)
     {
-      if (hitStatus == Fighter.HitStatus.Hit)
-      {
-        _audioManager.TeamB.HitSoundPlayer.Play();
-      }
-      else if (hitStatus == Fighter.HitStatus.Block)
-      {
-        _audioManager.TeamB.BlockSoundPlayer.Play();
-      }
+      _teamAudioPlayer.BlockSoundPlayer.Play();
     }
   }
 
@@ -147,6 +181,8 @@ public partial class Weapon : Node2D
   {
     _isCrit = IsCrit();
     _canAttack = true;
+    _hasHitFighter = false;
+    AtkAnimPlayer.SpeedScale = AtkSpeed;
   }
 
   private void Attack()
