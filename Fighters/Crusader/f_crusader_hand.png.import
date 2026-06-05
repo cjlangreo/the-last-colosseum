@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cowoght32q2j7"
-path="res://.godot/imported/crusader_hand.png-ec6e2f8d455107e982b5be90b6ef94a8.ctex"
+path="res://.godot/imported/f_crusader_hand.png-6fa61819a185c43a0a560311d4eaa3ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Fighters/Crusader/crusader_hand.png"
-dest_files=["res://.godot/imported/crusader_hand.png-ec6e2f8d455107e982b5be90b6ef94a8.ctex"]
+source_file="res://Fighters/Crusader/f_crusader_hand.png"
+dest_files=["res://.godot/imported/f_crusader_hand.png-6fa61819a185c43a0a560311d4eaa3ce.ctex"]
 
 [params]
 
