@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dwrtxb2jov3dq"]
+
+[ext_resource type="Script" uid="uid://bdws8p6dinrdx" path="res://Abilities/SpiritOfTheOwl/ASpiritOfTheOwl.cs" id="1_baqt2"]
+[ext_resource type="Texture2D" uid="uid://skawswqm3y75" path="res://Abilities/SpiritOfTheOwl/spiritOfTheOwl.png" id="2_e2cy8"]
+
+[node name="ASpiritOfTheOwl" type="Node" unique_id=658220978]
+script = ExtResource("1_baqt2")
+AbilityName = "Spirit of the Owl"
+AbilityIcon = ExtResource("2_e2cy8")
