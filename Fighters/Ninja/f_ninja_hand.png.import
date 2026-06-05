@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://veni723qe1d5"
-path="res://.godot/imported/sai.png-42b007f41a29b4f26848f93b4a8ed284.ctex"
+uid="uid://ccn2wf3n5m7l5"
+path="res://.godot/imported/f_ninja_hand.png-5832c5400ca0a88d8d27f8f886f45292.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Fighters/Ninja/sai.png"
-dest_files=["res://.godot/imported/sai.png-42b007f41a29b4f26848f93b4a8ed284.ctex"]
+source_file="res://Fighters/Ninja/f_ninja_hand.png"
+dest_files=["res://.godot/imported/f_ninja_hand.png-5832c5400ca0a88d8d27f8f886f45292.ctex"]
 
 [params]
 
