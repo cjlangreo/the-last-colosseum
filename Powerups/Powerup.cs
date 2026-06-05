@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Diagnostics;
+using RandomBattles.Fighters;
 
 public partial class Powerup : Area2D
 {
@@ -60,7 +61,7 @@ public partial class Powerup : Area2D
         fighter.Heal(50);
         break;
       case PowerupType.Damage:
-        fighter.Strength += 10;
+        fighter.SetStrength(fighter.Strength + 10);
         break;
     }
     PickedUp.Invoke();
