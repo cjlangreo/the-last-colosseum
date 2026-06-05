@@ -1,38 +1,26 @@
 using Godot;
-using RandomBattles.Utils;
 using System;
 
 public partial class Main : Node2D
 {
-
-  [Export] public bool Debug = false;
+  [Export] public MeshInstance2D DissolveMesh;
+  private ShaderMaterial BurnShader => (ShaderMaterial)DissolveMesh.Material;
+  private Tween _dissolveTween;
+  
+  
   public override void _Ready()
   {
-    if(Debug) EventManager.RoundEnd += OnRoundEnd;
+   _dissolveTween = CreateTween();
+   _dissolveTween.TweenMethod(Callable.From<float>(SetDissolvePercentage), 1.0, 0.0, 2.0);
   }
 
-  public override void _ExitTree()
+  private void SetDissolvePercentage(float percentage)
   {
-    EventManager.RoundEnd -= OnRoundEnd;
+    BurnShader.SetShaderParameter("percentage", percentage);
   }
 
-  private void OnRoundEnd(Fighter.Team team)
+  // Called every frame. 'delta' is the elapsed time since the previous frame.
+  public override void _Process(double delta)
   {
-    EventManager.Rounds += 1;
-    if (team == Fighter.Team.B)
-    {
-      EventManager.TeamAPoints += 1;
-    }
-    else
-    {
-      EventManager.TeamBPoints += 1;
-    }
-    GD.Print($"Rounds: {EventManager.Rounds}");
-    GD.Print($"Team A: {EventManager.TeamAPoints}");
-    GD.Print($"Team B: {EventManager.TeamBPoints}");
-    GD.Print();
-
-    GetTree().CallDeferred("reload_current_scene");
   }
-
 }
