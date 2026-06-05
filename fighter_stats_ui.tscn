@@ -1,0 +1,221 @@
+[gd_scene format=3 uid="uid://hbvlp3j2l0rm"]
+
+[ext_resource type="Script" uid="uid://dqtyvhggwoitu" path="res://FighterStatsUI.cs" id="1_jsmbm"]
+[ext_resource type="Texture2D" uid="uid://p7uho7d7mgfc" path="res://Fighters/Ninja/f_ninja.png" id="2_7q5dp"]
+[ext_resource type="Texture2D" uid="uid://crwgmllmetb2k" path="res://Fighters/Crusader/f_crusader.png" id="3_iatmb"]
+[ext_resource type="Texture2D" uid="uid://dy13xl45oniyp" path="res://Fighters/Orc/f_orc.png" id="4_qonjv"]
+[ext_resource type="Texture2D" uid="uid://c6gvdp0ctaj5b" path="res://Weapons/Greataxe/greataxe.png" id="5_5eywq"]
+[ext_resource type="Texture2D" uid="uid://veni723qe1d5" path="res://Weapons/Sai/sai.png" id="6_7wikv"]
+[ext_resource type="Texture2D" uid="uid://dpe5jcu5typ1b" path="res://Weapons/IronSword/weapon_iron_sword.png" id="7_tfh88"]
+[ext_resource type="Texture2D" uid="uid://dqebiovtmmfcc" path="res://Abilities/SpiritOfTheBear/spiritOfTheBear.png" id="8_77xx2"]
+[ext_resource type="Texture2D" uid="uid://skawswqm3y75" path="res://Abilities/SpiritOfTheOwl/spiritOfTheOwl.png" id="9_01qvr"]
+[ext_resource type="Texture2D" uid="uid://cbanvqm8i4vo1" path="res://Abilities/SpiritOfTheSnake/spiritOfTheSnake.png" id="10_8y8b2"]
+[ext_resource type="Texture2D" uid="uid://di8ipo13yul6a" path="res://Abilities/DivineProtection/divineProtection.png" id="11_8r8py"]
+[ext_resource type="StyleBox" uid="uid://3joxdwy12mhw" path="res://Assets/blue_frame_stylebox.tres" id="12_yyhg7"]
+[ext_resource type="StyleBox" uid="uid://b5u3gcqppyqsx" path="res://Assets/red_frame_stylebox.tres" id="13_gyojr"]
+[ext_resource type="Texture2D" uid="uid://b8wmeiivaqqpy" path="res://Assets/BlankStar.png" id="14_fsw2e"]
+[ext_resource type="Shader" uid="uid://d33br6tssxsko" path="res://ability_cooldown.gdshader" id="15_6v04v"]
+[ext_resource type="Shader" uid="uid://cfayirnsq8m6y" path="res://attack_cooldown.gdshader" id="16_e7pgw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0odxb"]
+resource_local_to_scene = true
+shader = ExtResource("15_6v04v")
+shader_parameter/percent = 0.5
+shader_parameter/darkness = 0.3
+shader_parameter/ability_active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xuqvo"]
+resource_local_to_scene = true
+shader = ExtResource("16_e7pgw")
+shader_parameter/percent = 0.5
+shader_parameter/darkness = 0.3
+
+[node name="FighterStatsUI" type="VBoxContainer" unique_id=1234396444 node_paths=PackedStringArray("FighterIcon", "WeaponIcon", "AbilityIcon", "AbilityFrameContainer", "WeaponFrameContainer", "StrStarsContainer", "AgiStarsContainer", "IntStarsContainer", "StrOverflowLabel", "AgiOverflowLabel", "IntOverflowLabel")]
+offset_left = 93.0
+offset_top = 3.0
+offset_right = 176.0
+offset_bottom = 73.0
+theme_override_constants/separation = 2
+script = ExtResource("1_jsmbm")
+FighterIcon = NodePath("HBoxContainer2/FighterIcon")
+WeaponIcon = NodePath("HBoxContainer/WeaponFrameContainer/WeaponIcon")
+AbilityIcon = NodePath("HBoxContainer/AbilityFrameContainer/AbilityIcon")
+FighterIconCollection = Array[CompressedTexture2D]([ExtResource("2_7q5dp"), ExtResource("3_iatmb"), ExtResource("4_qonjv")])
+WeaponIconCollection = Array[CompressedTexture2D]([ExtResource("5_5eywq"), ExtResource("6_7wikv"), ExtResource("7_tfh88")])
+AbilityIconCollection = Array[CompressedTexture2D]([ExtResource("8_77xx2"), ExtResource("9_01qvr"), ExtResource("10_8y8b2"), ExtResource("11_8r8py")])
+AbilityFrameContainer = NodePath("HBoxContainer/AbilityFrameContainer")
+WeaponFrameContainer = NodePath("HBoxContainer/WeaponFrameContainer")
+BlueFrameStylebox = ExtResource("12_yyhg7")
+RedFrameStylebox = ExtResource("13_gyojr")
+StrStarsContainer = NodePath("HBoxContainer2/VBoxContainer2/StrStars")
+AgiStarsContainer = NodePath("HBoxContainer2/VBoxContainer2/AgiStars")
+IntStarsContainer = NodePath("HBoxContainer2/VBoxContainer2/IntStars")
+StrOverflowLabel = NodePath("HBoxContainer2/VBoxContainer2/StrStars/StrOverflowLabel")
+AgiOverflowLabel = NodePath("HBoxContainer2/VBoxContainer2/AgiStars/AgiOverflowLabel")
+IntOverflowLabel = NodePath("HBoxContainer2/VBoxContainer2/IntStars/IntOverflowLabel")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=1650209172]
+layout_mode = 2
+theme_override_constants/separation = 1
+alignment = 1
+
+[node name="FighterIcon" type="TextureRect" parent="HBoxContainer2" unique_id=1001758027]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("4_qonjv")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer2" unique_id=1596223234]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="STRLabel" type="Label" parent="HBoxContainer2/VBoxContainer2" unique_id=105780870]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6745098, 0.19607843, 0.19607843, 1)
+theme_override_font_sizes/font_size = 4
+text = "STR"
+
+[node name="StrStars" type="HBoxContainer" parent="HBoxContainer2/VBoxContainer2" unique_id=1316586319]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 1
+
+[node name="Star" type="TextureRect" parent="HBoxContainer2/VBoxContainer2/StrStars" unique_id=1731205531]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_fsw2e")
+
+[node name="Star2" type="TextureRect" parent="HBoxContainer2/VBoxContainer2/StrStars" unique_id=1485822795]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_fsw2e")
+
+[node name="Star3" type="TextureRect" parent="HBoxContainer2/VBoxContainer2/StrStars" unique_id=1392508836]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_fsw2e")
+
+[node name="Star4" type="TextureRect" parent="HBoxContainer2/VBoxContainer2/StrStars" unique_id=285649877]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_fsw2e")
+
+[node name="Star5" type="TextureRect" parent="HBoxContainer2/VBoxContainer2/StrStars" unique_id=928382493]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_fsw2e")
+
+[node name="StrOverflowLabel" type="Label" parent="HBoxContainer2/VBoxContainer2/StrStars" unique_id=1680163503]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6745098, 0.19607843, 0.19607843, 1)
+theme_override_font_sizes/font_size = 4
+
+[node name="AGILabel" type="Label" parent="HBoxContainer2/VBoxContainer2" unique_id=356577422]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.41568628, 0.74509805, 0.1882353, 1)
+theme_override_font_sizes/font_size = 4
+text = "AGI"
+
+[node name="AgiStars" type="HBoxContainer" parent="HBoxContainer2/VBoxContainer2" unique_id=1666454540]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 1
+
+[node name="Star" type="TextureRect" parent="HBoxContainer2/VBoxContainer2/AgiStars" unique_id=118517291]
+layout_mode = 2
+texture = ExtResource("14_fsw2e")
+
+[node name="Star2" type="TextureRect" parent="HBoxContainer2/VBoxContainer2/AgiStars" unique_id=652087775]
+layout_mode = 2
+texture = ExtResource("14_fsw2e")
+
+[node name="Star3" type="TextureRect" parent="HBoxContainer2/VBoxContainer2/AgiStars" unique_id=2010482966]
+layout_mode = 2
+texture = ExtResource("14_fsw2e")
+
+[node name="Star4" type="TextureRect" parent="HBoxContainer2/VBoxContainer2/AgiStars" unique_id=1496248038]
+layout_mode = 2
+texture = ExtResource("14_fsw2e")
+
+[node name="Star5" type="TextureRect" parent="HBoxContainer2/VBoxContainer2/AgiStars" unique_id=311007833]
+layout_mode = 2
+texture = ExtResource("14_fsw2e")
+
+[node name="AgiOverflowLabel" type="Label" parent="HBoxContainer2/VBoxContainer2/AgiStars" unique_id=1844331405]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.41568628, 0.74509805, 0.1882353, 1)
+theme_override_font_sizes/font_size = 4
+
+[node name="INTLabel" type="Label" parent="HBoxContainer2/VBoxContainer2" unique_id=1794635895]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35686275, 0.43137255, 0.88235295, 1)
+theme_override_font_sizes/font_size = 4
+text = "INT"
+
+[node name="IntStars" type="HBoxContainer" parent="HBoxContainer2/VBoxContainer2" unique_id=2003880710]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 1
+
+[node name="Star" type="TextureRect" parent="HBoxContainer2/VBoxContainer2/IntStars" unique_id=1941348263]
+layout_mode = 2
+texture = ExtResource("14_fsw2e")
+
+[node name="Star2" type="TextureRect" parent="HBoxContainer2/VBoxContainer2/IntStars" unique_id=952214320]
+layout_mode = 2
+texture = ExtResource("14_fsw2e")
+
+[node name="Star3" type="TextureRect" parent="HBoxContainer2/VBoxContainer2/IntStars" unique_id=1306100697]
+layout_mode = 2
+texture = ExtResource("14_fsw2e")
+
+[node name="Star4" type="TextureRect" parent="HBoxContainer2/VBoxContainer2/IntStars" unique_id=511228417]
+layout_mode = 2
+texture = ExtResource("14_fsw2e")
+
+[node name="Star5" type="TextureRect" parent="HBoxContainer2/VBoxContainer2/IntStars" unique_id=457278828]
+layout_mode = 2
+texture = ExtResource("14_fsw2e")
+
+[node name="IntOverflowLabel" type="Label" parent="HBoxContainer2/VBoxContainer2/IntStars" unique_id=1589036752]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35686275, 0.43137255, 0.88235295, 1)
+theme_override_font_sizes/font_size = 4
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer2/VBoxContainer2" unique_id=86867872]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1984956977]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 1
+alignment = 1
+
+[node name="AbilityFrameContainer" type="PanelContainer" parent="HBoxContainer" unique_id=878631524]
+material = SubResource("ShaderMaterial_0odxb")
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("13_gyojr")
+
+[node name="AbilityIcon" type="TextureRect" parent="HBoxContainer/AbilityFrameContainer" unique_id=437887961]
+use_parent_material = true
+layout_mode = 2
+texture = ExtResource("8_77xx2")
+
+[node name="WeaponFrameContainer" type="PanelContainer" parent="HBoxContainer" unique_id=1185691720]
+material = SubResource("ShaderMaterial_xuqvo")
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("12_yyhg7")
+
+[node name="WeaponIcon" type="TextureRect" parent="HBoxContainer/WeaponFrameContainer" unique_id=53958644]
+use_parent_material = true
+layout_mode = 2
+texture = ExtResource("5_5eywq")
+expand_mode = 3
+stretch_mode = 5
