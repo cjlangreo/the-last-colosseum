@@ -33,6 +33,7 @@ color = Color(0.71, 0, 0, 1)
 collision_layer = 0
 collision_mask = 16
 script = ExtResource("1_1o14u")
+FighterName = "Knight"
 r_Sprite = NodePath("Sprite2D")
 r_BloodSplatter = NodePath("BloodSplatter")
 HandSprite = ExtResource("3_1105a")

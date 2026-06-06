@@ -30,9 +30,12 @@ shader = ExtResource("16_e7pgw")
 shader_parameter/percent = 0.5
 shader_parameter/darkness = 0.3
 
-[node name="FighterStatsUI" type="VBoxContainer" unique_id=1234396444 node_paths=PackedStringArray("FighterIcon", "WeaponIcon", "AbilityIcon", "AbilityFrameContainer", "WeaponFrameContainer", "StrStarsContainer", "AgiStarsContainer", "IntStarsContainer", "StrOverflowLabel", "AgiOverflowLabel", "IntOverflowLabel")]
+[node name="FighterStatsUI" type="VBoxContainer" unique_id=1234396444 node_paths=PackedStringArray("FighterIcon", "WeaponIcon", "AbilityIcon", "AbilityFrameContainer", "WeaponFrameContainer", "FighterNameLabel", "AbilityNameLabel", "WeaponNameLabel", "StrStarsContainer", "AgiStarsContainer", "IntStarsContainer", "StrOverflowLabel", "AgiOverflowLabel", "IntOverflowLabel")]
 offset_right = 83.0
 offset_bottom = 70.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+size_flags_vertical = 4
+offset_transform_enabled = true
 theme_override_constants/separation = 2
 script = ExtResource("1_jsmbm")
 FighterIcon = NodePath("HBoxContainer2/FighterIcon")
@@ -45,12 +48,20 @@ AbilityFrameContainer = NodePath("HBoxContainer/AbilityFrameContainer")
 WeaponFrameContainer = NodePath("HBoxContainer/WeaponFrameContainer")
 BlueFrameStylebox = ExtResource("12_yyhg7")
 RedFrameStylebox = ExtResource("13_gyojr")
+FighterNameLabel = NodePath("FighterNameLabel")
+AbilityNameLabel = NodePath("AbilityLabel")
+WeaponNameLabel = NodePath("WeaponLabel")
 StrStarsContainer = NodePath("HBoxContainer2/VBoxContainer2/StrStars")
 AgiStarsContainer = NodePath("HBoxContainer2/VBoxContainer2/AgiStars")
 IntStarsContainer = NodePath("HBoxContainer2/VBoxContainer2/IntStars")
 StrOverflowLabel = NodePath("HBoxContainer2/VBoxContainer2/StrStars/StrOverflowLabel")
 AgiOverflowLabel = NodePath("HBoxContainer2/VBoxContainer2/AgiStars/AgiOverflowLabel")
 IntOverflowLabel = NodePath("HBoxContainer2/VBoxContainer2/IntStars/IntOverflowLabel")
+
+[node name="FighterNameLabel" type="Label" parent="." unique_id=793650687]
+layout_mode = 2
+text = "Orc"
+horizontal_alignment = 1
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=1650209172]
 layout_mode = 2
@@ -60,6 +71,7 @@ alignment = 1
 [node name="FighterIcon" type="TextureRect" parent="HBoxContainer2" unique_id=1001758027]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+offset_transform_enabled = true
 texture = ExtResource("4_qonjv")
 expand_mode = 5
 stretch_mode = 5
@@ -197,6 +209,7 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+offset_transform_enabled = true
 theme_override_styles/panel = ExtResource("13_gyojr")
 
 [node name="AbilityIcon" type="TextureRect" parent="HBoxContainer/AbilityFrameContainer" unique_id=437887961]
@@ -209,6 +222,7 @@ material = SubResource("ShaderMaterial_xuqvo")
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_vertical = 4
+offset_transform_enabled = true
 theme_override_styles/panel = ExtResource("12_yyhg7")
 
 [node name="WeaponIcon" type="TextureRect" parent="HBoxContainer/WeaponFrameContainer" unique_id=53958644]
@@ -217,3 +231,17 @@ layout_mode = 2
 texture = ExtResource("5_5eywq")
 expand_mode = 3
 stretch_mode = 5
+
+[node name="AbilityLabel" type="Label" parent="." unique_id=390425328]
+layout_mode = 2
+theme_override_font_sizes/font_size = 4
+text = "Mark of the Bear"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="WeaponLabel" type="Label" parent="." unique_id=421414634]
+layout_mode = 2
+theme_override_font_sizes/font_size = 4
+text = "Greataxe"
+horizontal_alignment = 1
+autowrap_mode = 2

@@ -36,6 +36,7 @@ public enum Stat
 
 public partial class Fighter : CharacterBody2D, ICanDie
 {
+  [Export] public string FighterName { set;get;} = "[Fighter Name Here]";
   [Export] public int Strength { get; private set; } = 3;
   [Export]
   public int Agility
@@ -83,8 +84,9 @@ public partial class Fighter : CharacterBody2D, ICanDie
 
   public Action Died;
 
-  [ExportGroup("Refs", "r_")]
   public StatusBar StatusBar;
+  [ExportGroup("Refs", "r_")]
+
   [Export] public Sprite2D r_Sprite;
   public Weapon r_Weapon => GetChildren().OfType<Weapon>().FirstOrDefault();
   [Export] public GpuParticles2D r_BloodSplatter;
@@ -128,7 +130,6 @@ public partial class Fighter : CharacterBody2D, ICanDie
       Visible = false
     };
     AddChild(_deathSprite);
-
   }
 
     public override void _ExitTree()
@@ -147,15 +148,15 @@ public partial class Fighter : CharacterBody2D, ICanDie
 
   private void ValidateStats()
   {
-    GD.Print(Name, " Stats: ", Strength, Agility, Intelligence);
+    GD.Print(FighterName, " Stats: ", Strength, Agility, Intelligence);
     if ((Agility + Strength + Intelligence) != MaxTotalAbilityPoints)
     {
-      GD.PrintErr(Name, $" Stats does not add up to {MaxTotalAbilityPoints}!");
+      GD.PrintErr(FighterName, $" Stats does not add up to {MaxTotalAbilityPoints}!");
     }
 
     if (Agility > MaxAbilityPoints || Strength > MaxAbilityPoints || Intelligence > MaxAbilityPoints)
     {
-      GD.PrintErr(Name, " Stat overflow!");
+      GD.PrintErr(FighterName, " Stat overflow!");
     }
   }
   public void SetStrength(int newStrength)
@@ -175,7 +176,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
 
   private void OnWin()
   {
-    GD.Print(Name, " Win!");
+    GD.Print(FighterName, " Win!");
     ZIndex = 1;
   }
 

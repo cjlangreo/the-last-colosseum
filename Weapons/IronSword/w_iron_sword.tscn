@@ -178,6 +178,7 @@ _data = {
 [node name="WIronSword" type="Node2D" unique_id=1230071005 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "MainSprite", "Hands")]
 show_behind_parent = true
 script = ExtResource("1_kr824")
+WeaponName = "Iron Sword"
 AtkAnimPlayer = NodePath("AnimationPlayer")
 AtkTrigger = NodePath("AttackTrigger")
 HitBox = NodePath("HitBox")
@@ -186,7 +187,7 @@ HitSound = ExtResource("2_b5igw")
 SwingSound = ExtResource("4_s6ybx")
 BlockSound = ExtResource("3_0mnmp")
 MainSprite = NodePath("HandPivot/Hand/WeaponSprite")
-Hands = [NodePath("HandPivot/Hand/WeaponSprite")]
+Hands = [NodePath("HandPivot/Hand")]
 
 [node name="HandPivot" type="Node2D" parent="." unique_id=378631271]
 

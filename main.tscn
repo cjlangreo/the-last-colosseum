@@ -4,15 +4,18 @@
 [ext_resource type="Script" uid="uid://s0vktmo3smqs" path="res://Camera.cs" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://hbvlp3j2l0rm" path="res://fighter_stats_ui.tscn" id="3_4c57u"]
 [ext_resource type="PackedScene" uid="uid://bjsnjr14q58n5" path="res://Fighters/Orc/orc.tscn" id="4_efxa6"]
+[ext_resource type="PackedScene" uid="uid://racm6yfyhyrf" path="res://Fighters/Crusader/crusader.tscn" id="6_w48qg"]
 [ext_resource type="Texture2D" uid="uid://84mch2jogimf" path="res://walls.png" id="7_2cqfq"]
-[ext_resource type="PackedScene" uid="uid://d3e0poyqwacgf" path="res://Fighters/Ninja/ninja.tscn" id="7_dg77c"]
+[ext_resource type="PackedScene" uid="uid://dp5ycbv4t5w65" path="res://Weapons/IronSword/w_iron_sword.tscn" id="7_vivmo"]
+[ext_resource type="PackedScene" uid="uid://cmmqc1o0t6nd6" path="res://Abilities/DivineProtection/a_divine_protection.tscn" id="8_2cqfq"]
 [ext_resource type="Script" uid="uid://ds7ekv0i5wjot" path="res://TeamSpawner.cs" id="9_dg77c"]
 [ext_resource type="PackedScene" uid="uid://hbrcckwyp775" path="res://Abilities/SpiritOfTheBear/a_spirit_of_the_bear.tscn" id="9_efxa6"]
-[ext_resource type="PackedScene" uid="uid://b7vdewbdwy1up" path="res://Abilities/SpiritOfTheSnake/a_spirit_of_the_snake.tscn" id="9_ycdy4"]
 [ext_resource type="Shader" uid="uid://disydkqfjrafh" path="res://burn_dissolve.gdshader" id="11_dg77c"]
 [ext_resource type="Shader" uid="uid://cuqyhrxrpgnr2" path="res://crt.gdshader" id="11_efxa6"]
-[ext_resource type="PackedScene" uid="uid://dladnw68amri6" path="res://Weapons/Sai/w_2_handed_sai.tscn" id="12_dg77c"]
 [ext_resource type="PackedScene" uid="uid://bfrclebkpbjo2" path="res://Weapons/Greataxe/w_greataxe.tscn" id="13_ycdy4"]
+[ext_resource type="Texture2D" uid="uid://d4abjl3nfe7o2" path="res://nns_logo.png" id="14_w48qg"]
+[ext_resource type="Texture2D" uid="uid://bdei1kymvn1ta" path="res://facebook-logo.png" id="15_2cqfq"]
+[ext_resource type="Texture2D" uid="uid://cj0q80m7p8om7" path="res://youtube-logo.webp" id="16_2cqfq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7dm0k"]
 size = Vector2(14, 220)
@@ -64,13 +67,14 @@ shader_parameter/glow_threshold = 0.65
 
 [sub_resource type="QuadMesh" id="QuadMesh_4c57u"]
 
-[node name="Main" type="Node2D" unique_id=1413481918 node_paths=PackedStringArray("DissolveMesh", "fighterStatsUIA", "fighterStatsUIB")]
+[node name="Main" type="Node2D" unique_id=1413481918 node_paths=PackedStringArray("DissolveMesh", "FighterStatsUIA", "FighterStatsUIB", "FighterStatsUIContainer")]
 script = ExtResource("1_ycdy4")
 DissolveMesh = NodePath("UI/DissolveMesh")
-Random = true
-fighterStatsUIA = NodePath("UI/FighterStatsUI")
-fighterStatsUIB = NodePath("UI/FighterStatsUI2")
-metadata/_edit_horizontal_guides_ = [76.0]
+FighterStatsUIA = NodePath("UI/FighterStatsUIContainer/FighterStatsUI")
+FighterStatsUIB = NodePath("UI/FighterStatsUIContainer/FighterStatsUI2")
+FighterStatsUIContainer = NodePath("UI/FighterStatsUIContainer")
+FighterStatsUIContainerFinalPos = Vector2(0, -6)
+metadata/_edit_horizontal_guides_ = [76.0, 160.0]
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1259107346]
 offset_left = -184.0
@@ -79,6 +83,48 @@ offset_right = 352.0
 offset_bottom = 407.0
 color = Color(0, 0, 0, 1)
 metadata/_edit_lock_ = true
+
+[node name="Socials" type="Node2D" parent="." unique_id=1226197249]
+modulate = Color(1, 1, 1, 0.34509805)
+
+[node name="NnsLogo" type="Sprite2D" parent="Socials" unique_id=1238353574]
+position = Vector2(90, 198)
+scale = Vector2(0.21669106, 0.1797235)
+texture = ExtResource("14_w48qg")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Socials" unique_id=1804501480]
+offset_left = 17.0
+offset_top = 220.0
+offset_right = 161.0
+offset_bottom = 228.0
+
+[node name="TextureRect" type="TextureRect" parent="Socials/HBoxContainer" unique_id=302403784]
+custom_minimum_size = Vector2(12, 2)
+layout_mode = 2
+texture = ExtResource("15_2cqfq")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Socials/HBoxContainer" unique_id=1837031698]
+layout_mode = 2
+text = "Not Null Studios"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Socials" unique_id=881340056]
+offset_left = 23.0
+offset_top = 232.0
+offset_right = 159.0
+offset_bottom = 240.0
+
+[node name="TextureRect" type="TextureRect" parent="Socials/HBoxContainer2" unique_id=1963178649]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("16_2cqfq")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Socials/HBoxContainer2" unique_id=1079174569]
+layout_mode = 2
+text = "@notnullstudios"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=291705944]
 position = Vector2(90, 188)
@@ -119,12 +165,11 @@ script = ExtResource("9_dg77c")
 metadata/_custom_type_script = "uid://ds7ekv0i5wjot"
 metadata/_edit_lock_ = true
 
-[node name="FOrc" parent="TeamASpawner" unique_id=103714473 instance=ExtResource("4_efxa6")]
+[node name="FCrusader" parent="TeamASpawner" unique_id=1585473059 instance=ExtResource("6_w48qg")]
 
-[node name="ASpiritOfTheBear" parent="TeamASpawner/FOrc" unique_id=1504790841 instance=ExtResource("9_efxa6")]
+[node name="WIronSword" parent="TeamASpawner/FCrusader" unique_id=1230071005 instance=ExtResource("7_vivmo")]
 
-[node name="WGreataxe" parent="TeamASpawner/FOrc" unique_id=880340592 node_paths=PackedStringArray("Hands") instance=ExtResource("13_ycdy4")]
-Hands = []
+[node name="ADivineProtection" parent="TeamASpawner/FCrusader" unique_id=613260488 instance=ExtResource("8_2cqfq")]
 
 [node name="TeamBSpawner" type="Marker2D" parent="." unique_id=484979622]
 position = Vector2(183, 105)
@@ -133,12 +178,11 @@ Team = 1
 metadata/_custom_type_script = "uid://ds7ekv0i5wjot"
 metadata/_edit_lock_ = true
 
-[node name="FNinja" parent="TeamBSpawner" unique_id=155666014 instance=ExtResource("7_dg77c")]
+[node name="FOrc" parent="TeamBSpawner" unique_id=103714473 instance=ExtResource("4_efxa6")]
 
-[node name="W2HandedSai" parent="TeamBSpawner/FNinja" unique_id=185032968 node_paths=PackedStringArray("Hands") instance=ExtResource("12_dg77c")]
-Hands = []
+[node name="ASpiritOfTheBear" parent="TeamBSpawner/FOrc" unique_id=1504790841 instance=ExtResource("9_efxa6")]
 
-[node name="ASpiritOfTheSnake" parent="TeamBSpawner/FNinja" unique_id=584125610 instance=ExtResource("9_ycdy4")]
+[node name="WGreataxe" parent="TeamBSpawner/FOrc" unique_id=880340592 instance=ExtResource("13_ycdy4")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1619336283]
 process_mode = 3
@@ -151,20 +195,28 @@ scale = Vector2(265, 392.00003)
 mesh = SubResource("QuadMesh_efxa6")
 metadata/_edit_lock_ = true
 
-[node name="FighterStatsUI" parent="UI" unique_id=1234396444 instance=ExtResource("3_4c57u")]
-offset_left = 2.0
-offset_top = 3.0
-offset_right = 85.0
-offset_bottom = 73.0
+[node name="FighterStatsUIContainer" type="Control" parent="UI" unique_id=2011100593]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 114.0
+offset_right = 180.0
+offset_bottom = 206.0
+size_flags_vertical = 4
 
-[node name="FighterStatsUI2" parent="UI" unique_id=219077898 instance=ExtResource("3_4c57u")]
-offset_left = 95.0
-offset_top = 3.0
-offset_right = 178.0
-offset_bottom = 73.0
+[node name="FighterStatsUI" parent="UI/FighterStatsUIContainer" unique_id=1234396444 instance=ExtResource("3_4c57u")]
+layout_mode = 0
+offset_left = 11.0
+offset_right = 85.0
+offset_bottom = 92.0
+
+[node name="FighterStatsUI2" parent="UI/FighterStatsUIContainer" unique_id=219077898 instance=ExtResource("3_4c57u")]
+layout_mode = 0
+offset_left = 96.0
+offset_right = 170.0
+offset_bottom = 92.0
 team = 1
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="UI" unique_id=1955210050]
+[node name="CRT" type="MeshInstance2D" parent="UI" unique_id=1955210050]
 material = SubResource("ShaderMaterial_kek77")
 position = Vector2(88.75001, 162.375)
 scale = Vector2(308.5, 347.25003)

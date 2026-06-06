@@ -5,6 +5,6 @@
 
 [node name="ASpiritOfTheBear" type="Node" unique_id=1504790841]
 script = ExtResource("1_aowy3")
-AbilityName = "Spirit of the Bear"
+AbilityName = "Mark of the Bear"
 AbilityIcon = ExtResource("2_dt0js")
 AbDuration = 10.0

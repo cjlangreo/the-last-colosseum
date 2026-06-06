@@ -78,6 +78,7 @@ material = SubResource("ShaderMaterial_srt68")
 collision_layer = 0
 collision_mask = 16
 script = ExtResource("1_mqqsm")
+FighterName = "Orc"
 Strength = 5
 Agility = 2
 Intelligence = 2

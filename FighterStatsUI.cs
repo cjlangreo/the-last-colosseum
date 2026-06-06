@@ -10,6 +10,7 @@ public partial class FighterStatsUI : VBoxContainer
   [Export] public bool Active = true;
   [Export] public bool RandomFighter = false;
   [Export] public int Spins = 10;
+  [Export] public float SpinDuration = 3;
   [Export] public Team team = Team.A;
   [Export] public TextureRect FighterIcon;
   [Export] public TextureRect WeaponIcon;
@@ -24,6 +25,10 @@ public partial class FighterStatsUI : VBoxContainer
   [Export] public StyleBoxTexture BlueFrameStylebox;
   [Export] public StyleBoxTexture RedFrameStylebox;
 
+
+  [Export] public Label FighterNameLabel;
+  [Export] public Label AbilityNameLabel;
+  [Export] public Label WeaponNameLabel;
 
   [Export] public HBoxContainer StrStarsContainer;
   [Export] public HBoxContainer AgiStarsContainer;
@@ -61,8 +66,14 @@ public partial class FighterStatsUI : VBoxContainer
   private bool AbilityShaderActive { set => AbilityShaderMat.SetShaderParameter("ability_active", value); }
   private double WeaponShaderValue { set => WeaponShaderMat.SetShaderParameter("percent", value); }
 
-  private Timer _spinTimer = new();
-  private enum SpinIcons
+  private Random _random = new();
+
+
+  private Tween _rotateTween;
+  private readonly float RotateRads = Mathf.DegToRad(1);
+  private const float RotateTweenDuration = 2f;
+
+  private enum Slot
   {
     Fighter,
     Weapon,
@@ -74,6 +85,8 @@ public partial class FighterStatsUI : VBoxContainer
 
   public override void _Ready()
   {
+    RotateTweenInit();
+
     _fighter = team == Team.A ? EventBus.FighterA : EventBus.FighterB;
     _fighter.StatUpdated += OnStatUpdated;
 
@@ -97,18 +110,29 @@ public partial class FighterStatsUI : VBoxContainer
     WeaponIcon.Texture = _weapon.MainSprite.Texture;
     AbilityIcon.Texture = _ability?.AbilityIcon;
 
+    FighterNameLabel.Text = _fighter.FighterName;
+    WeaponNameLabel.Text = _weapon.WeaponName;
+    AbilityNameLabel.Text = _ability.AbilityName;
+
     if (RandomFighter)
     {
-      SpinIcon(Spins, SpinIcons.Fighter);
-      SpinIcon(Spins, SpinIcons.Weapon);
-      SpinIcon(Spins, SpinIcons.Ability);
+      SpinSlot(Spins, Slot.Fighter);
+      SpinSlot(Spins, Slot.Weapon);
+      SpinSlot(Spins, Slot.Ability);
     }
-
   }
 
   public override void _ExitTree()
   {
     _fighter.StatUpdated -= OnStatUpdated;
+  }
+
+  private void RotateTweenInit()
+  {
+    OffsetTransformRotation = (float)GD.RandRange(-RotateRads, RotateRads);
+    _rotateTween = CreateTween().SetLoops().SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.InOut);
+    _rotateTween.TweenProperty(this, "offset_transform_rotation", RotateRads, RotateTweenDuration);
+    _rotateTween.TweenProperty(this, "offset_transform_rotation", -RotateRads, RotateTweenDuration);
   }
 
   private void OnStatUpdated(Stat stat, int value)
@@ -164,24 +188,24 @@ public partial class FighterStatsUI : VBoxContainer
   }
 
 
-  private async void SpinIcon(int spins, SpinIcons spinIcon)
+  private async void SpinSlot(int spins, Slot spinIcon)
   {
     List<CompressedTexture2D> shuffledList = [];
     int currentIconIndex = 0;
     TextureRect textureRect = null;
     switch (spinIcon)
     {
-      case SpinIcons.Fighter:
+      case Slot.Fighter:
         shuffledList = [.. FighterIconCollection];
         currentIconIndex = shuffledList.FindIndex(icon => icon == _fighter.r_Sprite.Texture);
         textureRect = FighterIcon;
         break;
-      case SpinIcons.Ability:
+      case Slot.Ability:
         shuffledList = [.. AbilityIconCollection];
         currentIconIndex = shuffledList.FindIndex(icon => icon == _ability.AbilityIcon);
         textureRect = AbilityIcon;
         break;
-      case SpinIcons.Weapon:
+      case Slot.Weapon:
         shuffledList = [.. WeaponIconCollection];
         currentIconIndex = shuffledList.FindIndex(icon => icon == _weapon.MainSprite.Texture);
         textureRect = WeaponIcon;
@@ -192,29 +216,52 @@ public partial class FighterStatsUI : VBoxContainer
     shuffledList = [.. shuffledList.Shuffle().Prepend(temp)];
 
     int totalSpins = spins * shuffledList.Count;
-    Tween spinTween = CreateTween().SetTrans(Tween.TransitionType.Circ).SetEase(Tween.EaseType.Out);
-    spinTween.TweenMethod(Callable.From((int index) => ChangeIcon(textureRect, shuffledList[index % shuffledList.Count])), 0, totalSpins, 5);
+    // Tween spinTween = CreateTween().SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.Out);
+    Tween spinTween = CreateTween();
+    spinTween.TweenMethod(Callable.From((int index) => ChangeSlot(textureRect, shuffledList[index % shuffledList.Count], spinIcon)), 0, totalSpins, SpinDuration);
     await ToSignal(spinTween, Tween.SignalName.Finished);
     OnSpinDone(spinIcon);
   }
 
-  private void ChangeIcon(TextureRect textureRect, CompressedTexture2D texture)
+  private void ChangeSlot(TextureRect textureRect, CompressedTexture2D texture, Slot spinIcon)
   {
     textureRect.Texture = texture;
+    switch (spinIcon)
+    {
+      case Slot.Fighter:
+        FighterNameLabel.Text = RandomString(GD.RandRange(3, 10));
+        SetStatStars(Stat.Strength, _random.Next(1, Fighter.MaxAbilityPoints));
+        SetStatStars(Stat.Agility, _random.Next(1, Fighter.MaxAbilityPoints));
+        SetStatStars(Stat.Intelligence, _random.Next(1, Fighter.MaxAbilityPoints));
+        break;
+      case Slot.Weapon:
+        WeaponNameLabel.Text = RandomString(GD.RandRange(3, 10));
+        break;
+      case Slot.Ability:
+        AbilityNameLabel.Text = RandomString(GD.RandRange(3, 10));
+        break;
+    }
+
   }
 
-  private void OnSpinDone(SpinIcons spinIcon)
+  private void OnSpinDone(Slot spinIcon)
   {
     switch (spinIcon)
     {
-      case SpinIcons.Fighter:
+      case Slot.Fighter:
         _fighterSpinDone = true;
+        FighterNameLabel.Text = _fighter.FighterName;
+        SetStatStars(Stat.Strength, _fighter.Strength);
+        SetStatStars(Stat.Agility, _fighter.Agility);
+        SetStatStars(Stat.Intelligence, _fighter.Intelligence);
         break;
-      case SpinIcons.Ability:
+      case Slot.Ability:
         _abilitySpinDone = true;
+        AbilityNameLabel.Text = _ability.AbilityName;
         break;
-      case SpinIcons.Weapon:
+      case Slot.Weapon:
         _weaponSpinDone = true;
+        WeaponNameLabel.Text = _weapon.WeaponName;
         break;
     }
     if (_fighterSpinDone && _abilitySpinDone && _weaponSpinDone)
@@ -253,4 +300,20 @@ public partial class FighterStatsUI : VBoxContainer
     AbilityShaderActive = _ability.Active;
   }
 
+  private string RandomString(int length)
+  {
+    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstu vwxyz";
+    return new string(Enumerable.Repeat(chars, length)
+        .Select(s => s[_random.Next(s.Length)]).ToArray());
+  }
+
+  public void SetTextVisibility(bool value)
+  {
+    Tween tween = CreateTween().SetParallel();
+    Color modulate = value ? Colors.White : Colors.Transparent;
+
+    tween.TweenProperty(FighterNameLabel, "self_modulate", modulate, 1);
+    tween.TweenProperty(AbilityNameLabel, "self_modulate", modulate, 1);
+    tween.TweenProperty(WeaponNameLabel, "self_modulate", modulate, 1);
+  }
 }

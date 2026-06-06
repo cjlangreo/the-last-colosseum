@@ -130,6 +130,7 @@ _data = {
 [node name="WGreataxe" type="Node2D" unique_id=880340592 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "MainSprite", "Hands")]
 show_behind_parent = true
 script = ExtResource("1_ad04h")
+WeaponName = "Greataxe"
 AtkAnimPlayer = NodePath("AnimationPlayer")
 AtkTrigger = NodePath("AttackTrigger")
 HitBox = NodePath("HitBox")

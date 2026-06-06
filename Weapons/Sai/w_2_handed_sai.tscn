@@ -139,6 +139,7 @@ _data = {
 [node name="W2HandedSai" type="Node2D" unique_id=185032968 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "MainSprite", "Hands")]
 show_behind_parent = true
 script = ExtResource("1_48eqy")
+WeaponName = "Dual Wield Sai"
 AtkAnimPlayer = NodePath("AnimationPlayer")
 AtkTrigger = NodePath("AttackTrigger")
 HitBox = NodePath("HitBox")

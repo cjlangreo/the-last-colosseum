@@ -7,6 +7,7 @@ using RandomBattles.Fighters;
 public partial class Weapon : Node2D
 {
   [Export] public bool Enabled = true;
+  [Export] public string WeaponName { set;get;} = "[Weapon Name Here]";
   [Export] public AnimationPlayer AtkAnimPlayer;
   [Export] public Area2D AtkTrigger;
   [Export] public Area2D HitBox;
