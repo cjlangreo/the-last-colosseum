@@ -1,12 +1,15 @@
 using Godot;
 using RandomBattles.Fighters;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 public partial class FighterStatsUI : VBoxContainer
 {
   [Export] public bool Active = true;
+  [Export] public bool RandomFighter = false;
+  [Export] public int Spins = 10;
   [Export] public Team team = Team.A;
   [Export] public TextureRect FighterIcon;
   [Export] public TextureRect WeaponIcon;
@@ -28,6 +31,10 @@ public partial class FighterStatsUI : VBoxContainer
   [Export] public Label StrOverflowLabel;
   [Export] public Label AgiOverflowLabel;
   [Export] public Label IntOverflowLabel;
+
+  public Action SpinDone;
+
+
   private const string StrStarUID = "uid://cfbx3w2613wb4";
   private const string AgiStarUID = "uid://bbobvq7wlbojg";
   private const string IntStarUID = "uid://byeqgasc7idte";
@@ -54,9 +61,16 @@ public partial class FighterStatsUI : VBoxContainer
   private bool AbilityShaderActive { set => AbilityShaderMat.SetShaderParameter("ability_active", value); }
   private double WeaponShaderValue { set => WeaponShaderMat.SetShaderParameter("percent", value); }
 
-  private Random _random = new();
   private Timer _spinTimer = new();
-  private const int Spins = 10;
+  private enum SpinIcons
+  {
+    Fighter,
+    Weapon,
+    Ability
+  }
+  private bool _fighterSpinDone = false;
+  private bool _weaponSpinDone = false;
+  private bool _abilitySpinDone = false;
 
   public override void _Ready()
   {
@@ -82,6 +96,14 @@ public partial class FighterStatsUI : VBoxContainer
     FighterIcon.Texture = _fighter.r_Sprite.Texture;
     WeaponIcon.Texture = _weapon.MainSprite.Texture;
     AbilityIcon.Texture = _ability?.AbilityIcon;
+
+    if (RandomFighter)
+    {
+      SpinIcon(Spins, SpinIcons.Fighter);
+      SpinIcon(Spins, SpinIcons.Weapon);
+      SpinIcon(Spins, SpinIcons.Ability);
+    }
+
   }
 
   public override void _ExitTree()
@@ -142,23 +164,68 @@ public partial class FighterStatsUI : VBoxContainer
   }
 
 
-  private async void SpinFighterIcon(int spins)
+  private async void SpinIcon(int spins, SpinIcons spinIcon)
   {
-    FighterIconCollection.Shuffle();
-    AddChild(_spinTimer);
-    int currentSpins = 0;
-
-    while(currentSpins <= spins)
+    List<CompressedTexture2D> shuffledList = [];
+    int currentIconIndex = 0;
+    TextureRect textureRect = null;
+    switch (spinIcon)
     {
-      foreach(CompressedTexture2D texture in FighterIconCollection)
-      {
-        FighterIcon.Texture = texture;
-        await ToSignal(GetTree().CreateTimer(0.1), SceneTreeTimer.SignalName.Timeout);
-      }
-      currentSpins++;
+      case SpinIcons.Fighter:
+        shuffledList = [.. FighterIconCollection];
+        currentIconIndex = shuffledList.FindIndex(icon => icon == _fighter.r_Sprite.Texture);
+        textureRect = FighterIcon;
+        break;
+      case SpinIcons.Ability:
+        shuffledList = [.. AbilityIconCollection];
+        currentIconIndex = shuffledList.FindIndex(icon => icon == _ability.AbilityIcon);
+        textureRect = AbilityIcon;
+        break;
+      case SpinIcons.Weapon:
+        shuffledList = [.. WeaponIconCollection];
+        currentIconIndex = shuffledList.FindIndex(icon => icon == _weapon.MainSprite.Texture);
+        textureRect = WeaponIcon;
+        break;
     }
-    FighterIcon.Texture = _fighter.r_Sprite.Texture;
-    
+    CompressedTexture2D temp = shuffledList.ElementAt(currentIconIndex);
+    shuffledList.RemoveAt(currentIconIndex);
+    shuffledList = [.. shuffledList.Shuffle().Prepend(temp)];
+
+    int totalSpins = spins * shuffledList.Count;
+    Tween spinTween = CreateTween().SetTrans(Tween.TransitionType.Circ).SetEase(Tween.EaseType.Out);
+    spinTween.TweenMethod(Callable.From((int index) => ChangeIcon(textureRect, shuffledList[index % shuffledList.Count])), 0, totalSpins, 5);
+    await ToSignal(spinTween, Tween.SignalName.Finished);
+    OnSpinDone(spinIcon);
+  }
+
+  private void ChangeIcon(TextureRect textureRect, CompressedTexture2D texture)
+  {
+    textureRect.Texture = texture;
+  }
+
+  private void OnSpinDone(SpinIcons spinIcon)
+  {
+    switch (spinIcon)
+    {
+      case SpinIcons.Fighter:
+        _fighterSpinDone = true;
+        break;
+      case SpinIcons.Ability:
+        _abilitySpinDone = true;
+        break;
+      case SpinIcons.Weapon:
+        _weaponSpinDone = true;
+        break;
+    }
+    if (_fighterSpinDone && _abilitySpinDone && _weaponSpinDone)
+    {
+      SpinDone?.Invoke();
+    }
+  }
+
+  private double EaseOutExpo(double number)
+  {
+    return 1 - Math.Pow(1 - number, 5);
   }
 
   public override void _Process(double delta)
@@ -170,7 +237,7 @@ public partial class FighterStatsUI : VBoxContainer
       AbilityShaderActive = false;
       return;
     }
-    
+
     if (_fighter.Dead) return;
     WeaponShaderValue = _weapon.AtkCooldownPercent;
 

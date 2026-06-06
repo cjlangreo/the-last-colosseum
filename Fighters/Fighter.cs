@@ -81,6 +81,8 @@ public partial class Fighter : CharacterBody2D, ICanDie
     get => Intelligence * 0.02f;
   }
 
+  public Action Died;
+
   [ExportGroup("Refs", "r_")]
   public StatusBar StatusBar;
   [Export] public Sprite2D r_Sprite;
@@ -105,6 +107,10 @@ public partial class Fighter : CharacterBody2D, ICanDie
 
   public override void _Ready()
   {
+    Enemy = GetEnemy();
+    Enemy.Died += OnWin;
+
+
     StatusBar = GetNode<StatusBar>("StatusBar");
     StatusBar.SetAbilityStatus(HasAbility);
 
@@ -123,6 +129,11 @@ public partial class Fighter : CharacterBody2D, ICanDie
     };
     AddChild(_deathSprite);
 
+  }
+
+    public override void _ExitTree()
+  {
+    Enemy.Died -= OnWin;
   }
 
   private void InitHealth()
@@ -162,7 +173,11 @@ public partial class Fighter : CharacterBody2D, ICanDie
     return strength * 50 + 50;
   }
 
-
+  private void OnWin()
+  {
+    GD.Print(Name, " Win!");
+    ZIndex = 1;
+  }
 
   public void InitTeam(Team _team)
   {
@@ -196,6 +211,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
     _deathSprite.Show();
     Tween deathSpriteTween = CreateTween().SetTrans(Tween.TransitionType.Elastic).SetEase(Tween.EaseType.Out);
     deathSpriteTween.TweenProperty(_deathSprite, "scale", new Vector2(1, 1), 1);
+    Died.Invoke();
   }
 
   public virtual HitStatus HitRequest(double damage, bool isCrit, float trueStrike)
@@ -300,8 +316,6 @@ public partial class Fighter : CharacterBody2D, ICanDie
   }
   public override void _Process(double delta)
   {
-    Enemy ??= GetEnemy();
-
     if (HasAbility)
     {
       StatusBar.AbilityBarValue =
@@ -333,7 +347,6 @@ public partial class Fighter : CharacterBody2D, ICanDie
     {
       Direction = Direction.Bounce(collision.GetNormal());
     };
-    GD.Print(Velocity);
   }
 
   public Vector2 GetRandomDirection()

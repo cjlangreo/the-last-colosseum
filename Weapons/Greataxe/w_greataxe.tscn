@@ -127,7 +127,7 @@ _data = {
 &"attack": SubResource("Animation_mqqsm")
 }
 
-[node name="WGreataxe" type="Node2D" unique_id=880340592 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "MainSprite")]
+[node name="WGreataxe" type="Node2D" unique_id=880340592 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "MainSprite", "Hands")]
 show_behind_parent = true
 script = ExtResource("1_ad04h")
 AtkAnimPlayer = NodePath("AnimationPlayer")
@@ -138,6 +138,7 @@ HitSound = ExtResource("2_pe4bi")
 SwingSound = ExtResource("4_6cmlq")
 BlockSound = ExtResource("3_v6t14")
 MainSprite = NodePath("HandPivot/Greataxe")
+Hands = [NodePath("HandPivot/Greataxe/Hand"), NodePath("HandPivot/Greataxe/Hand2")]
 
 [node name="HandPivot" type="Node2D" parent="." unique_id=1675078175]
 
@@ -147,12 +148,12 @@ rotation = -3.1415925
 texture = ExtResource("4_mqidt")
 offset = Vector2(0, -30)
 
-[node name="Hand" type="Sprite2D" parent="HandPivot/Greataxe" unique_id=503589338 groups=["Hands"]]
+[node name="Hand" type="Sprite2D" parent="HandPivot/Greataxe" unique_id=503589338]
 position = Vector2(-8.495567e-06, -45)
 rotation = 3.1415925
 texture = ExtResource("5_66twd")
 
-[node name="Hand2" type="Sprite2D" parent="HandPivot/Greataxe" unique_id=1228174992 groups=["Hands"]]
+[node name="Hand2" type="Sprite2D" parent="HandPivot/Greataxe" unique_id=1228174992]
 position = Vector2(-2.621896e-07, -1)
 rotation = 3.1415925
 texture = ExtResource("5_66twd")

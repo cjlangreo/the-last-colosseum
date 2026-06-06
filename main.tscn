@@ -29,9 +29,9 @@ shader = ExtResource("11_dg77c")
 shader_parameter/percentage = 0.999999977648
 shader_parameter/burn_texture = SubResource("NoiseTexture2D_w48qg")
 shader_parameter/layer_1 = Color(0.2, 0.2, 0.2, 1)
-shader_parameter/size_1 = 0.06
+shader_parameter/size_1 = 0.05
 shader_parameter/layer_2 = Color(0.61, 0.636, 1, 1)
-shader_parameter/size_2 = 0.025
+shader_parameter/size_2 = 0.05
 shader_parameter/layer_3 = Color(0.100000024, 0.100000024, 1, 1)
 shader_parameter/size_3 = 0.05
 
@@ -46,17 +46,17 @@ shader_parameter/gamma = 1.05
 shader_parameter/curvature = 0.062000002945
 shader_parameter/corner_soften = 0.06
 shader_parameter/vignette = 0.38
-shader_parameter/scanline_strength = 0.2710000128725
-shader_parameter/scanline_density = 1.5430000495425
-shader_parameter/interlace_strength = 0.282000013395
+shader_parameter/scanline_strength = 0.1450000068875
+shader_parameter/scanline_density = 2.250000083125
+shader_parameter/interlace_strength = 0.2
 shader_parameter/mask_strength = 0.22
 shader_parameter/mask_scale = 1.0
 shader_parameter/chroma_offset_px = 1.6
 shader_parameter/luma_smear_px = 2.2
 shader_parameter/jitter_px = 0.3410000161975
 shader_parameter/wobble_px = 1.3750000653125
-shader_parameter/tape_noise = 0.22
-shader_parameter/tape_lines = 0.35
+shader_parameter/tape_noise = 1.0
+shader_parameter/tape_lines = 0.250000011875
 shader_parameter/roll_speed = 0.1
 shader_parameter/roll_strength = 0.15
 shader_parameter/glow_strength = 0.25
@@ -64,11 +64,13 @@ shader_parameter/glow_threshold = 0.65
 
 [sub_resource type="QuadMesh" id="QuadMesh_4c57u"]
 
-[node name="Main" type="Node2D" unique_id=1413481918 node_paths=PackedStringArray("DissolveMesh")]
+[node name="Main" type="Node2D" unique_id=1413481918 node_paths=PackedStringArray("DissolveMesh", "fighterStatsUIA", "fighterStatsUIB")]
 script = ExtResource("1_ycdy4")
 DissolveMesh = NodePath("UI/DissolveMesh")
-metadata/_edit_horizontal_guides_ = [64.0]
-metadata/_edit_vertical_guides_ = [90.0]
+Random = true
+fighterStatsUIA = NodePath("UI/FighterStatsUI")
+fighterStatsUIB = NodePath("UI/FighterStatsUI2")
+metadata/_edit_horizontal_guides_ = [76.0]
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1259107346]
 offset_left = -184.0
@@ -119,9 +121,10 @@ metadata/_edit_lock_ = true
 
 [node name="FOrc" parent="TeamASpawner" unique_id=103714473 instance=ExtResource("4_efxa6")]
 
-[node name="WGreataxe" parent="TeamASpawner/FOrc" unique_id=880340592 instance=ExtResource("13_ycdy4")]
-
 [node name="ASpiritOfTheBear" parent="TeamASpawner/FOrc" unique_id=1504790841 instance=ExtResource("9_efxa6")]
+
+[node name="WGreataxe" parent="TeamASpawner/FOrc" unique_id=880340592 node_paths=PackedStringArray("Hands") instance=ExtResource("13_ycdy4")]
+Hands = []
 
 [node name="TeamBSpawner" type="Marker2D" parent="." unique_id=484979622]
 position = Vector2(183, 105)
@@ -132,11 +135,13 @@ metadata/_edit_lock_ = true
 
 [node name="FNinja" parent="TeamBSpawner" unique_id=155666014 instance=ExtResource("7_dg77c")]
 
-[node name="W2HandedSai" parent="TeamBSpawner/FNinja" unique_id=185032968 instance=ExtResource("12_dg77c")]
+[node name="W2HandedSai" parent="TeamBSpawner/FNinja" unique_id=185032968 node_paths=PackedStringArray("Hands") instance=ExtResource("12_dg77c")]
+Hands = []
 
 [node name="ASpiritOfTheSnake" parent="TeamBSpawner/FNinja" unique_id=584125610 instance=ExtResource("9_ycdy4")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1619336283]
+process_mode = 3
 
 [node name="DissolveMesh" type="MeshInstance2D" parent="UI" unique_id=257214726]
 modulate = Color(0, 0, 0.38, 1)
@@ -144,12 +149,19 @@ material = SubResource("ShaderMaterial_vivmo")
 position = Vector2(94.49999, 178)
 scale = Vector2(265, 392.00003)
 mesh = SubResource("QuadMesh_efxa6")
+metadata/_edit_lock_ = true
 
 [node name="FighterStatsUI" parent="UI" unique_id=1234396444 instance=ExtResource("3_4c57u")]
-offset_left = 4.0
-offset_right = 87.0
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 85.0
+offset_bottom = 73.0
 
-[node name="FighterStatsUI2" parent="UI" unique_id=1705269055 instance=ExtResource("3_4c57u")]
+[node name="FighterStatsUI2" parent="UI" unique_id=219077898 instance=ExtResource("3_4c57u")]
+offset_left = 95.0
+offset_top = 3.0
+offset_right = 178.0
+offset_bottom = 73.0
 team = 1
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="UI" unique_id=1955210050]

@@ -16,7 +16,7 @@ public partial class Weapon : Node2D
   [Export] public AudioStream BlockSound;
   [Export] public float HitBoxLifeSpan = 0.2f;
   [Export] public Sprite2D MainSprite;
-  private Sprite2D[] Hands => GetTree().GetNodesInGroup("Hands").Cast<Sprite2D>().ToArray();
+  [Export] private Sprite2D[] Hands;
   private AudioManager _audioManager;
 
   private double Damage
