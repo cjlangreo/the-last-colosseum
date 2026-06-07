@@ -43,7 +43,7 @@ public partial class Ability : Node
     set
     {
       field = value;
-      BlinkShader.SetShaderParameter("on", value);
+      if(AbDuration > 0) BlinkShader.SetShaderParameter("on", value);
     }
   } = false;
 
@@ -85,7 +85,9 @@ public partial class Ability : Node
       toPrint += $" with duration of {AbDuration}";
       _abilityTimer.Start(AbDuration);
       Active = true;
-
+    } else
+    {
+      _abilityCooldownTimer.Start(AbCooldown);
     }
     PrintDebug(toPrint, $"{Fighter.Name}:{Fighter.team}");
   }
@@ -102,7 +104,7 @@ public partial class Ability : Node
 
   public virtual void FighterDie()
   {
-    _abilityTimer.Stop();
+    _abilityTimer?.Stop();
     _abilityCooldownTimer.Stop();
     Active = false;
   }

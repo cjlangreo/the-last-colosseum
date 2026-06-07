@@ -90,7 +90,7 @@ public partial class FighterStatsUI : VBoxContainer
     _fighter = team == Team.A ? EventBus.FighterA : EventBus.FighterB;
     _fighter.StatUpdated += OnStatUpdated;
 
-    _weapon = _fighter.r_Weapon;
+    _weapon = _fighter.Weapon;
     _ability = _fighter.Ability;
 
     _strStars = StrStarsContainer.GetChildren().OfType<TextureRect>().ToArray();
@@ -112,7 +112,7 @@ public partial class FighterStatsUI : VBoxContainer
 
     FighterNameLabel.Text = _fighter.FighterName;
     WeaponNameLabel.Text = _weapon.WeaponName;
-    AbilityNameLabel.Text = _ability.AbilityName;
+    AbilityNameLabel.Text = _ability?.AbilityName;
 
     if (RandomFighter)
     {
@@ -201,6 +201,7 @@ public partial class FighterStatsUI : VBoxContainer
         textureRect = FighterIcon;
         break;
       case Slot.Ability:
+        if(!_fighter.HasAbility) return;
         shuffledList = [.. AbilityIconCollection];
         currentIconIndex = shuffledList.FindIndex(icon => icon == _ability.AbilityIcon);
         textureRect = AbilityIcon;
@@ -264,7 +265,7 @@ public partial class FighterStatsUI : VBoxContainer
         WeaponNameLabel.Text = _weapon.WeaponName;
         break;
     }
-    if (_fighterSpinDone && _abilitySpinDone && _weaponSpinDone)
+    if (_fighterSpinDone && (_fighter.HasAbility ? _abilitySpinDone : true) && _weaponSpinDone)
     {
       SpinDone?.Invoke();
     }

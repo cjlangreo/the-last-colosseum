@@ -23,7 +23,8 @@ public enum HitStatus
 {
   Hit,
   Block,
-  Evade
+  Evade,
+  Miss
 }
 
 public enum Stat
@@ -82,13 +83,14 @@ public partial class Fighter : CharacterBody2D, ICanDie
     get => Intelligence * 0.02f;
   }
 
+  public bool CanMove = true;
   public Action Died;
 
   public StatusBar StatusBar;
   [ExportGroup("Refs", "r_")]
 
   [Export] public Sprite2D r_Sprite;
-  public Weapon r_Weapon => GetChildren().OfType<Weapon>().FirstOrDefault();
+  public Weapon Weapon => GetChildren().OfType<Weapon>().FirstOrDefault();
   [Export] public GpuParticles2D r_BloodSplatter;
   [Export] public CompressedTexture2D HandSprite;
   public Ability Ability => GetChildren().OfType<Ability>().FirstOrDefault();
@@ -203,7 +205,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
   public virtual void Die()
   {
     Dead = true;
-    r_Weapon.Disable();
+    Weapon.Disable();
     Ability?.FighterDie();
     SetCollisionLayerValue((int)(team == Team.A ? ColLayer.A : ColLayer.B), false);
     SetCollisionMaskValue((int)(team == Team.A ? ColLayer.B : ColLayer.A), false);
@@ -335,15 +337,16 @@ public partial class Fighter : CharacterBody2D, ICanDie
     }
     else
     {
-      Velocity = Direction.Normalized() * (float)(MovementSpeed * delta);
       if (IsInstanceValid(Enemy))
       {
         float targetAngle = GetAngleTo(Enemy.GlobalPosition);
-        r_Weapon?.Rotation = Mathf.LerpAngle(r_Weapon.Rotation, targetAngle, (Agility + 2) * (float)delta);
+        Weapon?.Rotation = Mathf.LerpAngle(Weapon.Rotation, targetAngle, (Agility + 2) * (float)delta);
       }
+
+      Velocity = Direction.Normalized() * (float)(MovementSpeed * delta);
     }
 
-    KinematicCollision2D collision = MoveAndCollide(Velocity);
+    KinematicCollision2D collision = CanMove ?  MoveAndCollide(Velocity) : null;
     if (collision != null)
     {
       Direction = Direction.Bounce(collision.GetNormal());

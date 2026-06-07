@@ -23,7 +23,10 @@ public partial class Main : Node2D
   private bool _teamBSpinDone = false;
   private const float TransitionDuration = 2.0f;
   private float _startDelay = TransitionDuration - .5f;
-
+  private const string ScreenshotPath = "res://thumbnail.png";
+  
+  
+  [Signal] private delegate void FinishedEventHandler();
 
 
   public override async void _EnterTree()
@@ -43,7 +46,7 @@ public partial class Main : Node2D
     }
     else
     {
-    await ToSignal(GetTree().CreateTimer(_startDelay), SceneTreeTimer.SignalName.Timeout);
+      await ToSignal(GetTree().CreateTimer(_startDelay), SceneTreeTimer.SignalName.Timeout);
       StartFight();
     }
   }
@@ -60,15 +63,20 @@ public partial class Main : Node2D
   {
     await ToSignal(GetTree().CreateTimer(2), SceneTreeTimer.SignalName.Timeout);
     FighterStatsUIContainer.ZIndex = -1;
-    StartDissolveTransition(0,1);
+    StartDissolveTransition(0, 1);
+    await ToSignal(this, SignalName.Finished);
+    GetTree().Quit();
   }
 
   private async void StartFight()
   {
+    TakeScreenshot(ScreenshotPath);
     StartDissolveTransition(1, 0);
     await ToSignal(GetTree().CreateTimer(_startDelay), SceneTreeTimer.SignalName.Timeout);
     SetFighterStatsUITextVisiblity(false);
     MoveFighterUITop();
+    FighterStatsUIA.Active = true;
+    FighterStatsUIB.Active = true;
     GetTree().Paused = false;
   }
 
@@ -99,7 +107,7 @@ public partial class Main : Node2D
 
   }
 
-  private void StartDissolveTransition(float from, float to)
+  private async void StartDissolveTransition(float from, float to)
   {
     if (IsInstanceValid(_dissolveTween))
     {
@@ -107,6 +115,8 @@ public partial class Main : Node2D
     }
     _dissolveTween = DissolveMesh.CreateTween();
     _dissolveTween.TweenMethod(Callable.From<float>(SetDissolvePercentage), from, to, TransitionDuration);
+    await ToSignal(_dissolveTween, Tween.SignalName.Finished);
+    EmitSignal(SignalName.Finished);
   }
 
   private void SetDissolvePercentage(float percentage)
@@ -117,5 +127,11 @@ public partial class Main : Node2D
   // Called every frame. 'delta' is the elapsed time since the previous frame.
   public override void _Process(double delta)
   {
+  }
+
+  private void TakeScreenshot(string savePath)
+  {
+    Image image = GetViewport().GetTexture().GetImage();
+    image.SavePng(savePath);
   }
 }

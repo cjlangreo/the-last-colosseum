@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponStats" format=3 uid="uid://d3mufvlyuwrka"]
+
+[ext_resource type="Script" uid="uid://dk8j0eovb1oej" path="res://Fighters/WeaponStats.cs" id="1_0u74q"]
+
+[resource]
+script = ExtResource("1_0u74q")
+Weight = 0.4
+BaseDmg = 12.0
+CritMult = 1.2
+metadata/_custom_type_script = "uid://dk8j0eovb1oej"

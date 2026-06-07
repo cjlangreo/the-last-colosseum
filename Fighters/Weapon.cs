@@ -6,8 +6,8 @@ using RandomBattles.Fighters;
 
 public partial class Weapon : Node2D
 {
-  [Export] public bool Enabled = true;
-  [Export] public string WeaponName { set;get;} = "[Weapon Name Here]";
+  public bool CanAttack {private set; get;} = true;
+  [Export] public string WeaponName { set; get; } = "[Weapon Name Here]";
   [Export] public AnimationPlayer AtkAnimPlayer;
   [Export] public Area2D AtkTrigger;
   [Export] public Area2D HitBox;
@@ -44,7 +44,7 @@ public partial class Weapon : Node2D
     }
   }
 
-
+  public Action<HitStatus> Attacked;
   private bool _hasHitFighter = false;
 
   private AudioManager.Team _teamAudioPlayer;
@@ -85,12 +85,22 @@ public partial class Weapon : Node2D
   }
 
 
+  public void Enable()
+  {
+    AtkTrigger.Monitoring = true;
+    HitBox.Monitoring = true;
+    AtkAnimPlayer.Active = true;
+    Modulate = Colors.White;
+    CanAttack = true;
+  }
+
   public void Disable()
   {
     AtkTrigger.Monitoring = false;
     HitBox.Monitoring = false;
     AtkAnimPlayer.Active = false;
     Modulate = _parentFighter.DeadColor;
+    CanAttack = false;
   }
 
   private void InitSounds()
@@ -142,13 +152,15 @@ public partial class Weapon : Node2D
   public void OnAttackHit(Node2D _)
   {
     if (_hasHitFighter) return;
+    HitStatus hitStatus = HitStatus.Miss;
     foreach (Fighter fighter in HitBox.GetOverlappingBodies().OfType<Fighter>())
     {
-      HitStatus hitStatus = fighter.HitRequest(_isCrit ? Damage * Stats.CritMult : Damage, _isCrit, _parentFighter.TrueStrike);
+      hitStatus = fighter.HitRequest(_isCrit ? Damage * Stats.CritMult : Damage, _isCrit, _parentFighter.TrueStrike);
 
       PlaySound(hitStatus);
       _hasHitFighter = true;
     }
+    Attacked?.Invoke(hitStatus);
   }
 
   private void PlaySound(HitStatus hitStatus)
@@ -166,7 +178,7 @@ public partial class Weapon : Node2D
 
   public override void _PhysicsProcess(double delta)
   {
-    if (!Enabled) return;
+    if (!CanAttack) return;
 
     if (_canAttack && AtkTrigger.Monitoring && AtkTrigger.HasOverlappingBodies())
     {
