@@ -171,7 +171,6 @@ shape = SubResource("RectangleShape2D_uuyko")
 debug_color = Color(0.7, 0.45499998, 0, 0.41960785)
 
 [node name="HitBox" type="Area2D" parent="." unique_id=1425121301]
-visible = false
 position = Vector2(63, 0)
 collision_layer = 0
 collision_mask = 0

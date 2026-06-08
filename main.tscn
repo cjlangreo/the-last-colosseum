@@ -5,10 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://hbvlp3j2l0rm" path="res://fighter_stats_ui.tscn" id="3_4c57u"]
 [ext_resource type="Texture2D" uid="uid://84mch2jogimf" path="res://walls.png" id="7_2cqfq"]
 [ext_resource type="Script" uid="uid://ds7ekv0i5wjot" path="res://TeamSpawner.cs" id="9_dg77c"]
+[ext_resource type="PackedScene" uid="uid://bfrclebkpbjo2" path="res://Weapons/Greataxe/w_greataxe.tscn" id="10_2cqfq"]
+[ext_resource type="PackedScene" uid="uid://dwrtxb2jov3dq" path="res://Abilities/SpiritOfTheOwl/a_spirit_of_the_owl.tscn" id="10_vivmo"]
 [ext_resource type="PackedScene" uid="uid://d3e0poyqwacgf" path="res://Fighters/Ninja/ninja.tscn" id="11_2cqfq"]
 [ext_resource type="Shader" uid="uid://disydkqfjrafh" path="res://burn_dissolve.gdshader" id="11_dg77c"]
 [ext_resource type="Shader" uid="uid://cuqyhrxrpgnr2" path="res://crt.gdshader" id="11_efxa6"]
-[ext_resource type="PackedScene" uid="uid://dladnw68amri6" path="res://Weapons/Sai/w_2_handed_sai.tscn" id="12_yaehf"]
+[ext_resource type="PackedScene" uid="uid://cao3vxouldjfw" path="res://Weapons/Katana/w_katana.tscn" id="12_vivmo"]
 [ext_resource type="PackedScene" uid="uid://b7vdewbdwy1up" path="res://Abilities/SpiritOfTheSnake/a_spirit_of_the_snake.tscn" id="13_074og"]
 [ext_resource type="Texture2D" uid="uid://d4abjl3nfe7o2" path="res://nns_logo.png" id="14_w48qg"]
 [ext_resource type="Texture2D" uid="uid://bdei1kymvn1ta" path="res://facebook-logo.png" id="15_2cqfq"]
@@ -64,14 +66,15 @@ shader_parameter/glow_threshold = 0.65
 
 [sub_resource type="QuadMesh" id="QuadMesh_4c57u"]
 
-[node name="Main" type="Node2D" unique_id=1413481918 node_paths=PackedStringArray("DissolveMesh", "FighterStatsUIA", "FighterStatsUIB", "FighterStatsUIContainer")]
+[node name="Main" type="Node2D" unique_id=1413481918 node_paths=PackedStringArray("DissolveMesh", "FighterStatsUIA", "FighterStatsUIB", "FighterStatsUIContainer", "UI")]
 script = ExtResource("1_ycdy4")
 DissolveMesh = NodePath("UI/DissolveMesh")
 FighterStatsUIA = NodePath("UI/FighterStatsUIContainer/FighterStatsUI")
 FighterStatsUIB = NodePath("UI/FighterStatsUIContainer/FighterStatsUI2")
 FighterStatsUIContainer = NodePath("UI/FighterStatsUIContainer")
 FighterStatsUIContainerFinalPos = Vector2(0, -6)
-metadata/_edit_horizontal_guides_ = [76.0, 160.0]
+UI = NodePath("UI")
+metadata/_edit_horizontal_guides_ = [76.0, 160.0, 198.0]
 metadata/movie_file = "movie.avi"
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1259107346]
@@ -84,6 +87,7 @@ metadata/_edit_lock_ = true
 
 [node name="Socials" type="Node2D" parent="." unique_id=1226197249]
 modulate = Color(1, 1, 1, 0.34509805)
+position = Vector2(0, -18)
 
 [node name="NnsLogo" type="Sprite2D" parent="Socials" unique_id=1238353574]
 position = Vector2(90, 198)
@@ -165,10 +169,9 @@ metadata/_edit_lock_ = true
 
 [node name="FNinja" parent="TeamASpawner" unique_id=155666014 instance=ExtResource("11_2cqfq")]
 
-[node name="W2HandedSai" parent="TeamASpawner/FNinja" unique_id=185032968 node_paths=PackedStringArray("Hands") instance=ExtResource("12_yaehf")]
-Hands = [NodePath("../../../TeamBSpawner/FNinja/W2HandedSai/HandPivot/Hand"), NodePath("../../../TeamBSpawner/FNinja/W2HandedSai/HandPivot/Hand2")]
+[node name="ASpiritOfTheOwl" parent="TeamASpawner/FNinja" unique_id=658220978 instance=ExtResource("10_vivmo")]
 
-[node name="ASpiritOfTheSnake" parent="TeamASpawner/FNinja" unique_id=584125610 instance=ExtResource("13_074og")]
+[node name="WGreataxe" parent="TeamASpawner/FNinja" unique_id=880340592 instance=ExtResource("10_2cqfq")]
 
 [node name="TeamBSpawner" type="Marker2D" parent="." unique_id=484979622]
 position = Vector2(183, 105)
@@ -179,12 +182,13 @@ metadata/_edit_lock_ = true
 
 [node name="FNinja" parent="TeamBSpawner" unique_id=1332521111 instance=ExtResource("11_2cqfq")]
 
-[node name="W2HandedSai" parent="TeamBSpawner/FNinja" unique_id=347346076 instance=ExtResource("12_yaehf")]
-
 [node name="ASpiritOfTheSnake" parent="TeamBSpawner/FNinja" unique_id=1655741373 instance=ExtResource("13_074og")]
+
+[node name="WKatana" parent="TeamBSpawner/FNinja" unique_id=1823693304 instance=ExtResource("12_vivmo")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1619336283]
 process_mode = 3
+visible = false
 
 [node name="DissolveMesh" type="MeshInstance2D" parent="UI" unique_id=257214726]
 modulate = Color(0, 0, 0.38, 1)

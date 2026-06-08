@@ -7,3 +7,4 @@
 script = ExtResource("1_baqt2")
 AbilityName = "Mark of the Owl"
 AbilityIcon = ExtResource("2_e2cy8")
+AbDuration = 10.0

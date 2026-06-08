@@ -51,6 +51,8 @@ public partial class Weapon : Node2D
 
   public override void _Ready()
   {
+    ToggleHitBox(false);
+
     _parentFighter = GetParent<Fighter>();
     InitSounds();
 
