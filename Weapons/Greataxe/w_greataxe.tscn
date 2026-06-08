@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://bfrclebkpbjo2"]
 
 [ext_resource type="Script" uid="uid://c1gmc7u677lq2" path="res://Fighters/Weapon.cs" id="1_ad04h"]
-[ext_resource type="AudioStream" uid="uid://b0n2hj8fip74i" path="res://Weapons/Greataxe/sfx_greataxe_hit.mp3" id="2_pe4bi"]
+[ext_resource type="AudioStream" uid="uid://dqde7sj40oyd1" path="res://project-battle-third-party/Assets/Weapons/Greataxe/sfx_greataxe_hit.mp3" id="2_pe4bi"]
 [ext_resource type="Resource" uid="uid://bt5am41aaj7ct" path="res://Weapons/Greataxe/greataxe_stats.tres" id="2_v6t14"]
-[ext_resource type="AudioStream" uid="uid://untl41p2e6o0" path="res://Weapons/Greataxe/sfx_greataxe_block.mp3" id="3_v6t14"]
-[ext_resource type="AudioStream" uid="uid://do00w70071v85" path="res://Weapons/Greataxe/sfx_axe_swing.mp3" id="4_6cmlq"]
+[ext_resource type="AudioStream" uid="uid://cnfuaav3wm4q2" path="res://project-battle-third-party/Assets/Weapons/Greataxe/sfx_greataxe_block.mp3" id="3_v6t14"]
+[ext_resource type="AudioStream" uid="uid://b2ce8ylru6xe1" path="res://project-battle-third-party/Assets/Weapons/Greataxe/sfx_axe_swing.mp3" id="4_6cmlq"]
 [ext_resource type="Texture2D" uid="uid://c6gvdp0ctaj5b" path="res://Weapons/Greataxe/greataxe.png" id="4_mqidt"]
 [ext_resource type="Texture2D" uid="uid://bka0ugaeesiap" path="res://Fighters/Orc/f_orc_hand.png" id="5_66twd"]
 

@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://c1gmc7u677lq2" path="res://Fighters/Weapon.cs" id="1_kr824"]
 [ext_resource type="Resource" uid="uid://dwkbdid4rpiu2" path="res://Weapons/IronSword/iron_sword_stats.tres" id="2_0mnmp"]
-[ext_resource type="AudioStream" uid="uid://bt32s3ahww5ex" path="res://Weapons/IronSword/sfx_iron_sword_hit.mp3" id="2_b5igw"]
-[ext_resource type="AudioStream" uid="uid://cxyanssn0ucpg" path="res://Weapons/IronSword/sfx_iron_sword_block.mp3" id="3_0mnmp"]
-[ext_resource type="AudioStream" uid="uid://bw6v61cfo8aly" path="res://Weapons/IronSword/sfx_iron_sword_swing.mp3" id="4_s6ybx"]
+[ext_resource type="AudioStream" uid="uid://dwcd4vgktio03" path="res://project-battle-third-party/Assets/Weapons/IronSword/sfx_iron_sword_hit.mp3" id="2_b5igw"]
+[ext_resource type="AudioStream" uid="uid://dxdxvpd4yfh3a" path="res://project-battle-third-party/Assets/Weapons/IronSword/sfx_iron_sword_block.mp3" id="3_0mnmp"]
+[ext_resource type="AudioStream" uid="uid://cnxd4yq640epu" path="res://project-battle-third-party/Assets/Weapons/IronSword/sfx_iron_sword_swing.mp3" id="4_s6ybx"]
 [ext_resource type="Texture2D" uid="uid://cowoght32q2j7" path="res://Fighters/Crusader/f_crusader_hand.png" id="4_w45xa"]
 [ext_resource type="Texture2D" uid="uid://dpe5jcu5typ1b" path="res://Weapons/IronSword/weapon_iron_sword.png" id="5_wti4q"]
 

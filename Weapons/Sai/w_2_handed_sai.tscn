@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://c1gmc7u677lq2" path="res://Fighters/Weapon.cs" id="1_48eqy"]
 [ext_resource type="Resource" uid="uid://cwnaxej3dqpjv" path="res://Weapons/Sai/sai_stats.tres" id="2_0rr50"]
-[ext_resource type="AudioStream" uid="uid://dk3m7p8grukq1" path="res://Weapons/Sai/sfx_sai_hit.mp3" id="2_vp8d7"]
-[ext_resource type="AudioStream" uid="uid://2lvtn5pxjslv" path="res://Weapons/Sai/sfx_sai_swing.mp3" id="4_u7ug3"]
+[ext_resource type="AudioStream" uid="uid://g48qoeft01op" path="res://project-battle-third-party/Assets/Weapons/Sai/sfx_sai_hit.mp3" id="2_vp8d7"]
+[ext_resource type="AudioStream" uid="uid://dih3tkjk2rkgi" path="res://project-battle-third-party/Assets/Weapons/Sai/sfx_sai_swing.mp3" id="4_u7ug3"]
 [ext_resource type="Texture2D" uid="uid://ccn2wf3n5m7l5" path="res://Fighters/Ninja/f_ninja_hand.png" id="4_w4gvr"]
-[ext_resource type="AudioStream" uid="uid://w4f8ilwcc80" path="res://Weapons/Sai/sfx_sai_block.mp3" id="5_mhou7"]
+[ext_resource type="AudioStream" uid="uid://dfyg2gq55wt2x" path="res://project-battle-third-party/Assets/Weapons/Sai/sfx_sai_block.mp3" id="5_mhou7"]
 [ext_resource type="Texture2D" uid="uid://veni723qe1d5" path="res://Weapons/Sai/sai.png" id="5_sabdw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_um2u5"]
