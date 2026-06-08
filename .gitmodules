@@ -1,0 +1,3 @@
+[submodule "project-battle-third-party"]
+	path = project-battle-third-party
+	url = ./project-battle-third-party/
