@@ -17,7 +17,7 @@ public partial class Weapon : Node2D
   [Export] public AudioStream BlockSound;
   [Export] public float HitBoxLifeSpan = 0.2f;
   [Export] public Sprite2D MainSprite;
-  [Export] private Sprite2D[] Hands;
+  [Export] public Sprite2D[] Hands;
   private AudioManager _audioManager;
 
   private double Damage
@@ -58,6 +58,7 @@ public partial class Weapon : Node2D
 
     foreach (Sprite2D hand in Hands)
     {
+      GD.Print(hand);
       hand.Texture = _parentFighter.HandSprite;
     }
 
@@ -133,14 +134,7 @@ public partial class Weapon : Node2D
 
     HitBox.Monitoring = value;
     HitBox.Visible = value;
-    if (value)
-    {
-      await ToSignal(GetTree().CreateTimer(HitBoxLifeSpan), Timer.SignalName.Timeout);
-      HitBox.Monitoring = false;
-      HitBox.Visible = false;
-    }
-    else
-    {
+    if (!value){
       _hasHitFighter = false;
     }
   }
