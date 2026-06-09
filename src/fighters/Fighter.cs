@@ -37,7 +37,7 @@ public enum Stat
 
 public partial class Fighter : CharacterBody2D, ICanDie
 {
-  [Export] public string FighterName { set;get;} = "[Fighter Name Here]";
+  [Export] public string FighterName { set; get; } = "[Fighter Name Here]";
   [Export] public int Strength { get; private set; } = 3;
   [Export]
   public int Agility
@@ -66,7 +66,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
   }
   protected float Evasion
   {
-    get => Agility * 0.11f;
+    get => Agility * 0.10f;
   }
   public double Health { get; set; }
   public double MaxHealth
@@ -81,6 +81,16 @@ public partial class Fighter : CharacterBody2D, ICanDie
   public float TrueStrike
   {
     get => Intelligence * 0.02f;
+  }
+
+  private float TimeScale
+  {
+    get;
+    set
+    {
+      field = value;
+      Engine.TimeScale = value;
+    }
   }
 
   public bool CanMove = true;
@@ -109,6 +119,9 @@ public partial class Fighter : CharacterBody2D, ICanDie
   public const int MaxTotalAbilityPoints = 9;
   public const int MaxAbilityPoints = 5;
 
+  private Tween _hitStopTween;
+  private const float HitStopDurationBase = 1;
+
   public override void _Ready()
   {
     Enemy = GetEnemy();
@@ -134,7 +147,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
     AddChild(_deathSprite);
   }
 
-    public override void _ExitTree()
+  public override void _ExitTree()
   {
     Enemy.Died -= OnWin;
   }
@@ -274,7 +287,20 @@ public partial class Fighter : CharacterBody2D, ICanDie
 
     SetHealth(Health - (float)damage);
 
+    HitStop(damage);
+
     if (Health <= 0) Die();
+  }
+
+  private void HitStop(double damage)
+  {
+    TimeScale = 0;
+    if (IsInstanceValid(_hitStopTween))
+    {
+      _hitStopTween.Kill();
+    }
+    _hitStopTween = CreateTween();
+    _hitStopTween.TweenProperty(this, "TimeScale", 1.0, HitStopDurationBase * damage / GetMaxHealth(Strength));
   }
 
   private void SetHealth(double value)
@@ -346,11 +372,12 @@ public partial class Fighter : CharacterBody2D, ICanDie
       Velocity = Direction.Normalized() * (float)(MovementSpeed * delta);
     }
 
-    KinematicCollision2D collision = CanMove ?  MoveAndCollide(Velocity) : null;
+    KinematicCollision2D collision = CanMove ? MoveAndCollide(Velocity) : null;
     if (collision != null)
     {
       Direction = Direction.Bounce(collision.GetNormal());
-    };
+    }
+    ;
   }
 
   public Vector2 GetRandomDirection()
