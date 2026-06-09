@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using RandomBattles.Fighters;
+using TheLastColosseumFighters;
 
 public partial class Camera : Camera2D
 {

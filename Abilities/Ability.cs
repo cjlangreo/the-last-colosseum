@@ -1,8 +1,8 @@
 
 using System;
 using Godot;
-using RandomBattles.Fighters;
-using static RandomBattles.Utils.Debug;
+using TheLastColosseumFighters;
+using static TheLastColosseumUtils.Debug;
 
 [Icon("/home/birbdoy/Projects/random-battles/Assets/IconGodotNode/node/icon_ring.png")]
 [GlobalClass]

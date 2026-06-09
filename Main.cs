@@ -1,9 +1,9 @@
 using Godot;
 using System;
-using RandomBattles.Fighters;
+using TheLastColosseumFighters;
 using System.Threading.Tasks;
 
-namespace RandomBattles;
+namespace TheLastColosseum;
 public partial class Main : Node2D
 {
   [Export] public MeshInstance2D DissolveMesh;

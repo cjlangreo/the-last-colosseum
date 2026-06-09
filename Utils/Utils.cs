@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace RandomBattles.Utils;
+namespace TheLastColosseumUtils;
 
 
 public static class Debug

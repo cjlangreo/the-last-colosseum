@@ -1,5 +1,5 @@
 using Godot;
-using RandomBattles.Fighters;
+using TheLastColosseumFighters;
 using System;
 using System.Collections.Generic;
 using System.Linq;

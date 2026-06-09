@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 
 
-namespace RandomBattles.Fighters;
+namespace TheLastColosseumFighters;
 
 public enum Team
 {

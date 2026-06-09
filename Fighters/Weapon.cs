@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using System.Linq;
-using RandomBattles.Fighters;
+using TheLastColosseumFighters;
 
 
 public partial class Weapon : Node2D

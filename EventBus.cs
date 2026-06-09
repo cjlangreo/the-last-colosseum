@@ -1,5 +1,5 @@
 using Godot;
-using RandomBattles.Fighters;
+using TheLastColosseumFighters;
 using System;
 
 public static class EventBus

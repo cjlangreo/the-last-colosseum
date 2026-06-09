@@ -1,5 +1,5 @@
 using Godot;
-using RandomBattles.Fighters;
+using TheLastColosseumFighters;
 
 public partial class StatusBar : Sprite2D
 {

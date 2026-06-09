@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using RandomBattles.Fighters;
+using TheLastColosseumFighters;
 
 namespace Abilities;
 public partial class ADivineProtection : Ability

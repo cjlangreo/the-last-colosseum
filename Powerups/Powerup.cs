@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using System.Diagnostics;
-using RandomBattles.Fighters;
+using TheLastColosseumFighters;
 
 public partial class Powerup : Area2D
 {

@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using RandomBattles.Fighters;
+using TheLastColosseumFighters;
 using System.Threading.Tasks;
 
 public partial class ADisciplinedStrike : Ability
