@@ -8,11 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://cowoght32q2j7" path="res://src/fighters/Crusader/f_crusader_hand.png" id="6_wjst6"]
 [ext_resource type="Texture2D" uid="uid://b71ftd6fk4w0h" path="res://src/weapons/Katana/w_katana.png" id="7_e38ot"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pxs0u"]
+size = Vector2(80, 17.999998)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_0u74q"]
 radius = 52.538082
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_6cmlq"]
-radius = 48.0
 
 [sub_resource type="Animation" id="Animation_3ypa3"]
 length = 0.001
@@ -31,7 +31,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("HitBox:monitoring")
+tracks/1/path = NodePath("HandPivot/Hand/Katana/HitBox:monitoring")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -43,7 +43,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("HitBox:visible")
+tracks/2/path = NodePath("HandPivot/Hand/Katana/HitBox:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -107,7 +107,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = false
-tracks/1/path = NodePath("HitBox:monitoring")
+tracks/1/path = NodePath("HandPivot/Hand/Katana/HitBox:monitoring")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -119,7 +119,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = false
-tracks/2/path = NodePath("HitBox:visible")
+tracks/2/path = NodePath("HandPivot/Hand/Katana/HitBox:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -159,10 +159,13 @@ tracks/5/path = NodePath(".")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.13999999),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.109999985, 0.59),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [true],
+"method": &"ToggleHitBox"
+}, {
+"args": [false],
 "method": &"ToggleHitBox"
 }]
 }
@@ -173,7 +176,7 @@ tracks/6/path = NodePath(".")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0.14),
+"times": PackedFloat32Array(0.11),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -205,7 +208,7 @@ script = ExtResource("1_d4v6o")
 WeaponName = "Katana"
 AtkAnimPlayer = NodePath("AnimationPlayer")
 AtkTrigger = NodePath("AttackTrigger")
-HitBox = NodePath("HitBox")
+HitBox = NodePath("HandPivot/Hand/Katana/HitBox")
 Stats = ExtResource("2_d4v6o")
 HitSound = ExtResource("3_k612y")
 SwingSound = ExtResource("4_4b8g2")
@@ -225,6 +228,20 @@ position = Vector2(23, 0)
 rotation = 1.5707964
 texture = ExtResource("7_e38ot")
 
+[node name="HitBox" type="Area2D" parent="HandPivot/Hand/Katana" unique_id=2145997643]
+visible = false
+position = Vector2(1.0000017, -1)
+rotation = -1.5707964
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HandPivot/Hand/Katana/HitBox" unique_id=1744490889]
+position = Vector2(0, -1.0000019)
+shape = SubResource("RectangleShape2D_pxs0u")
+debug_color = Color(0.9098039, 0.20784314, 0.20784314, 0.41960785)
+
 [node name="AttackTrigger" type="Area2D" parent="." unique_id=822973807]
 position = Vector2(38, 0)
 collision_layer = 0
@@ -235,19 +252,6 @@ monitorable = false
 position = Vector2(8, 0)
 shape = SubResource("CircleShape2D_0u74q")
 debug_color = Color(0.7, 0.45499998, 0, 0.41960785)
-
-[node name="HitBox" type="Area2D" parent="." unique_id=2145997643]
-visible = false
-position = Vector2(42, 0)
-collision_layer = 0
-collision_mask = 0
-monitoring = false
-monitorable = false
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitBox" unique_id=1744490889]
-position = Vector2(4, 0)
-shape = SubResource("CircleShape2D_6cmlq")
-debug_color = Color(0.9098039, 0.20784314, 0.20784314, 0.41960785)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=148345807]
 libraries/ = SubResource("AnimationLibrary_f18uy")

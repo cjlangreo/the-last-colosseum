@@ -6,13 +6,19 @@
 [ext_resource type="AudioStream" uid="uid://cnfuaav3wm4q2" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/Greataxe/sfx_greataxe_block.mp3" id="3_v6t14"]
 [ext_resource type="AudioStream" uid="uid://b2ce8ylru6xe1" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/Greataxe/sfx_axe_swing.mp3" id="4_6cmlq"]
 [ext_resource type="Texture2D" uid="uid://c6gvdp0ctaj5b" path="res://src/weapons/Greataxe/greataxe.png" id="4_mqidt"]
-[ext_resource type="Texture2D" uid="uid://bka0ugaeesiap" path="res://src/fighters/Orc/f_orc_hand.png" id="5_66twd"]
+[ext_resource type="Shader" uid="uid://cwgecup132u4u" path="res://src/weapons/Greataxe/w_greataxe.gdshader" id="6_pxs0u"]
+[ext_resource type="Texture2D" uid="uid://bpw6fj1qh6ms3" path="res://src/fighters/Samurai/samurai_hand.png" id="8_pxs0u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4g4ix"]
+shader = ExtResource("6_pxs0u")
+shader_parameter/speed = 0.0
+shader_parameter/amplitude = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pxs0u"]
+size = Vector2(32, 99)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uuyko"]
 size = Vector2(101, 118)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_mqqsm"]
-radius = 54.00926
 
 [sub_resource type="Animation" id="Animation_srt68"]
 length = 0.001
@@ -99,10 +105,13 @@ tracks/3/path = NodePath("WGreataxe")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.35),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.35, 0.5),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [true],
+"method": &"ToggleHitBox"
+}, {
+"args": [false],
 "method": &"ToggleHitBox"
 }]
 }
@@ -133,7 +142,7 @@ script = ExtResource("1_ad04h")
 WeaponName = "Greataxe"
 AtkAnimPlayer = NodePath("AnimationPlayer")
 AtkTrigger = NodePath("AttackTrigger")
-HitBox = NodePath("HitBox")
+HitBox = NodePath("HandPivot/Greataxe/HitBox")
 Stats = ExtResource("2_v6t14")
 HitSound = ExtResource("2_pe4bi")
 SwingSound = ExtResource("4_6cmlq")
@@ -144,6 +153,7 @@ Hands = [NodePath("HandPivot/Greataxe/Hand"), NodePath("HandPivot/Greataxe/Hand2
 [node name="HandPivot" type="Node2D" parent="." unique_id=1675078175]
 
 [node name="Greataxe" type="Sprite2D" parent="HandPivot" unique_id=564265767]
+material = SubResource("ShaderMaterial_4g4ix")
 position = Vector2(24, -24)
 rotation = -3.1415925
 texture = ExtResource("4_mqidt")
@@ -152,12 +162,25 @@ offset = Vector2(0, -30)
 [node name="Hand" type="Sprite2D" parent="HandPivot/Greataxe" unique_id=503589338]
 position = Vector2(-8.495567e-06, -45)
 rotation = 3.1415925
-texture = ExtResource("5_66twd")
+texture = ExtResource("8_pxs0u")
 
 [node name="Hand2" type="Sprite2D" parent="HandPivot/Greataxe" unique_id=1228174992]
 position = Vector2(-2.621896e-07, -1)
 rotation = 3.1415925
-texture = ExtResource("5_66twd")
+texture = ExtResource("8_pxs0u")
+
+[node name="HitBox" type="Area2D" parent="HandPivot/Greataxe" unique_id=1425121301]
+position = Vector2(-3.8146973e-06, -24)
+rotation = 3.1415925
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HandPivot/Greataxe/HitBox" unique_id=881180840]
+position = Vector2(0, 7.5)
+shape = SubResource("RectangleShape2D_pxs0u")
+debug_color = Color(0.9098039, 0.20784314, 0.20784314, 0.41960785)
 
 [node name="AttackTrigger" type="Area2D" parent="." unique_id=311905526]
 position = Vector2(38, 0)
@@ -169,17 +192,6 @@ monitorable = false
 position = Vector2(29.5, 0)
 shape = SubResource("RectangleShape2D_uuyko")
 debug_color = Color(0.7, 0.45499998, 0, 0.41960785)
-
-[node name="HitBox" type="Area2D" parent="." unique_id=1425121301]
-position = Vector2(63, 0)
-collision_layer = 0
-collision_mask = 0
-monitoring = false
-monitorable = false
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitBox" unique_id=881180840]
-shape = SubResource("CircleShape2D_mqqsm")
-debug_color = Color(0.9098039, 0.20784314, 0.20784314, 0.41960785)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1700154063]
 root_node = NodePath("../..")

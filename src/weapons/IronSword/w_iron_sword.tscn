@@ -8,11 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://cowoght32q2j7" path="res://src/fighters/Crusader/f_crusader_hand.png" id="6_4vak5"]
 [ext_resource type="Texture2D" uid="uid://dpe5jcu5typ1b" path="res://src/weapons/IronSword/weapon_iron_sword.png" id="7_r4chl"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ypa3"]
+size = Vector2(50.511627, 23.31173)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l3gly"]
 size = Vector2(70, 48)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ypa3"]
-size = Vector2(72, 50)
 
 [sub_resource type="Animation" id="Animation_3ypa3"]
 length = 0.001
@@ -31,7 +31,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("HitBox:monitoring")
+tracks/1/path = NodePath("HandPivot/Hand/WeaponSprite/HitBox:monitoring")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -43,7 +43,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("HitBox:visible")
+tracks/2/path = NodePath("HandPivot/Hand/WeaponSprite/HitBox:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -95,7 +95,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = false
-tracks/1/path = NodePath("HitBox:monitoring")
+tracks/1/path = NodePath("HandPivot/Hand/WeaponSprite/HitBox:monitoring")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -107,7 +107,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = false
-tracks/2/path = NodePath("HitBox:visible")
+tracks/2/path = NodePath("HandPivot/Hand/WeaponSprite/HitBox:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -147,10 +147,13 @@ tracks/5/path = NodePath(".")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.13999999),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.13999999, 0.3),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [true],
+"method": &"ToggleHitBox"
+}, {
+"args": [false],
 "method": &"ToggleHitBox"
 }]
 }
@@ -181,7 +184,7 @@ script = ExtResource("1_0tvvd")
 WeaponName = "Iron Sword"
 AtkAnimPlayer = NodePath("AnimationPlayer")
 AtkTrigger = NodePath("AttackTrigger")
-HitBox = NodePath("HitBox")
+HitBox = NodePath("HandPivot/Hand/WeaponSprite/HitBox")
 Stats = ExtResource("2_ogpkq")
 HitSound = ExtResource("3_ils2y")
 SwingSound = ExtResource("4_nofai")
@@ -201,6 +204,19 @@ position = Vector2(17, 0)
 rotation = 1.5707964
 texture = ExtResource("7_r4chl")
 
+[node name="HitBox" type="Area2D" parent="HandPivot/Hand/WeaponSprite" unique_id=496576046]
+visible = false
+rotation = -1.5707964
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HandPivot/Hand/WeaponSprite/HitBox" unique_id=1903036087]
+position = Vector2(1.020462, -1.9073486e-06)
+shape = SubResource("RectangleShape2D_3ypa3")
+debug_color = Color(0.9098039, 0.20784314, 0.20784314, 0.41960785)
+
 [node name="AttackTrigger" type="Area2D" parent="." unique_id=1640839803]
 position = Vector2(38, 0)
 collision_layer = 0
@@ -211,19 +227,6 @@ monitorable = false
 position = Vector2(14, 0)
 shape = SubResource("RectangleShape2D_l3gly")
 debug_color = Color(0.7, 0.45499998, 0, 0.41960785)
-
-[node name="HitBox" type="Area2D" parent="." unique_id=496576046]
-visible = false
-position = Vector2(42, 0)
-collision_layer = 0
-collision_mask = 0
-monitoring = false
-monitorable = false
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitBox" unique_id=1903036087]
-position = Vector2(1, 0)
-shape = SubResource("RectangleShape2D_3ypa3")
-debug_color = Color(0.9098039, 0.20784314, 0.20784314, 0.41960785)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1022535896]
 libraries/ = SubResource("AnimationLibrary_f18uy")
