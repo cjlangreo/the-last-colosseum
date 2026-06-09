@@ -171,8 +171,7 @@ metadata/_edit_lock_ = true
 
 [node name="ASpiritOfTheOwl" parent="TeamASpawner/FNinja" unique_id=658220978 instance=ExtResource("10_vivmo")]
 
-[node name="WGreataxe" parent="TeamASpawner/FNinja" unique_id=880340592 node_paths=PackedStringArray("Hands") instance=ExtResource("10_2cqfq")]
-Hands = []
+[node name="WGreataxe" parent="TeamASpawner/FNinja" unique_id=880340592 instance=ExtResource("10_2cqfq")]
 
 [node name="TeamBSpawner" type="Marker2D" parent="." unique_id=484979622]
 position = Vector2(183, 105)
