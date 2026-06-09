@@ -1,0 +1,3 @@
+[submodule "addons/the-last-colosseum-third-party"]
+	path = addons/the-last-colosseum-third-party
+	url = git@github.com:cjlangreo/the-last-colosseum-third-party.git
