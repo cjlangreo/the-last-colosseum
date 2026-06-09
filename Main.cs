@@ -25,7 +25,6 @@ public partial class Main : Node2D
   private bool _teamBSpinDone = false;
   private const float TransitionDuration = 2.0f;
   private float _startDelay = TransitionDuration - .5f;
-  private const string ScreenshotPath = "res://thumbnail.png";
   
   
   [Signal] private delegate void FinishedEventHandler();
@@ -74,7 +73,6 @@ public partial class Main : Node2D
 
   private async void StartFight()
   {
-	TakeScreenshot(ScreenshotPath);
 	StartDissolveTransition(1, 0);
 	await ToSignal(GetTree().CreateTimer(_startDelay), SceneTreeTimer.SignalName.Timeout);
 	SetFighterStatsUITextVisiblity(false);
@@ -131,11 +129,5 @@ public partial class Main : Node2D
   // Called every frame. 'delta' is the elapsed time since the previous frame.
   public override void _Process(double delta)
   {
-  }
-
-  private void TakeScreenshot(string savePath)
-  {
-	Image image = GetViewport().GetTexture().GetImage();
-	image.SavePng(savePath);
   }
 }
