@@ -4,6 +4,7 @@ using System.Linq;
 using TheLastColosseumFighters;
 
 
+[GlobalClass]
 public partial class Weapon : Node2D
 {
   public bool CanAttack {private set; get;} = true;

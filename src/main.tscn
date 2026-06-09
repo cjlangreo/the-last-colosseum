@@ -184,8 +184,8 @@ metadata/_edit_lock_ = true
 
 [node name="ASpiritOfTheSnake" parent="TeamBSpawner/FNinja" unique_id=1655741373 instance=ExtResource("13_074og")]
 
-[node name="WKatana" parent="TeamBSpawner/FNinja" unique_id=1823693304 node_paths=PackedStringArray("Hands") instance=ExtResource("12_vivmo")]
-Hands = []
+[node name="WKatana" parent="TeamBSpawner/FNinja" unique_id=1823693304 instance=ExtResource("12_vivmo")]
+HitBoxLifeSpan = null
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1619336283]
 process_mode = 3

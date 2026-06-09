@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dladnw68amri6"]
 
-[ext_resource type="Script" uid="uid://c1gmc7u677lq2" path="res://src/fighters/Weapon.cs" id="1_48eqy"]
+[ext_resource type="Script" uid="uid://djq6i1lrt3luu" path="res://src/weapons/Sai/W2HandedSai.cs" id="1_68sim"]
 [ext_resource type="Resource" uid="uid://cwnaxej3dqpjv" path="res://src/weapons/Sai/sai_stats.tres" id="2_0rr50"]
 [ext_resource type="AudioStream" uid="uid://g48qoeft01op" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/Sai/sfx_sai_hit.mp3" id="2_vp8d7"]
 [ext_resource type="AudioStream" uid="uid://dih3tkjk2rkgi" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/Sai/sfx_sai_swing.mp3" id="4_u7ug3"]
@@ -141,8 +141,8 @@ _data = {
 
 [node name="W2HandedSai" type="Node2D" unique_id=185032968 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "MainSprite", "Hands")]
 show_behind_parent = true
-script = ExtResource("1_48eqy")
-WeaponName = "Dual Wield Sai"
+script = ExtResource("1_68sim")
+WeaponName = "Double Sai"
 AtkAnimPlayer = NodePath("AnimationPlayer")
 AtkTrigger = NodePath("AttackTrigger")
 HitBox = NodePath("HitBox")

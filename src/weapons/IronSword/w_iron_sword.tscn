@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dp5ycbv4t5w65"]
 
-[ext_resource type="Script" uid="uid://c1gmc7u677lq2" path="res://src/fighters/Weapon.cs" id="1_0tvvd"]
+[ext_resource type="Script" uid="uid://oi2eedkmhcnu" path="res://src/weapons/IronSword/WIronSword.cs" id="1_ck5uq"]
 [ext_resource type="Resource" uid="uid://dwkbdid4rpiu2" path="res://src/weapons/IronSword/iron_sword_stats.tres" id="2_ogpkq"]
 [ext_resource type="AudioStream" uid="uid://dwcd4vgktio03" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/IronSword/sfx_iron_sword_hit.mp3" id="3_ils2y"]
 [ext_resource type="AudioStream" uid="uid://cnxd4yq640epu" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/IronSword/sfx_iron_sword_swing.mp3" id="4_nofai"]
@@ -180,7 +180,7 @@ _data = {
 
 [node name="WIronSword" type="Node2D" unique_id=1230071005 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "MainSprite", "Hands")]
 show_behind_parent = true
-script = ExtResource("1_0tvvd")
+script = ExtResource("1_ck5uq")
 WeaponName = "Iron Sword"
 AtkAnimPlayer = NodePath("AnimationPlayer")
 AtkTrigger = NodePath("AttackTrigger")
@@ -190,7 +190,7 @@ HitSound = ExtResource("3_ils2y")
 SwingSound = ExtResource("4_nofai")
 BlockSound = ExtResource("5_vfnmo")
 MainSprite = NodePath("HandPivot/Hand/WeaponSprite")
-Hands = []
+Hands = [NodePath("HandPivot/Hand")]
 
 [node name="HandPivot" type="Node2D" parent="." unique_id=378631271]
 
