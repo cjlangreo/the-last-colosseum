@@ -1,0 +1,257 @@
+[gd_scene format=3 uid="uid://cao3vxouldjfw"]
+
+[ext_resource type="Script" uid="uid://c1gmc7u677lq2" path="res://src/fighters/Weapon.cs" id="1_d4v6o"]
+[ext_resource type="Resource" uid="uid://d3mufvlyuwrka" path="res://src/weapons/Katana/katana_stats.tres" id="2_d4v6o"]
+[ext_resource type="AudioStream" uid="uid://dwcd4vgktio03" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/IronSword/sfx_iron_sword_hit.mp3" id="3_k612y"]
+[ext_resource type="AudioStream" uid="uid://cnxd4yq640epu" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/IronSword/sfx_iron_sword_swing.mp3" id="4_4b8g2"]
+[ext_resource type="AudioStream" uid="uid://dxdxvpd4yfh3a" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/IronSword/sfx_iron_sword_block.mp3" id="5_tvjsj"]
+[ext_resource type="Texture2D" uid="uid://cowoght32q2j7" path="res://src/fighters/Crusader/f_crusader_hand.png" id="6_wjst6"]
+[ext_resource type="Texture2D" uid="uid://b71ftd6fk4w0h" path="res://src/weapons/Katana/w_katana.png" id="7_e38ot"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0u74q"]
+radius = 52.538082
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6cmlq"]
+radius = 48.0
+
+[sub_resource type="Animation" id="Animation_3ypa3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HandPivot/Hand:rotation")
+tracks/0/interp = 4
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HitBox:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitBox:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HandPivot:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HandPivot:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HandPivot/Hand/Katana:flip_h")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_qq641"]
+resource_name = "Hit"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HandPivot/Hand:rotation")
+tracks/0/interp = 4
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06999999, 0.25, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 2.3701571242083, 2.012364627549462, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("HitBox:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.13, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("HitBox:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.13, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HandPivot:rotation")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.14, 0.45, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -1.5707963267948966, -3.141592653589793, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HandPivot:position")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.14, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(11, 0), Vector2(0, 0)]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.13999999),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [true],
+"method": &"ToggleHitBox"
+}]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.14),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"PlaySwingSound"
+}]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("HandPivot/Hand/Katana:flip_h")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f18uy"]
+_data = {
+&"RESET": SubResource("Animation_3ypa3"),
+&"attack": SubResource("Animation_qq641")
+}
+
+[node name="WKatana" type="Node2D" unique_id=1823693304 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "MainSprite", "Hands")]
+show_behind_parent = true
+script = ExtResource("1_d4v6o")
+WeaponName = "Katana"
+AtkAnimPlayer = NodePath("AnimationPlayer")
+AtkTrigger = NodePath("AttackTrigger")
+HitBox = NodePath("HitBox")
+Stats = ExtResource("2_d4v6o")
+HitSound = ExtResource("3_k612y")
+SwingSound = ExtResource("4_4b8g2")
+BlockSound = ExtResource("5_tvjsj")
+MainSprite = NodePath("HandPivot/Hand/Katana")
+Hands = [NodePath("HandPivot/Hand")]
+
+[node name="HandPivot" type="Node2D" parent="." unique_id=2049837447]
+
+[node name="Hand" type="Sprite2D" parent="HandPivot" unique_id=1600807969]
+position = Vector2(0, 20)
+texture = ExtResource("6_wjst6")
+
+[node name="Katana" type="Sprite2D" parent="HandPivot/Hand" unique_id=1729753680]
+show_behind_parent = true
+position = Vector2(23, 0)
+rotation = 1.5707964
+texture = ExtResource("7_e38ot")
+
+[node name="AttackTrigger" type="Area2D" parent="." unique_id=822973807]
+position = Vector2(38, 0)
+collision_layer = 0
+collision_mask = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackTrigger" unique_id=564768366]
+position = Vector2(8, 0)
+shape = SubResource("CircleShape2D_0u74q")
+debug_color = Color(0.7, 0.45499998, 0, 0.41960785)
+
+[node name="HitBox" type="Area2D" parent="." unique_id=2145997643]
+visible = false
+position = Vector2(42, 0)
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitBox" unique_id=1744490889]
+position = Vector2(4, 0)
+shape = SubResource("CircleShape2D_6cmlq")
+debug_color = Color(0.9098039, 0.20784314, 0.20784314, 0.41960785)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=148345807]
+libraries/ = SubResource("AnimationLibrary_f18uy")
+speed_scale = 0.5
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=1373976107]
+autostart = true

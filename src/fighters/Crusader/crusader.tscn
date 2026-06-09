@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://racm6yfyhyrf"]
+
+[ext_resource type="Script" uid="uid://b6jr8p00670rc" path="res://src/fighters/Crusader/Crusader.cs" id="1_1o14u"]
+[ext_resource type="Texture2D" uid="uid://crwgmllmetb2k" path="res://src/fighters/Crusader/f_crusader.png" id="2_3ypa3"]
+[ext_resource type="Texture2D" uid="uid://cowoght32q2j7" path="res://src/fighters/Crusader/f_crusader_hand.png" id="3_1105a"]
+[ext_resource type="PackedScene" uid="uid://cigdb1c0d5tou" path="res://src/fighters/status_bar.tscn" id="9_cic6y"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7dm0k"]
+radius = 16.0
+
+[sub_resource type="Curve" id="Curve_qb5y8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ig7h8"]
+curve = SubResource("Curve_qb5y8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qb5y8"]
+resource_local_to_scene = true
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 15.72
+direction = Vector3(0, 0, 0)
+spread = 60.0
+initial_velocity_max = 235.68
+gravity = Vector3(0, 0, 0)
+scale_min = 3.33
+scale_max = 3.33
+scale_curve = SubResource("CurveTexture_ig7h8")
+color = Color(0.71, 0, 0, 1)
+
+[node name="FCrusader" type="CharacterBody2D" unique_id=1585473059 node_paths=PackedStringArray("r_Sprite", "r_BloodSplatter")]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("1_1o14u")
+FighterName = "Knight"
+r_Sprite = NodePath("Sprite2D")
+r_BloodSplatter = NodePath("BloodSplatter")
+HandSprite = ExtResource("3_1105a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1109516803]
+shape = SubResource("CircleShape2D_7dm0k")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1964677853]
+use_parent_material = true
+texture = ExtResource("2_3ypa3")
+
+[node name="BloodSplatter" type="GPUParticles2D" parent="." unique_id=1968562095]
+emitting = false
+amount = 25
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_qb5y8")
+
+[node name="StatusBar" parent="." unique_id=1195225113 instance=ExtResource("9_cic6y")]

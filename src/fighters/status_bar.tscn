@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://cigdb1c0d5tou"]
+
+[ext_resource type="Script" uid="uid://b38f7ff0oh8kc" path="res://src/fighters/StatusBar.cs" id="2_ah46i"]
+[ext_resource type="Texture2D" uid="uid://dxs5rsvqvr824" path="res://assets/healthbar2.png" id="3_3eyni"]
+[ext_resource type="Theme" uid="uid://ip6g0dbwq1n1" path="res://assets/themes/health_bar.tres" id="3_y6nc5"]
+[ext_resource type="Shader" uid="uid://bgbsu1jhudj8m" path="res://src/abilities/ability_active.gdshader" id="4_kukni"]
+[ext_resource type="Texture2D" uid="uid://bnrotwu2de4on" path="res://assets/healthbar1.png" id="4_n01l3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2khvu"]
+corner_detail = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4v017"]
+resource_local_to_scene = true
+shader = ExtResource("4_kukni")
+shader_parameter/ability_active = false
+
+[node name="StatusBar" type="Sprite2D" unique_id=1195225113 node_paths=PackedStringArray("HealthBar", "DamageBar", "AbilityBar")]
+position = Vector2(0, -24)
+texture = ExtResource("3_3eyni")
+script = ExtResource("2_ah46i")
+HealthBar = NodePath("VBoxContainer/HealthBar")
+DamageBar = NodePath("VBoxContainer/HealthBar/DamageBar")
+AbilityBar = NodePath("VBoxContainer/AbilityBar")
+TeamAColor = Color(0.8509804, 0.34117648, 0.3882353, 1)
+TeamBColor = Color(0.3882353, 0.60784316, 1, 1)
+HealthOnlyBar = ExtResource("3_3eyni")
+HealthAbilityBar = ExtResource("4_n01l3")
+metadata/_edit_horizontal_guides_ = [-16.0]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=171039768]
+show_behind_parent = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.0
+offset_top = -11.0
+offset_right = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="HealthBar" type="ProgressBar" parent="VBoxContainer" unique_id=1271995170]
+process_mode = 3
+self_modulate = Color(0, 0, 1, 1)
+show_behind_parent = true
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_y6nc5")
+value = 100.0
+fill_mode = 1
+show_percentage = false
+
+[node name="DamageBar" type="ProgressBar" parent="VBoxContainer/HealthBar" unique_id=941220904]
+show_behind_parent = true
+layout_mode = 0
+offset_right = 62.0
+offset_bottom = 7.0
+size_flags_vertical = 3
+theme_override_styles/fill = SubResource("StyleBoxFlat_2khvu")
+fill_mode = 1
+show_percentage = false
+
+[node name="AbilityBar" type="ProgressBar" parent="VBoxContainer" unique_id=1260900730]
+visible = false
+self_modulate = Color(0, 1, 0, 1)
+material = SubResource("ShaderMaterial_4v017")
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("3_y6nc5")
+max_value = 1.0
+value = 1.0
+fill_mode = 1
+show_percentage = false

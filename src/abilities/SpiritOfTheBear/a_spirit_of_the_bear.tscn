@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://hbrcckwyp775"]
+
+[ext_resource type="Script" uid="uid://45a3wml2eoyn" path="res://src/abilities/SpiritOfTheBear/ASpiritOfTheBear.cs" id="1_aowy3"]
+[ext_resource type="Texture2D" uid="uid://dqebiovtmmfcc" path="res://src/abilities/SpiritOfTheBear/spiritOfTheBear.png" id="2_dt0js"]
+
+[node name="ASpiritOfTheBear" type="Node" unique_id=1504790841]
+script = ExtResource("1_aowy3")
+AbilityName = "Mark of the Bear"
+AbilityIcon = ExtResource("2_dt0js")
+AbDuration = 10.0

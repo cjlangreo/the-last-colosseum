@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://d3e0poyqwacgf"]
+
+[ext_resource type="Script" uid="uid://cfio3a80n60vs" path="res://src/fighters/Ninja/Ninja.cs" id="1_g3bh0"]
+[ext_resource type="Texture2D" uid="uid://p7uho7d7mgfc" path="res://src/fighters/Ninja/f_ninja.png" id="2_638ej"]
+[ext_resource type="Texture2D" uid="uid://ccn2wf3n5m7l5" path="res://src/fighters/Ninja/f_ninja_hand.png" id="2_tsyt5"]
+[ext_resource type="PackedScene" uid="uid://cigdb1c0d5tou" path="res://src/fighters/status_bar.tscn" id="6_q8l3v"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kgvej"]
+radius = 16.0
+
+[sub_resource type="Curve" id="Curve_qb5y8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ig7h8"]
+curve = SubResource("Curve_qb5y8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_q8l3v"]
+resource_local_to_scene = true
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 15.72
+direction = Vector3(0, 0, 0)
+spread = 60.0
+initial_velocity_max = 235.68
+gravity = Vector3(0, 0, 0)
+scale_min = 3.33
+scale_max = 3.33
+scale_curve = SubResource("CurveTexture_ig7h8")
+color = Color(0.71, 0, 0, 1)
+
+[node name="FNinja" type="CharacterBody2D" unique_id=155666014 node_paths=PackedStringArray("r_Sprite", "r_BloodSplatter")]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("1_g3bh0")
+FighterName = "Ninja"
+Strength = 2
+Agility = 5
+Intelligence = 2
+r_Sprite = NodePath("Sprite2D")
+r_BloodSplatter = NodePath("BloodSplatter")
+HandSprite = ExtResource("2_tsyt5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1001857364]
+shape = SubResource("CircleShape2D_kgvej")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=476489308]
+use_parent_material = true
+texture = ExtResource("2_638ej")
+
+[node name="StatusBar" parent="." unique_id=1271995170 instance=ExtResource("6_q8l3v")]
+
+[node name="BloodSplatter" type="GPUParticles2D" parent="." unique_id=419508323]
+emitting = false
+amount = 25
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_q8l3v")
