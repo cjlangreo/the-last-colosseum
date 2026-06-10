@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://bpw6fj1qh6ms3" path="res://src/fighters/Samurai/samurai_hand.png" id="2_4p3e7"]
 [ext_resource type="Texture2D" uid="uid://b8wf2ohnq3x6l" path="res://src/fighters/Samurai/f_samurai.png" id="2_218ks"]
 [ext_resource type="PackedScene" uid="uid://cigdb1c0d5tou" path="res://src/fighters/status_bar.tscn" id="3_4p3e7"]
-[ext_resource type="PackedScene" uid="uid://cao3vxouldjfw" path="res://src/weapons/Katana/w_katana.tscn" id="5_yxjgc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yxjgc"]
 radius = 16.0
@@ -45,7 +44,8 @@ shape = SubResource("CircleShape2D_yxjgc")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=302821046]
 use_parent_material = true
-scale = Vector2(1.175, 1.175)
+position = Vector2(0, -1.9999999)
+scale = Vector2(1.3288498, 1.3288498)
 texture = ExtResource("2_218ks")
 
 [node name="BloodSplatter" type="GPUParticles2D" parent="." unique_id=1750562924]
@@ -57,5 +57,4 @@ explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_2x7ar")
 
 [node name="StatusBar" parent="." unique_id=1195225113 instance=ExtResource("3_4p3e7")]
-
-[node name="WKatana" parent="." unique_id=1823693304 instance=ExtResource("5_yxjgc")]
+position = Vector2(0, -29)
