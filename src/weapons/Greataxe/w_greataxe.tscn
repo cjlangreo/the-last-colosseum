@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://cnfuaav3wm4q2" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/Greataxe/sfx_greataxe_block.mp3" id="3_v6t14"]
 [ext_resource type="AudioStream" uid="uid://b2ce8ylru6xe1" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/Greataxe/sfx_axe_swing.mp3" id="4_6cmlq"]
 [ext_resource type="Texture2D" uid="uid://c6gvdp0ctaj5b" path="res://src/weapons/Greataxe/greataxe.png" id="4_mqidt"]
-[ext_resource type="Shader" path="res://src/weapons/Greataxe/w_greataxe.gdshader" id="6_pxs0u"]
+[ext_resource type="Shader" uid="uid://besb1hiut4fso" path="res://src/weapons/Greataxe/w_greataxe.gdshader" id="6_pxs0u"]
 [ext_resource type="Texture2D" uid="uid://bpw6fj1qh6ms3" path="res://src/fighters/Samurai/samurai_hand.png" id="8_pxs0u"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4g4ix"]
@@ -14,8 +14,8 @@ shader = ExtResource("6_pxs0u")
 shader_parameter/speed = 0.0
 shader_parameter/amplitude = 1.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pxs0u"]
-size = Vector2(32, 99)
+[sub_resource type="CircleShape2D" id="CircleShape2D_7fcvn"]
+radius = 32.01562
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uuyko"]
 size = Vector2(101, 118)
@@ -136,7 +136,7 @@ _data = {
 &"attack": SubResource("Animation_mqqsm")
 }
 
-[node name="WGreataxe" type="Node2D" unique_id=880340592 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "MainSprite", "Hands")]
+[node name="WGreataxe" type="Node2D" unique_id=880340592 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "WeaponSprites", "Hands")]
 show_behind_parent = true
 script = ExtResource("1_0b4rd")
 WeaponName = "Greataxe"
@@ -147,7 +147,7 @@ Stats = ExtResource("2_v6t14")
 HitSound = ExtResource("2_pe4bi")
 SwingSound = ExtResource("4_6cmlq")
 BlockSound = ExtResource("3_v6t14")
-MainSprite = NodePath("HandPivot/Greataxe")
+WeaponSprites = [NodePath("HandPivot/Greataxe")]
 Hands = [NodePath("HandPivot/Greataxe/Hand"), NodePath("HandPivot/Greataxe/Hand2")]
 
 [node name="HandPivot" type="Node2D" parent="." unique_id=1675078175]
@@ -170,7 +170,7 @@ rotation = 3.1415925
 texture = ExtResource("8_pxs0u")
 
 [node name="HitBox" type="Area2D" parent="HandPivot/Greataxe" unique_id=1425121301]
-position = Vector2(-3.8146973e-06, -24)
+position = Vector2(-7.136605e-06, -46)
 rotation = 3.1415925
 collision_layer = 0
 collision_mask = 0
@@ -178,8 +178,7 @@ monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="HandPivot/Greataxe/HitBox" unique_id=881180840]
-position = Vector2(0, 7.5)
-shape = SubResource("RectangleShape2D_pxs0u")
+shape = SubResource("CircleShape2D_7fcvn")
 debug_color = Color(0.9098039, 0.20784314, 0.20784314, 0.41960785)
 
 [node name="AttackTrigger" type="Area2D" parent="." unique_id=311905526]

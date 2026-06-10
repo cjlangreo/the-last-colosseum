@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://b71ftd6fk4w0h" path="res://src/weapons/Katana/w_katana.png" id="7_e38ot"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pxs0u"]
-size = Vector2(80, 17.999998)
+size = Vector2(62, 17.999998)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0u74q"]
 radius = 52.538082
@@ -202,7 +202,7 @@ _data = {
 &"attack": SubResource("Animation_qq641")
 }
 
-[node name="WKatana" type="Node2D" unique_id=1823693304 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "MainSprite", "Hands")]
+[node name="WKatana" type="Node2D" unique_id=1823693304 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "WeaponSprites", "Hands")]
 show_behind_parent = true
 script = ExtResource("1_jgikc")
 WeaponName = "Katana"
@@ -213,7 +213,7 @@ Stats = ExtResource("2_d4v6o")
 HitSound = ExtResource("3_k612y")
 SwingSound = ExtResource("4_4b8g2")
 BlockSound = ExtResource("5_tvjsj")
-MainSprite = NodePath("HandPivot/Hand/Katana")
+WeaponSprites = [NodePath("HandPivot/Hand/Katana")]
 Hands = [NodePath("HandPivot/Hand")]
 
 [node name="HandPivot" type="Node2D" parent="." unique_id=2049837447]
@@ -238,7 +238,7 @@ monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="HandPivot/Hand/Katana/HitBox" unique_id=1744490889]
-position = Vector2(0, -1.0000019)
+position = Vector2(9, -1.0000019)
 shape = SubResource("RectangleShape2D_pxs0u")
 debug_color = Color(0.9098039, 0.20784314, 0.20784314, 0.41960785)
 

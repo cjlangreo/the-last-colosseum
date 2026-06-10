@@ -139,7 +139,7 @@ _data = {
 &"attack": SubResource("Animation_kgvej")
 }
 
-[node name="W2HandedSai" type="Node2D" unique_id=185032968 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "MainSprite", "Hands")]
+[node name="W2HandedSai" type="Node2D" unique_id=185032968 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "WeaponSprites", "Hands")]
 show_behind_parent = true
 script = ExtResource("1_68sim")
 WeaponName = "Double Sai"
@@ -150,7 +150,7 @@ Stats = ExtResource("2_0rr50")
 HitSound = ExtResource("2_vp8d7")
 SwingSound = ExtResource("4_u7ug3")
 BlockSound = ExtResource("5_mhou7")
-MainSprite = NodePath("HandPivot/Hand/WeaponSprite")
+WeaponSprites = [NodePath("HandPivot/Hand/WeaponSprite"), NodePath("HandPivot/Hand2/WeaponSprite")]
 Hands = [NodePath("HandPivot/Hand"), NodePath("HandPivot/Hand2")]
 
 [node name="HandPivot" type="Node2D" parent="." unique_id=2131917866]
