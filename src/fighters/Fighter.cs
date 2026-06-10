@@ -219,7 +219,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
   public virtual void Die()
   {
     Dead = true;
-    Weapon.Disable();
+    Weapon.Disable(true);
     Ability?.FighterDie();
     SetCollisionLayerValue((int)(team == Team.A ? ColLayer.A : ColLayer.B), false);
     SetCollisionMaskValue((int)(team == Team.A ? ColLayer.B : ColLayer.A), false);
