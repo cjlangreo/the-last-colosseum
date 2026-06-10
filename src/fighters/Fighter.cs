@@ -59,6 +59,8 @@ public partial class Fighter : CharacterBody2D, ICanDie
   } = 3;
 
   public Action<Stat, int> StatUpdated;
+  public float CritChanceBase = 0.18f;
+  public float TrueStrikeBase = 0.02f;
 
   protected float MovementSpeed
   {
@@ -75,12 +77,12 @@ public partial class Fighter : CharacterBody2D, ICanDie
   }
   public float CritChance
   {
-    get => Intelligence * 0.18f;
+    get => Intelligence * CritChanceBase;
   }
 
   public float TrueStrike
   {
-    get => Intelligence * 0.02f;
+    get => Intelligence * TrueStrikeBase;
   }
 
   private float TimeScale
