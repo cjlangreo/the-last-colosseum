@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+namespace TheLastColosseum.Abilities;
 public partial class ASpiritOfTheBear : Ability
 {
   [Export] public int AbStrBoost = 3;

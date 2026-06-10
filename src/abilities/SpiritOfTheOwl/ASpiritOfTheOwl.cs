@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+namespace TheLastColosseum.Abilities;
 public partial class ASpiritOfTheOwl : Ability
 {
   [Export] public int AbIntBonus = 3;

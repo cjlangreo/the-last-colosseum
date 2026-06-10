@@ -1,10 +1,12 @@
 
 using System;
 using Godot;
-using TheLastColosseumFighters;
-using static TheLastColosseumUtils.Debug;
+using TheLastColosseum.Fighters;
+using TheLastColosseum.Utils;
+using static TheLastColosseum.Utils.Debug;
 
-[Icon("/home/birbdoy/Projects/random-battles/Assets/IconGodotNode/node/icon_ring.png")]
+namespace TheLastColosseum.Abilities;
+[Icon("res://assets/IconGodotNode/node/icon_ring.png")]
 [GlobalClass]
 public partial class Ability : Node
 {
@@ -55,7 +57,7 @@ public partial class Ability : Node
 
   public virtual void InitAbility()
   {
-    GD.Print(Name, " Initializing Ability");
+    Debug.PrintDebug($"Initializing Ability", $"{Fighter.FighterName}:{AbilityName}");
     _abilityCooldownTimer = new() { Name = "AbilityCooldownTimer", OneShot = true };
     _abilityCooldownTimer.Timeout += UseAbility;
     AddChild(_abilityCooldownTimer);
@@ -85,9 +87,6 @@ public partial class Ability : Node
       toPrint += $" with duration of {AbDuration}";
       _abilityTimer.Start(AbDuration);
       Active = true;
-    } else
-    {
-      _abilityCooldownTimer.Start(AbCooldown);
     }
     PrintDebug(toPrint, $"{Fighter.Name}:{Fighter.team}");
   }

@@ -1,8 +1,8 @@
 using Godot;
 using System;
-using TheLastColosseumFighters;
+using TheLastColosseum.Fighters;
 
-namespace Abilities;
+namespace TheLastColosseum.Abilities;
 public partial class ADivineProtection : Ability
 {
   [Export] private CompressedTexture2D _shieldTexture;
