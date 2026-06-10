@@ -32,7 +32,7 @@ public partial class Weapon : Node2D
 
   private bool _canAttack = true;
 
-  private Fighter _parentFighter;
+  private Fighter Fighter;
 
   private Random _random;
 
@@ -63,15 +63,14 @@ public partial class Weapon : Node2D
 
     foreach (Sprite2D hand in Hands)
     {
-      GD.Print(hand);
-      hand.Texture = _parentFighter.HandSprite;
+      hand.Texture = Fighter.HandSprite;
     }
 
 
     AtkAnimPlayer.SpeedScale = AtkSpeed;
     AtkAnimPlayer.AnimationFinished += OnAttkAnimTimeout;
 
-    if (_parentFighter.team == Team.A)
+    if (Fighter.team == Team.A)
     {
       SetCollisions(ColLayer.B);
     }
@@ -114,7 +113,7 @@ public partial class Weapon : Node2D
   private void InitSounds()
   {
     _audioManager = GetNode<AudioManager>("/root/AudioManager");
-    _teamAudioPlayer = _parentFighter.team == Team.A ? _audioManager.TeamA : _audioManager.TeamB;
+    _teamAudioPlayer = Fighter.team == Team.A ? _audioManager.TeamA : _audioManager.TeamB;
     _teamAudioPlayer.HitSoundPlayer.Stream = HitSound;
     _teamAudioPlayer.BlockSoundPlayer.Stream = BlockSound;
     _teamAudioPlayer.SwingSoundPlayer.Stream = SwingSound;
@@ -147,7 +146,7 @@ public partial class Weapon : Node2D
 
   private bool IsCrit()
   {
-    return _random.NextDouble() <= _parentFighter.CritChance;
+    return _random.NextDouble() <= Fighter.CritChance;
   }
 
   public void OnAttackHit(Node2D _)
@@ -158,10 +157,14 @@ public partial class Weapon : Node2D
     {
       hitStatus = fighter.HitRequest(_isCrit ? Damage * Stats.CritMult : Damage, _isCrit, _parentFighter.TrueStrike);
 
+      HitStatus hitStatus = fighter.HitRequest(_isCrit ? Damage * Stats.CritMult : Damage, _isCrit, Fighter.TrueStrike);
       PlaySound(hitStatus);
       _hasHitFighter = true;
     }
-    Attacked?.Invoke(hitStatus);
+
+  private void PrintHitInfo(double damage)
+  {
+    Debug.PrintDebug($"Hit enemy with damage: {damage} crit: {Fighter.CritChance} truestrike: {Fighter.TrueStrike}", $"{Fighter.FighterName}:{WeaponName}");
   }
 
   private void PlaySound(HitStatus hitStatus)
@@ -197,6 +200,7 @@ public partial class Weapon : Node2D
     _canAttack = true;
     _hasHitFighter = false;
     AtkAnimPlayer.SpeedScale = AtkSpeed;
+    Debug.PrintDebug("Weapon swing end", $"{Fighter.FighterName}:{WeaponName}");
   }
 
   private void Attack()
