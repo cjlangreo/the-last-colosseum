@@ -27,7 +27,7 @@ public partial class Weapon : Node2D
 
   private double Damage
   {
-    get => Stats.BaseDmg + (Stats.BaseDmg * _parentFighter.Strength * 0.15);
+    get => Stats.BaseDmg + (Stats.BaseDmg * Fighter.Strength * 0.15);
   }
 
   private bool _canAttack = true;
@@ -61,7 +61,7 @@ public partial class Weapon : Node2D
   {
     ToggleHitBox(false);
 
-    _parentFighter = GetParent<Fighter>();
+    Fighter = GetParent<Fighter>();
     InitSounds();
 
     foreach (Sprite2D hand in Hands)
