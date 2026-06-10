@@ -160,8 +160,11 @@ public partial class Weapon : Node2D
       hitStatus = fighter.HitRequest(_isCrit ? Damage * Stats.CritMult : Damage, _isCrit, _parentFighter.TrueStrike);
 
       HitStatus hitStatus = fighter.HitRequest(_isCrit ? Damage * Stats.CritMult : Damage, _isCrit, Fighter.TrueStrike);
+      PrintHitInfo(Damage);
       PlaySound(hitStatus);
       _hasHitFighter = true;
+    }
+  }
 
   public void SetWeaponSpriteShaders(ShaderMaterial shaderMaterial)
   {
