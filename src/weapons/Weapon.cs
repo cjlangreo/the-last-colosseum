@@ -20,6 +20,9 @@ public partial class Weapon : Node2D
   [Export] public float HitBoxLifeSpan = 0.2f;
   [Export] public Sprite2D[] WeaponSprites;
   [Export] public Sprite2D[] Hands;
+
+  public float AtkSpeedBase {set;get;} = 0.15f;
+  
   private AudioManager _audioManager;
 
   private double Damage
@@ -36,7 +39,7 @@ public partial class Weapon : Node2D
   private bool _isCrit;
   private float AtkSpeed
   {
-    get => 0.25f + (_parentFighter.Agility * 0.15f / Stats.Weight);
+    get => 0.25f + (Fighter.Agility * AtkSpeedBase / Stats.Weight);
   }
   public double AtkCooldownPercent
   {
