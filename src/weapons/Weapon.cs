@@ -153,10 +153,8 @@ public partial class Weapon : Node2D
   public void OnAttackHit(Node2D _)
   {
     if (_hasHitFighter) return;
-    HitStatus hitStatus = HitStatus.Miss;
     foreach (Fighter fighter in HitBox.GetOverlappingBodies().OfType<Fighter>())
     {
-      hitStatus = fighter.HitRequest(_isCrit ? Damage * Stats.CritMult : Damage, _isCrit, _parentFighter.TrueStrike);
 
       HitStatus hitStatus = fighter.HitRequest(_isCrit ? Damage * Stats.CritMult : Damage, _isCrit, Fighter.TrueStrike);
       PrintHitInfo(Damage);
