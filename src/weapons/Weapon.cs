@@ -162,6 +162,13 @@ public partial class Weapon : Node2D
       HitStatus hitStatus = fighter.HitRequest(_isCrit ? Damage * Stats.CritMult : Damage, _isCrit, Fighter.TrueStrike);
       PlaySound(hitStatus);
       _hasHitFighter = true;
+
+  public void SetWeaponSpriteShaders(ShaderMaterial shaderMaterial)
+  {
+    foreach(Sprite2D sprite2D in WeaponSprites)
+    {
+      sprite2D.Material = shaderMaterial;
+    }
     }
 
   private void PrintHitInfo(double damage)
