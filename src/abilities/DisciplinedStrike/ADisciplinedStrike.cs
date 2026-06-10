@@ -5,11 +5,13 @@ namespace TheLastColosseum.Abilities;
 
 public partial class ADisciplinedStrike : Ability
 {
+  [Export] private Timer AbilityWaitTimer;
   [Export] private Shader ShakeShader;
   private const float BonusDamage = 1.5f;
   private const float BonusAtkSpeed = 2f;
   private const float ScaleAmount = 1.7f;
   private const float ScaleDuration = 1f;
+  private const float AbilityWaitTime = 3f;
   private Tween _scaleTween;
   private ShaderMaterial _shakeShaderMaterial;
   private bool _abilityActive = false;
@@ -27,11 +29,19 @@ public partial class ADisciplinedStrike : Ability
     // We don't unsubscribe because they don't outlive each other.
     Fighter.Weapon.WeaponSwingStart += OnWeaponSwingStart;
     Fighter.Weapon.WeaponSwingEnd += OnWeaponSwingEnd;
+    AbilityWaitTimer.Timeout += OnWaitTimerTimeout;
     _shakeShaderMaterial = new ShaderMaterial()
     {
       Shader = ShakeShader
     };
     Fighter.Weapon.SetWeaponSpriteShaders(_shakeShaderMaterial);
+
+    AbilityWaitTimer.WaitTime = AbilityWaitTime;
+  }
+
+  private void OnWaitTimerTimeout()
+  {
+    OnWeaponSwingEnd();
   }
 
   private void ToggleShakeShader(bool value)
@@ -55,7 +65,7 @@ public partial class ADisciplinedStrike : Ability
     {
       await ToSignal(Fighter.Weapon, Weapon.SignalName.WeaponSwingEnd);
     }
-
+    AbilityWaitTimer.Start();
     _abilityActive = true;
     ToggleShakeShader(true);
 
@@ -109,7 +119,6 @@ public partial class ADisciplinedStrike : Ability
     if (IsInstanceValid(_scaleTween)) _scaleTween.Kill();
     _scaleTween = CreateTween();
     _scaleTween.TweenProperty(Fighter.Weapon, "scale", Vector2.One, ScaleDuration);
-
     RestoreOriginStats();
     EndAbility();
   }
