@@ -165,7 +165,6 @@ public partial class Fighter : CharacterBody2D, ICanDie
 
   private void ValidateStats()
   {
-    GD.Print(FighterName, " Stats: ", Strength, Agility, Intelligence);
     if ((Agility + Strength + Intelligence) != MaxTotalAbilityPoints)
     {
       GD.PrintErr(FighterName, $" Stats does not add up to {MaxTotalAbilityPoints}!");
