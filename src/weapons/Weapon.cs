@@ -36,7 +36,6 @@ public partial class Weapon : Node2D
 
   private Random _random;
 
-  private bool _isCrit;
   private float AtkSpeed
   {
     get => 0.25f + (Fighter.Agility * AtkSpeedBase / Stats.Weight);
@@ -56,6 +55,7 @@ public partial class Weapon : Node2D
   private bool _hasHitFighter = false;
 
   private AudioManager.Team _teamAudioPlayer;
+  private bool _isCrit;
 
   public override void _Ready()
   {
