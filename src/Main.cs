@@ -14,32 +14,42 @@ public partial class Main : Node2D
 	[Export] public Control FighterStatsUIContainer;
 	[Export] public Vector2 FighterStatsUIContainerFinalPos;
 	[Export] public CanvasLayer UI;
+	[Export] public Title Title;
+	[Signal] private delegate void FinishedEventHandler();
 
+
+	private const float TransitionDuration = 2.0f;
+	private const float TitleTweenDuration = 1f;
+	private float _startDelay = TransitionDuration - .5f;
+
+	private float _titleYOrigin;
 	private Fighter _fighterA;
 	private Fighter _fighterB;
 
-	private ShaderMaterial BurnShader => (ShaderMaterial)DissolveColorRect.Material;
 	private Tween _dissolveTween;
 	private Tween _statContainerTween;
+	private Tween _titleTween;
 
 	private bool _teamASpinDone = false;
 	private bool _teamBSpinDone = false;
-	private const float TransitionDuration = 2.0f;
-	private float _startDelay = TransitionDuration - .5f;
+	private Vector2 centerCoord;
 
+	private ShaderMaterial BurnShader => (ShaderMaterial)DissolveColorRect.Material;
 
-	[Signal] private delegate void FinishedEventHandler();
 
 
 	public override async void _EnterTree()
 	{
+		UI.Show();
+		centerCoord = GetViewportRect().Size / 2;
+
+
 		GetTree().Paused = true;
 		FighterStatsUIContainer.Modulate = Colors.Transparent;
 		_statContainerTween = FighterStatsUIContainer.CreateTween();
 		_statContainerTween.TweenProperty(FighterStatsUIContainer, "modulate", Colors.White, 1);
 
-		UI.Show();
-		
+		TweenTitle();
 
 		if (Random)
 		{
@@ -63,10 +73,17 @@ public partial class Main : Node2D
 		_fighterB.Died += OnRoundEnd;
 	}
 
+	private void TweenTitle()
+	{
+		_titleYOrigin = Title.GlobalPosition.Y;
+		Title.GlobalPosition = centerCoord;
+		_titleTween = Title.CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
+		_titleTween.TweenProperty(Title, "global_position:y", _titleYOrigin, TitleTweenDuration);
+	}
+
 	private async void OnRoundEnd()
 	{
-		Title title = DissolveColorRect.GetChild<Title>(0);
-		title.Hide();
+		Title.GlobalPosition = centerCoord;
 		await ToSignal(GetTree().CreateTimer(2), SceneTreeTimer.SignalName.Timeout);
 		FighterStatsUIContainer.ZIndex = -1;
 		StartDissolveTransition(0, 1);
