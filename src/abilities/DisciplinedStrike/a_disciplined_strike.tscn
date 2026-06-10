@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://bg7jctypwsfgi" path="res://src/abilities/DisciplinedStrike/ADisciplinedStrike.cs" id="1_hq8lo"]
 [ext_resource type="Shader" uid="uid://dmsj32ju1lhue" path="res://src/abilities/DisciplinedStrike/shake.gdshader" id="2_x3qj0"]
-[ext_resource type="Texture2D" uid="uid://byeqgasc7idte" path="res://assets/IntStar.png" id="2_xcmk3"]
+[ext_resource type="Texture2D" uid="uid://17nftslqohki" path="res://src/abilities/DisciplinedStrike/aDisciplinedStrike.png" id="3_xcmk3"]
 
 [node name="ADisciplinedStrike" type="Node" unique_id=173817733]
 script = ExtResource("1_hq8lo")
 ShakeShader = ExtResource("2_x3qj0")
 AbilityName = "Disciplined Strike"
-AbilityIcon = ExtResource("2_xcmk3")
+AbilityIcon = ExtResource("3_xcmk3")
 AbCooldownBase = 3.0
 metadata/_custom_type_script = "uid://ctjqkpygad6hj"
