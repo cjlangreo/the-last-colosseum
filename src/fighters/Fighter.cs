@@ -1,10 +1,10 @@
 using Godot;
-using Godot.Collections;
 using System;
 using System.Linq;
+using TheLastColosseum.Abilities;
+using TheLastColosseum.Utils;
 
-
-namespace TheLastColosseumFighters;
+namespace TheLastColosseum.Fighters;
 
 public enum Team
 {
