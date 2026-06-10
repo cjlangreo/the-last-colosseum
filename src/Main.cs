@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using TheLastColosseum.UI;
-using TheLastColosseumFighters;
+using TheLastColosseum.Fighters;
 
 namespace TheLastColosseum;
 

@@ -1,7 +1,8 @@
 using Godot;
 using System;
 using System.Linq;
-using TheLastColosseumFighters;
+using TheLastColosseum.Fighters;
+using TheLastColosseum.Utils;
 
 
 [GlobalClass]

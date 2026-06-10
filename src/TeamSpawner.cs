@@ -1,6 +1,6 @@
 using Godot;
 using System.Linq;
-using TheLastColosseumFighters;
+using TheLastColosseum.Fighters;
 
 [GlobalClass]
 public partial class TeamSpawner : Marker2D
