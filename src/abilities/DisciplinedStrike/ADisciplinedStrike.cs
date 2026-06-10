@@ -1,55 +1,116 @@
 using Godot;
-using System;
-using TheLastColosseumFighters;
-using System.Threading.Tasks;
+using TheLastColosseum.Utils;
+
+namespace TheLastColosseum.Abilities;
 
 public partial class ADisciplinedStrike : Ability
 {
-  [Export] float originDamage;
+  [Export] private Shader ShakeShader;
+  private const float BonusDamage = 1.5f;
+  private const float BonusAtkSpeed = 2f;
+  private const float ScaleAmount = 1.7f;
+  private const float ScaleDuration = 1f;
+  private Tween _scaleTween;
+  private ShaderMaterial _shakeShaderMaterial;
   private bool _abilityActive = false;
+  private float OriginBaseDamage { set; get; }
+  private float OriginTrueStrikeBase { set; get; }
+  private float OriginCritChanceBase { set; get; }
+  private float OriginAtkSpeedBase { set; get; }
+
+
+
   public override void InitAbility()
   {
     base.InitAbility();
-    Fighter.Weapon.Attacked += OnAttack;
+
+    // We don't unsubscribe because they don't outlive each other.
+    Fighter.Weapon.WeaponSwingStart += OnWeaponSwingStart;
+    Fighter.Weapon.WeaponSwingEnd += OnWeaponSwingEnd;
+    _shakeShaderMaterial = new ShaderMaterial()
+    {
+      Shader = ShakeShader
+    };
+    Fighter.Weapon.SetWeaponSpriteShaders(_shakeShaderMaterial);
   }
 
+  private void ToggleShakeShader(bool value)
+  {
+    _shakeShaderMaterial.SetShaderParameter("enabled", value);
+  }
 
+  private void OnWeaponSwingStart()
+  {
+    if (_abilityActive) return;
+    if (IsInstanceValid(_scaleTween)) _scaleTween.Kill();
+    Fighter.Weapon.Scale = Vector2.One;
+    Fighter.CanMove = true;
+    ToggleShakeShader(false);
+  }
 
   public override async void UseAbility()
   {
     base.UseAbility();
+    if (Fighter.Weapon.AtkAnimPlayer.IsPlaying())
+    {
+      await ToSignal(Fighter.Weapon, Weapon.SignalName.WeaponSwingEnd);
+    }
 
-    Fighter.Weapon.AtkAnimPlayer.Play("RESET");
-    originDamage = Fighter.Weapon.Stats.BaseDmg;
-    ToggleCollisions(false);
-    Fighter.CanMove = false;
-    Fighter.Weapon.Disable();
-    Tween tween = CreateTween().SetParallel();
-    tween.TweenProperty(Fighter.Weapon, "scale", new Vector2(1.7f,1.7f), 1);
-    tween.TweenProperty(Fighter.Weapon, "Stats:BaseDmg", 20, 1);
-    await ToSignal(tween, Tween.SignalName.Finished);
-    Fighter.Weapon.Enable();
     _abilityActive = true;
+    ToggleShakeShader(true);
+
+    StoreOriginStats();
+
+    Fighter.CanMove = false;
+    Fighter.Weapon.Disable(false);
+
+
+    SetNewStats();
+    if (IsInstanceValid(_scaleTween)) _scaleTween.Kill();
+    _scaleTween = CreateTween();
+    _scaleTween.TweenProperty(Fighter.Weapon, "scale", new Vector2(ScaleAmount, ScaleAmount), ScaleDuration);
+
+    await ToSignal(_scaleTween, Tween.SignalName.Finished);
+
+    if (!Fighter.Dead) Fighter.Weapon.Enable();
 
   }
 
-  private void OnAttack(HitStatus hitStatus)
+  private void SetNewStats()
   {
-    if(!_abilityActive) return;
-    Fighter.CanMove = true;
-    Fighter.Weapon.Stats.BaseDmg = originDamage;
-    Fighter.Weapon.Scale = Vector2.One;
-    ToggleCollisions(true);
+    Fighter.TrueStrikeBase = 1f;
+    Fighter.CritChanceBase = 1f;
+    Fighter.Weapon.Stats.BaseDmg *= BonusDamage;
+    Fighter.Weapon.AtkSpeedBase *= BonusAtkSpeed;
   }
 
-  private void ToggleCollisions(bool value)
+  private void StoreOriginStats()
   {
-    Fighter.SetCollisionLayerValue((int)(Fighter.team == Team.A ? ColLayer.A : ColLayer.B), value);
-    Fighter.SetCollisionMaskValue((int)(Fighter.team == Team.A ? ColLayer.B : ColLayer.A), value);
+    Debug.PrintDebug("Storing Original Stats", $"{Fighter.Name}:{AbilityName}");
+    OriginCritChanceBase = Fighter.CritChanceBase;
+    OriginTrueStrikeBase = Fighter.TrueStrikeBase;
+    OriginBaseDamage = Fighter.Weapon.Stats.BaseDmg;
+    OriginAtkSpeedBase = Fighter.Weapon.AtkSpeedBase;
   }
 
-  public override void EndAbility()
+  private void RestoreOriginStats()
   {
-    base.EndAbility();
+    Fighter.CritChanceBase = OriginCritChanceBase;
+    Fighter.TrueStrikeBase = OriginTrueStrikeBase;
+    Fighter.Weapon.Stats.BaseDmg = OriginBaseDamage;
+    Fighter.Weapon.AtkSpeedBase = OriginAtkSpeedBase;
+  }
+
+  private void OnWeaponSwingEnd()
+  {
+    if (!_abilityActive) return;
+    _abilityActive = false;
+
+    if (IsInstanceValid(_scaleTween)) _scaleTween.Kill();
+    _scaleTween = CreateTween();
+    _scaleTween.TweenProperty(Fighter.Weapon, "scale", Vector2.One, ScaleDuration);
+
+    RestoreOriginStats();
+    EndAbility();
   }
 }
