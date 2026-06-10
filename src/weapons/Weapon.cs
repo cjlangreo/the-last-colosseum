@@ -97,7 +97,6 @@ public partial class Weapon : Node2D
   public void Enable()
   {
     AtkTrigger.Monitoring = true;
-    HitBox.Monitoring = true;
     AtkAnimPlayer.Active = true;
     Modulate = Colors.White;
     CanAttack = true;
