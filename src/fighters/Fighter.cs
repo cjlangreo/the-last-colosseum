@@ -192,7 +192,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
 
   private void OnWin()
   {
-    GD.Print(FighterName, " Win!");
+    Debug.PrintDebug("Win!", FighterName);
     ZIndex = 1;
   }
 
