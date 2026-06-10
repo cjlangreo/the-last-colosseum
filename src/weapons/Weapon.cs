@@ -18,7 +18,7 @@ public partial class Weapon : Node2D
   [Export] public AudioStream SwingSound;
   [Export] public AudioStream BlockSound;
   [Export] public float HitBoxLifeSpan = 0.2f;
-  [Export] public Sprite2D MainSprite;
+  [Export] public Sprite2D[] WeaponSprites;
   [Export] public Sprite2D[] Hands;
   private AudioManager _audioManager;
 

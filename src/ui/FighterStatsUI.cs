@@ -107,7 +107,7 @@ public partial class FighterStatsUI : VBoxContainer
     WeaponFrameContainer.AddThemeStyleboxOverride("panel", team == Team.A ? RedFrameStylebox : BlueFrameStylebox);
 
     FighterIcon.Texture = _fighter.r_Sprite.Texture;
-    WeaponIcon.Texture = _weapon.MainSprite.Texture;
+    WeaponIcon.Texture = _weapon.WeaponSprites[0].Texture;
     AbilityIcon.Texture = _ability?.AbilityIcon;
 
     FighterNameLabel.Text = _fighter.FighterName;
@@ -208,7 +208,7 @@ public partial class FighterStatsUI : VBoxContainer
         break;
       case Slot.Weapon:
         shuffledList = [.. WeaponIconCollection];
-        currentIconIndex = shuffledList.FindIndex(icon => icon == _weapon.MainSprite.Texture);
+        currentIconIndex = shuffledList.FindIndex(icon => icon == _weapon.WeaponSprites[0].Texture);
         textureRect = WeaponIcon;
         break;
     }
