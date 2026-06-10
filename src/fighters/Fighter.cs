@@ -122,7 +122,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
   public const int MaxAbilityPoints = 5;
 
   private Tween _hitStopTween;
-  private const float HitStopDurationBase = 1;
+  private const float HitStopDurationBase = 5f;
 
   public override void _Ready()
   {
@@ -301,7 +301,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
     {
       _hitStopTween.Kill();
     }
-    _hitStopTween = CreateTween();
+    _hitStopTween = CreateTween().SetIgnoreTimeScale();
     _hitStopTween.TweenProperty(this, "TimeScale", 1.0, HitStopDurationBase * damage / GetMaxHealth(Strength));
   }
 
