@@ -9,15 +9,14 @@
 [ext_resource type="Shader" uid="uid://disydkqfjrafh" path="res://assets/shaders/burn_dissolve.gdshader" id="11_dg77c"]
 [ext_resource type="Shader" uid="uid://cuqyhrxrpgnr2" path="res://assets/shaders/crt.gdshader" id="11_efxa6"]
 [ext_resource type="PackedScene" uid="uid://b3hxav4hll64s" path="res://src/abilities/DisciplinedStrike/a_disciplined_strike.tscn" id="12_sta5p"]
-[ext_resource type="PackedScene" uid="uid://b7vdewbdwy1up" path="res://src/abilities/SpiritOfTheSnake/a_spirit_of_the_snake.tscn" id="13_074og"]
+[ext_resource type="PackedScene" uid="uid://cao3vxouldjfw" path="res://src/weapons/Katana/w_katana.tscn" id="12_vivmo"]
 [ext_resource type="PackedScene" uid="uid://dladnw68amri6" path="res://src/weapons/Sai/w_2_handed_sai.tscn" id="13_sta5p"]
+[ext_resource type="PackedScene" uid="uid://qcmhdcxwfhqk" path="res://src/fighters/Samurai/f_samurai.tscn" id="14_okx7f"]
 [ext_resource type="Texture2D" uid="uid://7gegm1jqvhoe" path="res://assets/title.png" id="14_tb146"]
 [ext_resource type="Texture2D" uid="uid://d4abjl3nfe7o2" path="res://assets/nns_logo.png" id="14_w48qg"]
 [ext_resource type="Texture2D" uid="uid://bdei1kymvn1ta" path="res://assets/IconGodotNode/facebook-logo.png" id="15_2cqfq"]
 [ext_resource type="Script" uid="uid://feuvv12flxog" path="res://src/Title.cs" id="15_e7lu8"]
-[ext_resource type="PackedScene" uid="uid://bjsnjr14q58n5" path="res://src/fighters/Orc/orc.tscn" id="15_sif16"]
 [ext_resource type="Texture2D" uid="uid://cj0q80m7p8om7" path="res://assets/youtube-logo.webp" id="16_2cqfq"]
-[ext_resource type="PackedScene" uid="uid://bfrclebkpbjo2" path="res://src/weapons/Greataxe/w_greataxe.tscn" id="16_d7bab"]
 [ext_resource type="Texture2D" uid="uid://c1ivjjb6lo7ke" path="res://assets/title_randomizer.png" id="16_okx7f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7dm0k"]
@@ -193,11 +192,11 @@ Team = 1
 metadata/_custom_type_script = "uid://ds7ekv0i5wjot"
 metadata/_edit_lock_ = true
 
-[node name="FOrc" parent="TeamBSpawner" unique_id=103714473 instance=ExtResource("15_sif16")]
+[node name="FSamurai" parent="TeamBSpawner" unique_id=49210304 instance=ExtResource("14_okx7f")]
 
-[node name="WGreataxe" parent="TeamBSpawner/FOrc" unique_id=812407132 instance=ExtResource("16_d7bab")]
+[node name="WKatana2" parent="TeamBSpawner/FSamurai" unique_id=1823693304 instance=ExtResource("12_vivmo")]
 
-[node name="ASpiritOfTheSnake" parent="TeamBSpawner/FOrc" unique_id=584125610 instance=ExtResource("13_074og")]
+[node name="ADisciplinedStrike" parent="TeamBSpawner/FSamurai" unique_id=1112404006 instance=ExtResource("12_sta5p")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1619336283]
 process_mode = 3
