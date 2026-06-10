@@ -134,12 +134,12 @@ public partial class Weapon : Node2D
   }
 
 
-  private async void ToggleHitBox(bool value)
+  private void ToggleHitBox(bool value)
   {
 
     HitBox.Monitoring = value;
     HitBox.Visible = value;
-    if (!value){
+    if (value == false){
       _hasHitFighter = false;
     }
   }
