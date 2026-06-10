@@ -251,7 +251,6 @@ public partial class Fighter : CharacterBody2D, ICanDie
         break;
       case HitStatus.Evade:
         DisplayDamageNumber("evade", Colors.Gray);
-        hitStatus = HitStatus.Evade;
         break;
     }
 
