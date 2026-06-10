@@ -103,12 +103,12 @@ public partial class Weapon : Node2D
     CanAttack = true;
   }
 
-  public void Disable()
+  public void Disable(bool modulate)
   {
     AtkTrigger.Monitoring = false;
     HitBox.Monitoring = false;
     AtkAnimPlayer.Active = false;
-    Modulate = _parentFighter.DeadColor;
+    if(modulate) Modulate = Fighter.DeadColor;
     CanAttack = false;
   }
 
