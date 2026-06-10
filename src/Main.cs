@@ -88,6 +88,7 @@ public partial class Main : Node2D
 		FighterStatsUIContainer.ZIndex = -1;
 		StartDissolveTransition(0, 1);
 		await ToSignal(this, SignalName.Finished);
+		await ToSignal(GetTree().CreateTimer(2), SceneTreeTimer.SignalName.Timeout);
 		GetTree().Quit();
 	}
 
