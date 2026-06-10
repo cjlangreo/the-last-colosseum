@@ -49,7 +49,10 @@ public partial class Weapon : Node2D
     }
   }
 
-  public Action<HitStatus> Attacked;
+  public Action WeaponSwingStart;
+
+  [Signal]
+  public delegate void WeaponSwingEndEventHandler();
   private bool _hasHitFighter = false;
 
   private AudioManager.Team _teamAudioPlayer;
@@ -196,7 +199,7 @@ public partial class Weapon : Node2D
 
   private void OnAttkAnimTimeout(StringName _)
   {
-    _isCrit = IsCrit();
+    EmitSignal(SignalName.WeaponSwingEnd);
     _canAttack = true;
     _hasHitFighter = false;
     AtkAnimPlayer.SpeedScale = AtkSpeed;
@@ -207,5 +210,6 @@ public partial class Weapon : Node2D
   {
     AtkAnimPlayer.Play("attack");
     _canAttack = false;
+    WeaponSwingStart?.Invoke();
   }
 }
