@@ -68,14 +68,16 @@ shader_parameter/glow_threshold = 0.65
 
 [sub_resource type="QuadMesh" id="QuadMesh_4c57u"]
 
-[node name="Main" type="Node2D" unique_id=1413481918 node_paths=PackedStringArray("DissolveColorRect", "FighterStatsUIA", "FighterStatsUIB", "FighterStatsUIContainer", "UI")]
+[node name="Main" type="Node2D" unique_id=1413481918 node_paths=PackedStringArray("DissolveColorRect", "FighterStatsUIA", "FighterStatsUIB", "FighterStatsUIContainer", "UI", "Title")]
 script = ExtResource("1_ycdy4")
 DissolveColorRect = NodePath("UI/DissolveColorRect")
+Random = true
 FighterStatsUIA = NodePath("UI/FighterStatsUIContainer/FighterStatsUI")
 FighterStatsUIB = NodePath("UI/FighterStatsUIContainer/FighterStatsUI2")
 FighterStatsUIContainer = NodePath("UI/FighterStatsUIContainer")
 FighterStatsUIContainerFinalPos = Vector2(0, -6)
 UI = NodePath("UI")
+Title = NodePath("UI/DissolveColorRect/TitleSprite")
 metadata/_edit_horizontal_guides_ = [76.0, 160.0, 198.0]
 metadata/movie_file = "movie.avi"
 metadata/_edit_vertical_guides_ = [90.0]
@@ -199,7 +201,6 @@ metadata/_edit_lock_ = true
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1619336283]
 process_mode = 3
-visible = false
 
 [node name="DissolveColorRect" type="ColorRect" parent="UI" unique_id=1363232809]
 material = SubResource("ShaderMaterial_vivmo")
