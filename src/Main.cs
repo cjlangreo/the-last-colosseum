@@ -98,7 +98,6 @@ public partial class Main : Node2D
 
 		if (_teamASpinDone && _teamBSpinDone)
 		{
-			GD.Print("Spin done!");
 			StartFight();
 		}
 	}
