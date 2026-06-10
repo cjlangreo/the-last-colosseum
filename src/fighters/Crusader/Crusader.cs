@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using TheLastColosseumFighters;
+using TheLastColosseum.Fighters;
 public partial class Crusader : Fighter
 {
 
