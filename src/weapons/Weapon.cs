@@ -84,7 +84,6 @@ public partial class Weapon : Node2D
 
 
     _random = new();
-    _isCrit = IsCrit();
 
     HitBox.BodyEntered += OnAttackHit;
   }
@@ -208,6 +207,7 @@ public partial class Weapon : Node2D
 
   private void Attack()
   {
+    _isCrit = IsCrit();
     AtkAnimPlayer.Play("attack");
     _canAttack = false;
     WeaponSwingStart?.Invoke();
