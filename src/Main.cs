@@ -7,8 +7,8 @@ namespace TheLastColosseum;
 
 public partial class Main : Node2D
 {
-	[Export] public ColorRect DissolveColorRect;
 	[Export] public bool Random;
+	[Export] public ColorRect DissolveColorRect;
 	[Export] public FighterStatsUI FighterStatsUIA;
 	[Export] public FighterStatsUI FighterStatsUIB;
 	[Export] public Control FighterStatsUIContainer;
