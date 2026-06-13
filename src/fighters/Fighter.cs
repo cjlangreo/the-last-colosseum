@@ -145,7 +145,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
   public Color DeadColor = new(0.3f, 0.3f, 0.3f);
 
 
-
+  private AudioManager _audioManager;
   private Tween _hitStopTween;
 
 
@@ -153,6 +153,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
   {
     InitChildren();
     Name = FighterName;
+    _audioManager = GetNode<AudioManager>("/root/AudioManager");
   }
 
 
@@ -431,6 +432,10 @@ public partial class Fighter : CharacterBody2D, ICanDie
     if (collision != null)
     {
       Direction = Direction.Bounce(collision.GetNormal());
+      if((bool)collision.GetCollider().GetMeta("is_wall", false))
+      {
+        _audioManager.PlayRandomStoneImpact();
+      }
     }
     ;
   }
