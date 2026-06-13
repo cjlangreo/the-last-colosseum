@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://skawswqm3y75" path="res://src/abilities/SpiritOfTheOwl/spiritOfTheOwl.png" id="9_01qvr"]
 [ext_resource type="Texture2D" uid="uid://b71ftd6fk4w0h" path="res://src/weapons/Katana/w_katana.png" id="9_qonjv"]
 [ext_resource type="Texture2D" uid="uid://cbanvqm8i4vo1" path="res://src/abilities/SpiritOfTheSnake/spiritOfTheSnake.png" id="10_8y8b2"]
-[ext_resource type="Texture2D" uid="uid://di8ipo13yul6a" path="res://src/abilities/DivineProtection/divineProtection.png" id="11_8r8py"]
+[ext_resource type="Texture2D" uid="uid://di8ipo13yul6a" path="res://src/abilities/DivineProtection/a_raise_shield_icon.png" id="11_8r8py"]
 [ext_resource type="StyleBox" uid="uid://3joxdwy12mhw" path="res://assets/blue_frame_stylebox.tres" id="12_yyhg7"]
 [ext_resource type="StyleBox" uid="uid://b5u3gcqppyqsx" path="res://assets/red_frame_stylebox.tres" id="13_gyojr"]
 [ext_resource type="Texture2D" uid="uid://17nftslqohki" path="res://src/abilities/DisciplinedStrike/aDisciplinedStrike.png" id="14_713hg"]
