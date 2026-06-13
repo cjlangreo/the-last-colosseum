@@ -87,12 +87,13 @@ public partial class Fighter : CharacterBody2D, ICanDie
   public const int MaxTotalAbilityPoints = 9;
   public const int MaxAbilityPoints = 5;
   private const float HitStopDurationBase = 5f;
+  private const float MovementSpeedMulti = 45f;
 
 
 
   protected float MovementSpeed
   {
-    get => 20 + Agility * 45;
+    get => 20 + Agility * MovementSpeedMulti;
   }
   protected float Evasion
   {
@@ -124,6 +125,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
   }
   public float CritChanceBase = 0.18f;
   public float TrueStrikeBase = 0.02f;
+  public float DamageMultiBase = 1.0f;
   public bool CanMove = true;
 
   public StatusBar StatusBar;
@@ -323,6 +325,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
 
   private void TakeDamage(double damage, bool isCrit)
   {
+    damage *= DamageMultiBase;
     string text = damage > 0 ? $"-{Math.Round(damage, 2)}" : Math.Round(damage, 2).ToString();
     Color color = damage > 0 ? isCrit ? Colors.Yellow : Colors.Red : Colors.White;
     DisplayDamageNumber(text, color);
