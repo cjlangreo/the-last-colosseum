@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_0u74q")
-Weight = 1.0
+Weight = 0.7
 CritMult = 1.2
 metadata/_custom_type_script = "uid://dk8j0eovb1oej"

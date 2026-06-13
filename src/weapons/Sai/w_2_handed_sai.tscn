@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dladnw68amri6"]
 
-[ext_resource type="Script" uid="uid://djq6i1lrt3luu" path="res://src/weapons/Sai/W2HandedSai.cs" id="1_68sim"]
+[ext_resource type="Script" uid="uid://gjnh2h8ikisj" path="res://src/weapons/Weapon.cs" id="1_e1sid"]
 [ext_resource type="Resource" uid="uid://cwnaxej3dqpjv" path="res://src/weapons/Sai/sai_stats.tres" id="2_0rr50"]
 [ext_resource type="AudioStream" uid="uid://g48qoeft01op" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/Sai/sfx_sai_hit.mp3" id="2_vp8d7"]
 [ext_resource type="AudioStream" uid="uid://dih3tkjk2rkgi" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/Sai/sfx_sai_swing.mp3" id="4_u7ug3"]
@@ -141,8 +141,8 @@ _data = {
 
 [node name="W2HandedSai" type="Node2D" unique_id=185032968 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "WeaponSprites", "Hands")]
 show_behind_parent = true
-script = ExtResource("1_68sim")
-WeaponName = "Double Sai"
+script = ExtResource("1_e1sid")
+WeaponEnum = 2
 AtkAnimPlayer = NodePath("AnimationPlayer")
 AtkTrigger = NodePath("AttackTrigger")
 HitBox = NodePath("HitBox")
@@ -150,8 +150,8 @@ Stats = ExtResource("2_0rr50")
 HitSound = ExtResource("2_vp8d7")
 SwingSound = ExtResource("4_u7ug3")
 BlockSound = ExtResource("5_mhou7")
-WeaponSprites = [NodePath("HandPivot/Hand/WeaponSprite"), NodePath("HandPivot/Hand2/WeaponSprite")]
-Hands = [NodePath("HandPivot/Hand"), NodePath("HandPivot/Hand2")]
+WeaponSprites = []
+Hands = []
 
 [node name="HandPivot" type="Node2D" parent="." unique_id=2131917866]
 

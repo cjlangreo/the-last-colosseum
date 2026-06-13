@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bfrclebkpbjo2"]
 
-[ext_resource type="Script" uid="uid://26ch8napirov" path="res://src/weapons/Greataxe/WGreataxe.cs" id="1_0b4rd"]
+[ext_resource type="Script" uid="uid://gjnh2h8ikisj" path="res://src/weapons/Weapon.cs" id="1_pxs0u"]
 [ext_resource type="AudioStream" uid="uid://dqde7sj40oyd1" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/Greataxe/sfx_greataxe_hit.mp3" id="2_pe4bi"]
 [ext_resource type="Resource" uid="uid://bt5am41aaj7ct" path="res://src/weapons/Greataxe/greataxe_stats.tres" id="2_v6t14"]
 [ext_resource type="AudioStream" uid="uid://cnfuaav3wm4q2" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/Greataxe/sfx_greataxe_block.mp3" id="3_v6t14"]
@@ -138,8 +138,8 @@ _data = {
 
 [node name="WGreataxe" type="Node2D" unique_id=880340592 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "WeaponSprites", "Hands")]
 show_behind_parent = true
-script = ExtResource("1_0b4rd")
-WeaponName = "Greataxe"
+script = ExtResource("1_pxs0u")
+WeaponEnum = 1
 AtkAnimPlayer = NodePath("AnimationPlayer")
 AtkTrigger = NodePath("AttackTrigger")
 HitBox = NodePath("HandPivot/Greataxe/HitBox")
@@ -147,8 +147,8 @@ Stats = ExtResource("2_v6t14")
 HitSound = ExtResource("2_pe4bi")
 SwingSound = ExtResource("4_6cmlq")
 BlockSound = ExtResource("3_v6t14")
-WeaponSprites = [NodePath("HandPivot/Greataxe")]
-Hands = [NodePath("HandPivot/Greataxe/Hand"), NodePath("HandPivot/Greataxe/Hand2")]
+WeaponSprites = []
+Hands = []
 
 [node name="HandPivot" type="Node2D" parent="." unique_id=1675078175]
 

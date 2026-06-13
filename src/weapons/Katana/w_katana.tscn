@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cao3vxouldjfw"]
 
-[ext_resource type="Script" uid="uid://ddgjj40ojabms" path="res://src/weapons/Katana/WKatana.cs" id="1_jgikc"]
+[ext_resource type="Script" uid="uid://gjnh2h8ikisj" path="res://src/weapons/Weapon.cs" id="1_7fcvn"]
 [ext_resource type="Resource" uid="uid://d3mufvlyuwrka" path="res://src/weapons/Katana/katana_stats.tres" id="2_d4v6o"]
 [ext_resource type="AudioStream" uid="uid://dwcd4vgktio03" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/IronSword/sfx_iron_sword_hit.mp3" id="3_k612y"]
 [ext_resource type="AudioStream" uid="uid://cnxd4yq640epu" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/IronSword/sfx_iron_sword_swing.mp3" id="4_4b8g2"]
@@ -204,8 +204,8 @@ _data = {
 
 [node name="WKatana" type="Node2D" unique_id=1823693304 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "WeaponSprites", "Hands")]
 show_behind_parent = true
-script = ExtResource("1_jgikc")
-WeaponName = "Katana"
+script = ExtResource("1_7fcvn")
+WeaponEnum = 3
 AtkAnimPlayer = NodePath("AnimationPlayer")
 AtkTrigger = NodePath("AttackTrigger")
 HitBox = NodePath("HandPivot/Hand/Katana/HitBox")
@@ -213,8 +213,8 @@ Stats = ExtResource("2_d4v6o")
 HitSound = ExtResource("3_k612y")
 SwingSound = ExtResource("4_4b8g2")
 BlockSound = ExtResource("5_tvjsj")
-WeaponSprites = [NodePath("HandPivot/Hand/Katana")]
-Hands = [NodePath("HandPivot/Hand")]
+WeaponSprites = []
+Hands = []
 
 [node name="HandPivot" type="Node2D" parent="." unique_id=2049837447]
 
