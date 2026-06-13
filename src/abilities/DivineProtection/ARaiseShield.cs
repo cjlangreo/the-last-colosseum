@@ -3,7 +3,7 @@ using System;
 using TheLastColosseum.Fighters;
 
 namespace TheLastColosseum.Abilities;
-public partial class ADivineProtection : Ability
+public partial class ARaiseShield : Ability
 {
   [Export] private CompressedTexture2D _shieldTexture;
   private Sprite2D _invincibleShield;

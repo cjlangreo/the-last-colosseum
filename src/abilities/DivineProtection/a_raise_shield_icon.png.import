@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://di8ipo13yul6a"
-path="res://.godot/imported/divineProtection.png-1569751720ad3c26cb6eb18abb9ac87a.ctex"
+path="res://.godot/imported/a_raise_shield_icon.png-a9b9ada462a454430695c75ccf292819.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/abilities/DivineProtection/divineProtection.png"
-dest_files=["res://.godot/imported/divineProtection.png-1569751720ad3c26cb6eb18abb9ac87a.ctex"]
+source_file="res://src/abilities/DivineProtection/a_raise_shield_icon.png"
+dest_files=["res://.godot/imported/a_raise_shield_icon.png-a9b9ada462a454430695c75ccf292819.ctex"]
 
 [params]
 
