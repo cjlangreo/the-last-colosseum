@@ -3,9 +3,17 @@ using System;
 using System.Linq;
 using TheLastColosseum.Abilities;
 using TheLastColosseum.Utils;
+using TheLastColosseum.Weapons;
 
 namespace TheLastColosseum.Fighters;
 
+public enum FighterEnum
+{
+  Orc,
+  Ninja,
+  Knight,
+  Samurai
+}
 public enum Team
 {
   A,
@@ -35,32 +43,52 @@ public enum Stat
 }
 
 
+
+
 public partial class Fighter : CharacterBody2D, ICanDie
 {
-  [Export] public string FighterName { set; get; } = "[Fighter Name Here]";
-  [Export] public int Strength { get; private set; } = 3;
-  [Export]
+
+  public string FighterName => FighterStats.FighterName;
+  public int Strength
+  {
+    get => FighterStats.Strength;
+    private set
+    {
+      FighterStats.Strength = value;
+    }
+  }
+
   public int Agility
   {
-    get; set
+    get => FighterStats.Agility;
+    set
     {
-      field = value;
-      StatUpdated?.Invoke(Stat.Agility, field);
+      FighterStats.Agility = value;
+      StatUpdated?.Invoke(Stat.Agility, value);
     }
-  } = 3;
-  [Export]
+  }
+
   public int Intelligence
   {
-    get; set
+    get => FighterStats.Intelligence;
+    set
     {
-      field = value;
-      StatUpdated?.Invoke(Stat.Intelligence, field);
+      FighterStats.Intelligence = value;
+      StatUpdated?.Invoke(Stat.Intelligence, value);
     }
-  } = 3;
+  }
 
   public Action<Stat, int> StatUpdated;
-  public float CritChanceBase = 0.18f;
-  public float TrueStrikeBase = 0.02f;
+  public Action Died;
+  public FighterStats FighterStats;
+  private const string CrossSpriteUID = "uid://bltixp8bd61yr";
+  private const string BloodSplatterParticleUID = "uid://8iekng5vgng7";
+  private const string StatusBarUID = "uid://cigdb1c0d5tou";
+  public const int MaxTotalAbilityPoints = 9;
+  public const int MaxAbilityPoints = 5;
+  private const float HitStopDurationBase = 5f;
+
+
 
   protected float MovementSpeed
   {
@@ -94,17 +122,14 @@ public partial class Fighter : CharacterBody2D, ICanDie
       Engine.TimeScale = value;
     }
   }
-
+  public float CritChanceBase = 0.18f;
+  public float TrueStrikeBase = 0.02f;
   public bool CanMove = true;
-  public Action Died;
 
   public StatusBar StatusBar;
-  [ExportGroup("Refs", "r_")]
-
-  [Export] public Sprite2D r_Sprite;
+  public Sprite2D Sprite;
   public Weapon Weapon => GetChildren().OfType<Weapon>().FirstOrDefault();
-  [Export] public GpuParticles2D r_BloodSplatter;
-  [Export] public CompressedTexture2D HandSprite;
+  public GpuParticles2D BloodSplatter;
   public Ability Ability => GetChildren().OfType<Ability>().FirstOrDefault();
   public Team team;
   public bool HasAbility => Ability != null;
@@ -117,12 +142,47 @@ public partial class Fighter : CharacterBody2D, ICanDie
   public bool Dead = false;
   public Color DeadColor = new(0.3f, 0.3f, 0.3f);
 
-  private const string CrossSpriteUID = "uid://bltixp8bd61yr";
-  public const int MaxTotalAbilityPoints = 9;
-  public const int MaxAbilityPoints = 5;
+
 
   private Tween _hitStopTween;
-  private const float HitStopDurationBase = 5f;
+
+
+  public override void _EnterTree()
+  {
+    InitChildren();
+    Name = FighterName;
+  }
+
+
+  private void InitChildren()
+  {
+    Sprite = new()
+    {
+      Texture = FighterStats.FighterIcon,
+      UseParentMaterial = true
+    };
+    BloodSplatter = new()
+    {
+      Emitting = false,
+      Amount = 25,
+      Lifetime = 0.5f,
+      OneShot = true,
+      Explosiveness = 1.0f,
+      ProcessMaterial = GD.Load<ParticleProcessMaterial>(BloodSplatterParticleUID)
+    };
+    CollisionShape2D collisionShape = new()
+    {
+      Shape = new CircleShape2D() { Radius = 16.0f }
+    };
+    StatusBar = GD.Load<PackedScene>(StatusBarUID).Instantiate<StatusBar>();
+
+    AddChild(Sprite);
+    AddChild(BloodSplatter);
+    AddChild(collisionShape);
+    AddChild(StatusBar);
+  }
+
+
 
   public override void _Ready()
   {
@@ -205,14 +265,6 @@ public partial class Fighter : CharacterBody2D, ICanDie
     SetCollisionLayerValue((int)(team == Team.A ? ColLayer.A : ColLayer.B), true);
     SetCollisionMaskValue((int)(team == Team.A ? ColLayer.B : ColLayer.A), true);
     SetCollisionMaskValue((int)ColLayer.Wall, true);
-    if (team == Team.A)
-    {
-      EventBus.FighterA = this;
-    }
-    else
-    {
-      EventBus.FighterB = this;
-    }
   }
 
 
@@ -223,7 +275,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
     Ability?.FighterDie();
     SetCollisionLayerValue((int)(team == Team.A ? ColLayer.A : ColLayer.B), false);
     SetCollisionMaskValue((int)(team == Team.A ? ColLayer.B : ColLayer.A), false);
-    r_Sprite.Modulate = DeadColor;
+    Sprite.Modulate = DeadColor;
     _deathSprite.Scale = new(0, 0);
     _deathSprite.Show();
     Tween deathSpriteTween = CreateTween().SetTrans(Tween.TransitionType.Elastic).SetEase(Tween.EaseType.Out);
@@ -259,14 +311,14 @@ public partial class Fighter : CharacterBody2D, ICanDie
 
   private void EmitHitParticles(Color color)
   {
-    ParticleProcessMaterial processMaterial = (ParticleProcessMaterial)r_BloodSplatter.ProcessMaterial;
+    ParticleProcessMaterial processMaterial = (ParticleProcessMaterial)BloodSplatter.ProcessMaterial;
     processMaterial.Direction = new(
       (float)_random.NextDouble(),
       (float)_random.NextDouble(),
       0
     );
     processMaterial.Color = color;
-    r_BloodSplatter.Restart();
+    BloodSplatter.Restart();
   }
 
   private void TakeDamage(double damage, bool isCrit)
@@ -282,8 +334,8 @@ public partial class Fighter : CharacterBody2D, ICanDie
       _hitFeedbackTween.Kill();
     }
     _hitFeedbackTween = CreateTween();
-    r_Sprite.SelfModulate = Colors.Red;
-    _hitFeedbackTween.TweenProperty(r_Sprite, "self_modulate", Colors.White, 0.3);
+    Sprite.SelfModulate = Colors.Red;
+    _hitFeedbackTween.TweenProperty(Sprite, "self_modulate", Colors.White, 0.3);
 
     SetHealth(Health - (float)damage);
 

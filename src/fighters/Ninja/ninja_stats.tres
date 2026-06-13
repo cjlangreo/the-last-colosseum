@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="FighterStats" format=3 uid="uid://c823xunr1p5nm"]
+
+[ext_resource type="Texture2D" uid="uid://ccn2wf3n5m7l5" path="res://src/fighters/Ninja/f_ninja_hand.png" id="1_t6uou"]
+[ext_resource type="Texture2D" uid="uid://p7uho7d7mgfc" path="res://src/fighters/Ninja/f_ninja.png" id="2_64lnm"]
+[ext_resource type="Script" uid="uid://dvk577x00eevx" path="res://src/fighters/FighterStats.cs" id="3_vmy58"]
+
+[resource]
+script = ExtResource("3_vmy58")
+FighterName = "Ninja"
+FighterIcon = ExtResource("2_64lnm")
+FighterHands = ExtResource("1_t6uou")
+Strength = 2
+Agility = 5
+Intelligence = 2
+metadata/_custom_type_script = "uid://dvk577x00eevx"

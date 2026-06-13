@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="FighterStats" format=3 uid="uid://csa0caxug1vds"]
+
+[ext_resource type="Texture2D" uid="uid://bpw6fj1qh6ms3" path="res://src/fighters/Samurai/samurai_hand.png" id="1_fqaxb"]
+[ext_resource type="Texture2D" uid="uid://b8wf2ohnq3x6l" path="res://src/fighters/Samurai/f_samurai.png" id="2_deg4k"]
+[ext_resource type="Script" uid="uid://dvk577x00eevx" path="res://src/fighters/FighterStats.cs" id="3_5e6tl"]
+
+[resource]
+script = ExtResource("3_5e6tl")
+FighterName = "Samurai"
+FighterIcon = ExtResource("2_deg4k")
+FighterHands = ExtResource("1_fqaxb")
+Strength = 4
+Agility = 4
+Intelligence = 1
+metadata/_custom_type_script = "uid://dvk577x00eevx"

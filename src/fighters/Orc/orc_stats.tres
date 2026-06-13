@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="FighterStats" format=3 uid="uid://drleqmgfq1f5y"]
+
+[ext_resource type="Texture2D" uid="uid://bka0ugaeesiap" path="res://src/fighters/Orc/f_orc_hand.png" id="1_5txcf"]
+[ext_resource type="Texture2D" uid="uid://dy13xl45oniyp" path="res://src/fighters/Orc/f_orc.png" id="2_jxrhr"]
+[ext_resource type="Script" uid="uid://dvk577x00eevx" path="res://src/fighters/FighterStats.cs" id="3_ae3uq"]
+
+[resource]
+script = ExtResource("3_ae3uq")
+FighterName = "Orc"
+FighterIcon = ExtResource("2_jxrhr")
+FighterHands = ExtResource("1_5txcf")
+Strength = 5
+Agility = 3
+Intelligence = 1
+metadata/_custom_type_script = "uid://dvk577x00eevx"
