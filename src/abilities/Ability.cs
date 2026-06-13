@@ -1,16 +1,28 @@
 
 using System;
+using System.Collections.Generic;
 using Godot;
 using TheLastColosseum.Fighters;
 using TheLastColosseum.Utils;
 using static TheLastColosseum.Utils.Debug;
 
 namespace TheLastColosseum.Abilities;
+
+	public enum AbilityEnum
+	{
+		RaiseShield,
+		MarkOfTheBear,
+		MarkOfTheOwl,
+		MarkofTheSnake,
+		DisciplinedStrike
+	}
+
 [Icon("res://assets/IconGodotNode/node/icon_ring.png")]
 [GlobalClass]
 public partial class Ability : Node
 {
-  [Export] public string AbilityName { set; get; } = "[Ability Name Here]";
+  public string AbilityName => AbilityNames[AbilityEnum];
+  [Export] public AbilityEnum AbilityEnum;
   [Export] public CompressedTexture2D AbilityIcon {set;get;}
   [Export] public float AbCooldownBase { set; get; } = 10;
   [Export] public float AbDuration { set; get; } = 0;
@@ -20,6 +32,14 @@ public partial class Ability : Node
 
   private const string BlinkShaderUID = "uid://dyrxsvx04xljg";
 
+
+  public static Dictionary<AbilityEnum, string> AbilityNames = new (){
+      {AbilityEnum.DisciplinedStrike, "Disciplined Strike"},
+      {AbilityEnum.MarkOfTheBear, "Mark of the Bear"},
+      {AbilityEnum.MarkofTheSnake, "Mark of the Snake"},
+      {AbilityEnum.MarkOfTheOwl, "Mark of the Owl"},
+      {AbilityEnum.RaiseShield, "Raise Shield"},
+  };
 
   public enum Trigger
   {
