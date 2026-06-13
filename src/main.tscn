@@ -5,13 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://hbvlp3j2l0rm" path="res://src/ui/fighter_stats_ui.tscn" id="3_4c57u"]
 [ext_resource type="Texture2D" uid="uid://84mch2jogimf" path="res://assets/walls.png" id="7_2cqfq"]
 [ext_resource type="Script" uid="uid://ds7ekv0i5wjot" path="res://src/TeamSpawner.cs" id="9_dg77c"]
-[ext_resource type="PackedScene" uid="uid://d3e0poyqwacgf" path="res://src/fighters/Ninja/ninja.tscn" id="11_2cqfq"]
 [ext_resource type="Shader" uid="uid://disydkqfjrafh" path="res://assets/shaders/burn_dissolve.gdshader" id="11_dg77c"]
 [ext_resource type="Shader" uid="uid://cuqyhrxrpgnr2" path="res://assets/shaders/crt.gdshader" id="11_efxa6"]
-[ext_resource type="PackedScene" uid="uid://b3hxav4hll64s" path="res://src/abilities/DisciplinedStrike/a_disciplined_strike.tscn" id="12_sta5p"]
-[ext_resource type="PackedScene" uid="uid://cao3vxouldjfw" path="res://src/weapons/Katana/w_katana.tscn" id="12_vivmo"]
-[ext_resource type="PackedScene" uid="uid://dladnw68amri6" path="res://src/weapons/Sai/w_2_handed_sai.tscn" id="13_sta5p"]
-[ext_resource type="PackedScene" uid="uid://qcmhdcxwfhqk" path="res://src/fighters/Samurai/f_samurai.tscn" id="14_okx7f"]
 [ext_resource type="Texture2D" uid="uid://7gegm1jqvhoe" path="res://assets/title.png" id="14_tb146"]
 [ext_resource type="Texture2D" uid="uid://d4abjl3nfe7o2" path="res://assets/nns_logo.png" id="14_w48qg"]
 [ext_resource type="Texture2D" uid="uid://bdei1kymvn1ta" path="res://assets/IconGodotNode/facebook-logo.png" id="15_2cqfq"]
@@ -70,7 +65,6 @@ shader_parameter/glow_threshold = 0.65
 [node name="Main" type="Node2D" unique_id=1413481918 node_paths=PackedStringArray("DissolveColorRect", "FighterStatsUIA", "FighterStatsUIB", "FighterStatsUIContainer", "UI", "Title")]
 script = ExtResource("1_ycdy4")
 DissolveColorRect = NodePath("UI/DissolveColorRect")
-Random = true
 FighterStatsUIA = NodePath("UI/FighterStatsUIContainer/FighterStatsUI")
 FighterStatsUIB = NodePath("UI/FighterStatsUIContainer/FighterStatsUI2")
 FighterStatsUIContainer = NodePath("UI/FighterStatsUIContainer")
@@ -176,27 +170,19 @@ shape = SubResource("RectangleShape2D_7dm0k")
 [node name="TeamASpawner" type="Marker2D" parent="." unique_id=973158779]
 position = Vector2(-3, 291)
 script = ExtResource("9_dg77c")
+weapon = 3
+ability = 4
 metadata/_custom_type_script = "uid://ds7ekv0i5wjot"
 metadata/_edit_lock_ = true
-
-[node name="FNinja" parent="TeamASpawner" unique_id=155666014 instance=ExtResource("11_2cqfq")]
-
-[node name="ADisciplinedStrike" parent="TeamASpawner/FNinja" unique_id=173817733 instance=ExtResource("12_sta5p")]
-
-[node name="W2HandedSai" parent="TeamASpawner/FNinja" unique_id=185032968 instance=ExtResource("13_sta5p")]
 
 [node name="TeamBSpawner" type="Marker2D" parent="." unique_id=484979622]
 position = Vector2(183, 105)
 script = ExtResource("9_dg77c")
 Team = 1
+fighter = 0
+ability = 4
 metadata/_custom_type_script = "uid://ds7ekv0i5wjot"
 metadata/_edit_lock_ = true
-
-[node name="FSamurai" parent="TeamBSpawner" unique_id=49210304 instance=ExtResource("14_okx7f")]
-
-[node name="WKatana2" parent="TeamBSpawner/FSamurai" unique_id=1823693304 instance=ExtResource("12_vivmo")]
-
-[node name="ADisciplinedStrike" parent="TeamBSpawner/FSamurai" unique_id=1112404006 instance=ExtResource("12_sta5p")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1619336283]
 process_mode = 3
