@@ -1,15 +1,27 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TheLastColosseum.Fighters;
 using TheLastColosseum.Utils;
 
 
+namespace TheLastColosseum.Weapons;
+
+public enum WeaponEnum
+{
+  IronSword,
+  Greataxe,
+  DoubleSai,
+  Katana
+}
+
 [GlobalClass]
 public partial class Weapon : Node2D
 {
-  public bool CanAttack {private set; get;} = true;
-  [Export] public string WeaponName { set; get; } = "[Weapon Name Here]";
+  public bool CanAttack { private set; get; } = true;
+  public string WeaponName => WeaponNames[WeaponEnum];
+  [Export] public WeaponEnum WeaponEnum;
   [Export] public AnimationPlayer AtkAnimPlayer;
   [Export] public Area2D AtkTrigger;
   [Export] public Area2D HitBox;
@@ -21,8 +33,18 @@ public partial class Weapon : Node2D
   [Export] public Sprite2D[] WeaponSprites;
   [Export] public Sprite2D[] Hands;
 
-  public float AtkSpeedBase {set;get;} = 0.15f;
+  public static Dictionary<WeaponEnum, string> WeaponNames = new()
+  {
+    {WeaponEnum.DoubleSai, "Double Sai"},
+    {WeaponEnum.IronSword, "Iron Sword"},
+    {WeaponEnum.Greataxe, "Greataxe"},
+    {WeaponEnum.Katana, "Katana"},
+  };
   
+  
+
+  public float AtkSpeedBase { set; get; } = 0.15f;
+
   private AudioManager _audioManager;
 
   private double Damage
@@ -66,7 +88,8 @@ public partial class Weapon : Node2D
 
     foreach (Sprite2D hand in Hands)
     {
-      hand.Texture = Fighter.HandSprite;
+      hand.Texture = Fighter.FighterStats.FighterHands;
+      GD.Print("Hey");
     }
 
 
@@ -107,7 +130,7 @@ public partial class Weapon : Node2D
     AtkTrigger.Monitoring = false;
     ToggleHitBox(false);
     AtkAnimPlayer.Active = false;
-    if(modulate) Modulate = Fighter.DeadColor;
+    if (modulate) Modulate = Fighter.DeadColor;
     CanAttack = false;
   }
 
@@ -139,7 +162,8 @@ public partial class Weapon : Node2D
 
     HitBox.Monitoring = value;
     HitBox.Visible = value;
-    if (value == false){
+    if (value == false)
+    {
       _hasHitFighter = false;
     }
   }
@@ -165,11 +189,11 @@ public partial class Weapon : Node2D
 
   public void SetWeaponSpriteShaders(ShaderMaterial shaderMaterial)
   {
-    foreach(Sprite2D sprite2D in WeaponSprites)
+    foreach (Sprite2D sprite2D in WeaponSprites)
     {
       sprite2D.Material = shaderMaterial;
     }
-    }
+  }
 
   private void PrintHitInfo(double damage)
   {
