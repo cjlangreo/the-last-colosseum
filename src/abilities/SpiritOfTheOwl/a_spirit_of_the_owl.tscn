@@ -5,6 +5,6 @@
 
 [node name="ASpiritOfTheOwl" type="Node" unique_id=658220978]
 script = ExtResource("1_baqt2")
-AbilityName = "Mark of the Owl"
+AbilityEnum = 2
 AbilityIcon = ExtResource("2_e2cy8")
 AbDuration = 10.0

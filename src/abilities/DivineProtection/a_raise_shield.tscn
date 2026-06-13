@@ -7,7 +7,7 @@
 [node name="ARaiseShield" type="Node" unique_id=613260488]
 script = ExtResource("1_v6khn")
 _shieldTexture = ExtResource("2_mnket")
-AbilityName = "Divine Protection"
+AbilityName = "Raise Shield"
 AbilityIcon = ExtResource("3_u8gl7")
 AbDuration = 5.0
 HasBeforeDamageEffect = true

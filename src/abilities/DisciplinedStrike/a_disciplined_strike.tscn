@@ -8,7 +8,7 @@
 script = ExtResource("1_hq8lo")
 AbilityWaitTimer = NodePath("AbilityWaitTimer")
 ShakeShader = ExtResource("2_x3qj0")
-AbilityName = "Disciplined Strike"
+AbilityEnum = 4
 AbilityIcon = ExtResource("3_xcmk3")
 AbCooldownBase = 4.0
 metadata/_custom_type_script = "uid://ctjqkpygad6hj"

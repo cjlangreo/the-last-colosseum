@@ -5,6 +5,6 @@
 
 [node name="ASpiritOfTheSnake" type="Node" unique_id=584125610]
 script = ExtResource("1_hw4ms")
-AbilityName = "Mark of the Snake"
+AbilityEnum = 3
 AbilityIcon = ExtResource("2_5vbbu")
 AbDuration = 10.0
