@@ -1,5 +1,6 @@
 using Godot;
 using TheLastColosseum.Utils;
+using TheLastColosseum.Weapons;
 
 namespace TheLastColosseum.Abilities;
 
