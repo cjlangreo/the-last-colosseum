@@ -213,8 +213,8 @@ Stats = ExtResource("2_d4v6o")
 HitSound = ExtResource("3_k612y")
 SwingSound = ExtResource("4_4b8g2")
 BlockSound = ExtResource("5_tvjsj")
-WeaponSprites = []
-Hands = []
+WeaponSprites = [NodePath("HandPivot/Hand/Katana")]
+Hands = [NodePath("HandPivot/Hand")]
 
 [node name="HandPivot" type="Node2D" parent="." unique_id=2049837447]
 

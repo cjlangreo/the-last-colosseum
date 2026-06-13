@@ -188,8 +188,8 @@ Stats = ExtResource("2_ogpkq")
 HitSound = ExtResource("3_ils2y")
 SwingSound = ExtResource("4_nofai")
 BlockSound = ExtResource("5_vfnmo")
-WeaponSprites = []
-Hands = []
+WeaponSprites = [NodePath("HandPivot/Hand/WeaponSprite")]
+Hands = [NodePath("HandPivot/Hand")]
 
 [node name="HandPivot" type="Node2D" parent="." unique_id=378631271]
 
