@@ -4,7 +4,9 @@
 [ext_resource type="Script" uid="uid://s0vktmo3smqs" path="res://src/Camera.cs" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://hbvlp3j2l0rm" path="res://src/ui/fighter_stats_ui.tscn" id="3_4c57u"]
 [ext_resource type="Texture2D" uid="uid://84mch2jogimf" path="res://assets/walls.png" id="7_2cqfq"]
+[ext_resource type="Texture2D" uid="uid://dmd2f8h0whurq" path="res://instagram_logo.svg" id="7_d3u4l"]
 [ext_resource type="Script" uid="uid://ds7ekv0i5wjot" path="res://src/TeamSpawner.cs" id="9_dg77c"]
+[ext_resource type="Texture2D" uid="uid://cx42mf5k1jkym" path="res://tiktok_logo.png" id="9_mlv6i"]
 [ext_resource type="Shader" uid="uid://disydkqfjrafh" path="res://assets/shaders/burn_dissolve.gdshader" id="11_dg77c"]
 [ext_resource type="Shader" uid="uid://cuqyhrxrpgnr2" path="res://assets/shaders/crt.gdshader" id="11_efxa6"]
 [ext_resource type="Texture2D" uid="uid://7gegm1jqvhoe" path="res://assets/title.png" id="14_tb146"]
@@ -83,56 +85,87 @@ offset_bottom = 407.0
 color = Color(0, 0, 0, 1)
 metadata/_edit_lock_ = true
 
-[node name="Socials" type="Node2D" parent="." unique_id=1226197249]
+[node name="Socials" type="VBoxContainer" parent="." unique_id=722578855]
 modulate = Color(1, 1, 1, 0.34509805)
-position = Vector2(90, 198)
+offset_left = 18.0
+offset_top = 118.0
+offset_right = 162.0
+offset_bottom = 279.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+alignment = 1
 
-[node name="NnsLogo" type="Sprite2D" parent="Socials" unique_id=1238353574]
-position = Vector2(-0.10834026, 27.410126)
-scale = Vector2(0.21669106, 0.1797235)
+[node name="Title" type="TextureRect" parent="Socials" unique_id=1266257084]
+use_parent_material = true
+layout_mode = 2
+texture = ExtResource("16_okx7f")
+script = ExtResource("15_e7lu8")
+NormalSprite = ExtResource("14_tb146")
+RandomizerSprite = ExtResource("16_okx7f")
+
+[node name="NnsLogo" type="TextureRect" parent="Socials" unique_id=110935239]
+layout_mode = 2
 texture = ExtResource("14_w48qg")
+expand_mode = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Socials" unique_id=1804501480]
-offset_left = -73.10833
-offset_top = 49.410126
-offset_right = 70.89167
-offset_bottom = 57.410126
+[node name="Facebook" type="HBoxContainer" parent="Socials" unique_id=1804501480]
+layout_mode = 2
+alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Socials/HBoxContainer" unique_id=302403784]
+[node name="TextureRect" type="TextureRect" parent="Socials/Facebook" unique_id=302403784]
 custom_minimum_size = Vector2(12, 2)
 layout_mode = 2
 texture = ExtResource("15_2cqfq")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Socials/HBoxContainer" unique_id=1837031698]
+[node name="Label" type="Label" parent="Socials/Facebook" unique_id=1837031698]
 layout_mode = 2
 text = "Not Null Studios"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Socials" unique_id=881340056]
-offset_left = -67.10833
-offset_top = 61.410126
-offset_right = 68.89167
-offset_bottom = 69.410126
+[node name="Instagram" type="HBoxContainer" parent="Socials" unique_id=339923587]
+layout_mode = 2
+alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Socials/HBoxContainer2" unique_id=1963178649]
+[node name="TextureRect" type="TextureRect" parent="Socials/Instagram" unique_id=1545338448]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("7_d3u4l")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Socials/Instagram" unique_id=875482142]
+layout_mode = 2
+text = "studios.notnull"
+
+[node name="Youtube" type="HBoxContainer" parent="Socials" unique_id=881340056]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Socials/Youtube" unique_id=1963178649]
 custom_minimum_size = Vector2(12, 0)
 layout_mode = 2
 texture = ExtResource("16_2cqfq")
 expand_mode = 5
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Socials/HBoxContainer2" unique_id=1079174569]
+[node name="Label" type="Label" parent="Socials/Youtube" unique_id=1079174569]
 layout_mode = 2
 text = "@notnullstudios"
 
-[node name="Title" type="Sprite2D" parent="Socials" unique_id=1742610830]
-use_parent_material = true
-position = Vector2(0, -29)
-texture = ExtResource("14_tb146")
-script = ExtResource("15_e7lu8")
-NormalSprite = ExtResource("14_tb146")
-RandomizerSprite = ExtResource("16_okx7f")
+[node name="TikTok" type="HBoxContainer" parent="Socials" unique_id=1866867834]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Socials/TikTok" unique_id=1649734495]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("9_mlv6i")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Socials/TikTok" unique_id=107165744]
+layout_mode = 2
+text = "@notnullstudios"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=291705944]
 position = Vector2(90, 188)
@@ -145,6 +178,7 @@ script = ExtResource("2_0xm2m")
 position = Vector2(90, 198)
 collision_layer = 16
 collision_mask = 0
+metadata/is_wall = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Walls" unique_id=497575979]
 texture = ExtResource("7_2cqfq")
@@ -170,7 +204,7 @@ shape = SubResource("RectangleShape2D_7dm0k")
 [node name="TeamASpawner" type="Marker2D" parent="." unique_id=973158779]
 position = Vector2(-3, 291)
 script = ExtResource("9_dg77c")
-weapon = 3
+weapon = 2
 ability = 4
 metadata/_custom_type_script = "uid://ds7ekv0i5wjot"
 metadata/_edit_lock_ = true
@@ -186,6 +220,7 @@ metadata/_edit_lock_ = true
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1619336283]
 process_mode = 3
+visible = false
 
 [node name="DissolveColorRect" type="ColorRect" parent="UI" unique_id=1363232809]
 material = SubResource("ShaderMaterial_vivmo")
