@@ -54,7 +54,6 @@ public partial class ADisciplinedStrike : Ability
     if (_abilityActive) return;
     if (IsInstanceValid(_scaleTween)) _scaleTween.Kill();
     Fighter.Weapon.Scale = Vector2.One;
-    Fighter.CanMove = true;
     ToggleShakeShader(false);
   }
 
@@ -115,6 +114,7 @@ public partial class ADisciplinedStrike : Ability
   {
     if (!_abilityActive) return;
     _abilityActive = false;
+    Fighter.CanMove = true;
 
     if (IsInstanceValid(_scaleTween)) _scaleTween.Kill();
     _scaleTween = CreateTween();
