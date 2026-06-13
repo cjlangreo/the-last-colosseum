@@ -10,6 +10,7 @@ public partial class ADisciplinedStrike : Ability
   [Export] private Shader ShakeShader;
   private const float BonusDamage = 1.5f;
   private const float BonusAtkSpeed = 2f;
+  private const float NewDamageMultiBase = 1.5f;
   private const float ScaleAmount = 1.7f;
   private const float ScaleDuration = 1f;
   private const float AbilityWaitTime = 3f;
@@ -20,6 +21,7 @@ public partial class ADisciplinedStrike : Ability
   private float OriginTrueStrikeBase { set; get; }
   private float OriginCritChanceBase { set; get; }
   private float OriginAtkSpeedBase { set; get; }
+  private float OriginDamageMultiBase {set;get;}
 
 
 
@@ -92,6 +94,7 @@ public partial class ADisciplinedStrike : Ability
     Fighter.CritChanceBase = 1f;
     Fighter.Weapon.Stats.BaseDmg *= BonusDamage;
     Fighter.Weapon.AtkSpeedBase *= BonusAtkSpeed;
+    Fighter.DamageMultiBase = NewDamageMultiBase;
   }
 
   private void StoreOriginStats()
@@ -101,6 +104,7 @@ public partial class ADisciplinedStrike : Ability
     OriginTrueStrikeBase = Fighter.TrueStrikeBase;
     OriginBaseDamage = Fighter.Weapon.Stats.BaseDmg;
     OriginAtkSpeedBase = Fighter.Weapon.AtkSpeedBase;
+    OriginDamageMultiBase = Fighter.DamageMultiBase;
   }
 
   private void RestoreOriginStats()
@@ -109,6 +113,7 @@ public partial class ADisciplinedStrike : Ability
     Fighter.TrueStrikeBase = OriginTrueStrikeBase;
     Fighter.Weapon.Stats.BaseDmg = OriginBaseDamage;
     Fighter.Weapon.AtkSpeedBase = OriginAtkSpeedBase;
+    Fighter.DamageMultiBase = OriginDamageMultiBase;
   }
 
   private void OnWeaponSwingEnd()
