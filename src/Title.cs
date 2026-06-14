@@ -3,7 +3,7 @@ using System;
 
 namespace TheLastColosseum.UI;
 
-public partial class Title : Sprite2D
+public partial class Title : TextureRect
 {
 	[Export] private Texture2D NormalSprite;
 	[Export] private Texture2D RandomizerSprite;
