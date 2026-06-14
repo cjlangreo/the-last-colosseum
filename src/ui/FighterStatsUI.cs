@@ -193,18 +193,18 @@ public partial class FighterStatsUI : VBoxContainer
     switch (spinIcon)
     {
       case Slot.Fighter:
-        shuffledList = [.. RefServer.fighters.Values.Select(fighter => fighter.FighterIcon)];
+        shuffledList = [.. RefServer.FighterIcons.Values];
         currentIconIndex = shuffledList.FindIndex(icon => icon == _fighter.Sprite.Texture);
         textureRect = FighterIcon;
         break;
       case Slot.Ability:
         if(!_fighter.HasAbility) return;
-        shuffledList = [.. RefServer.abilities.Values.Select(ability => ability.AbilityIcon)];
+        shuffledList = [.. RefServer.AbilityIcons.Values];
         currentIconIndex = shuffledList.FindIndex(icon => icon == _ability.AbilityIcon);
         textureRect = AbilityIcon;
         break;
       case Slot.Weapon:
-        shuffledList = [.. RefServer.weapons.Values.Select(weapon => weapon.WeaponSprites[0].Texture)];
+        shuffledList = [.. RefServer.WeaponIcons.Values];
         currentIconIndex = shuffledList.FindIndex(icon => icon == _weapon.WeaponSprites[0].Texture);
         textureRect = WeaponIcon;
         break;
