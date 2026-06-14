@@ -7,6 +7,7 @@ _data = [Vector2(1e-05, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_latj1"]
+resource_local_to_scene = true
 offsets = PackedFloat32Array(0, 0.97, 1)
 colors = PackedColorArray(0, 0, 0, 1, 0.057057057, 0.057057057, 0.057057057, 1, 1, 1, 1, 1)
 
