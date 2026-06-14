@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,22 +27,32 @@ public partial class Weapon : Node2D
   [Export] public Area2D AtkTrigger;
   [Export] public Area2D HitBox;
   [Export] public WeaponStats Stats;
+  
+  [ExportGroup("Sprites")]
+  [Export] public Sprite2D[] WeaponSprites;
+  [Export] public Sprite2D[] Hands;
+  
+  [ExportGroup("Sounds")]
   [Export] public AudioStream HitSound;
   [Export] public AudioStream SwingSound;
   [Export] public AudioStream BlockSound;
-  [Export] public float HitBoxLifeSpan = 0.2f;
-  [Export] public Sprite2D[] WeaponSprites;
-  [Export] public Sprite2D[] Hands;
 
-  public static Dictionary<WeaponEnum, string> WeaponNames = new()
+  [ExportGroup("Weapon Trail")]
+  [Export] public bool HasWeaponTrails = true;
+  [Export] public Array<Marker2D> WeaponTrailMarkers;
+  [Export] public float WeaponTrailWidth = 32f;
+  [Export] public Color WeaponTrailColor = Colors.White;
+  public static System.Collections.Generic.Dictionary<WeaponEnum, string> WeaponNames = new()
   {
     {WeaponEnum.DoubleSai, "Double Sai"},
     {WeaponEnum.IronSword, "Iron Sword"},
     {WeaponEnum.Greataxe, "Greataxe"},
     {WeaponEnum.Katana, "Katana"},
   };
-  
-  
+
+  private const string WeaponTrailUID = "uid://7bsxdq00fhpx";
+  private WeaponTrail _currentTrail;
+
 
   public float AtkSpeedBase { set; get; } = 0.15f;
 
@@ -86,13 +97,8 @@ public partial class Weapon : Node2D
     Fighter = GetParent<Fighter>();
     InitSounds();
 
-    foreach (Sprite2D hand in Hands)
-    {
-      hand.Texture = Fighter.FighterStats.FighterHands;
-      GD.Print("Hey");
-    }
 
-
+    SetWeaponHandSprites(Fighter.FighterStats.FighterHands);
     AtkAnimPlayer.SpeedScale = AtkSpeed;
     AtkAnimPlayer.AnimationFinished += OnAttkAnimTimeout;
 
@@ -110,6 +116,16 @@ public partial class Weapon : Node2D
 
     HitBox.BodyEntered += OnAttackHit;
   }
+
+  public void SetWeaponHandSprites(Texture2D texture)
+  {
+    GD.Print("Setting Weapon Hand Sprites");
+    foreach (Sprite2D hand in Hands)
+    {
+      hand.Texture = texture;
+    }
+  }
+
   public override void _ExitTree()
   {
     HitBox.BodyEntered -= OnAttackHit;
@@ -157,14 +173,18 @@ public partial class Weapon : Node2D
   }
 
 
-  private void ToggleHitBox(bool value)
+  private void ToggleHitBox(bool value, int index = 0)
   {
-
     HitBox.Monitoring = value;
     HitBox.Visible = value;
     if (value == false)
     {
       _hasHitFighter = false;
+      if(IsInstanceValid(_currentTrail)) _currentTrail.Remove();
+    }
+    else
+    {
+      if(HasWeaponTrails) _currentTrail = AddWeaponTrail(index);
     }
   }
 
@@ -232,15 +252,30 @@ public partial class Weapon : Node2D
     EmitSignal(SignalName.WeaponSwingEnd);
     _canAttack = true;
     _hasHitFighter = false;
-    AtkAnimPlayer.SpeedScale = AtkSpeed;
     Debug.PrintDebug("Weapon swing end", $"{Fighter.FighterName}:{WeaponName}");
   }
 
   private void Attack()
   {
+    AtkAnimPlayer.SpeedScale = AtkSpeed;
     _isCrit = IsCrit();
     AtkAnimPlayer.Play("attack");
     _canAttack = false;
     WeaponSwingStart?.Invoke();
+  }
+
+  private WeaponTrail AddWeaponTrail(int markerIndex)
+  {
+    WeaponTrail weaponTrail = GD.Load<PackedScene>(WeaponTrailUID).Instantiate<WeaponTrail>();
+    weaponTrail.Marker = WeaponTrailMarkers[markerIndex];
+    weaponTrail.Width = WeaponTrailWidth;
+    weaponTrail.TrailLifetime = AtkSpeed;
+
+    Gradient gradient = new();
+    gradient.SetColor(0, new(WeaponTrailColor, 0.0f));
+    gradient.SetColor(1, WeaponTrailColor);
+    weaponTrail.Gradient = gradient;
+    AddChild(weaponTrail);
+    return weaponTrail;
   }
 }
