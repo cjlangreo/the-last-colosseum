@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://7bsxdq00fhpx"]
+
+[ext_resource type="Script" uid="uid://dxugx22c4r56d" path="res://src/weapons/WeaponTrail.cs" id="1_latj1"]
+
+[sub_resource type="Curve" id="Curve_ru6fj"]
+_data = [Vector2(1e-05, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="WeaponTrail" type="Line2D" unique_id=773339559]
+top_level = true
+z_index = -1
+texture_filter = 2
+width_curve = SubResource("Curve_ru6fj")
+script = ExtResource("1_latj1")
