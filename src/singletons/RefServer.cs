@@ -17,11 +17,12 @@ public static partial class RefServer
 		{FighterEnum.Ninja, GD.Load<FighterStats>("uid://c823xunr1p5nm")},
 		{FighterEnum.Samurai, GD.Load<FighterStats>("uid://csa0caxug1vds")}
 	};
+	public static Dictionary<FighterEnum, Texture2D> FighterIcons = new(){};
 
-	public static Dictionary<WeaponEnum, Weapon> weapons = new() { };
-	public static Dictionary<AbilityEnum, Ability> abilities = new() { };
+	public static Dictionary<WeaponEnum, Texture2D> WeaponIcons = new() { };
+	public static Dictionary<AbilityEnum, Texture2D> AbilityIcons = new() {};
 
-	private static Dictionary<WeaponEnum, PackedScene> _weaponScenes = new()
+	public static Dictionary<WeaponEnum, PackedScene> WeaponScenes = new()
 	{
 		{WeaponEnum.DoubleSai, GD.Load<PackedScene>("uid://dladnw68amri6")},
 		{WeaponEnum.Greataxe, GD.Load<PackedScene>("uid://bfrclebkpbjo2")},
@@ -29,7 +30,7 @@ public static partial class RefServer
 		{WeaponEnum.Katana, GD.Load<PackedScene>("uid://cao3vxouldjfw")}
 	};
 
-	private static Dictionary<AbilityEnum, PackedScene> _abilityScenes = new()
+	public static Dictionary<AbilityEnum, PackedScene> AbilityScenes = new()
 	{
 		{AbilityEnum.DisciplinedStrike, GD.Load<PackedScene>("uid://b3hxav4hll64s")},
 		{AbilityEnum.MarkOfTheBear, GD.Load<PackedScene>("uid://hbrcckwyp775")},
@@ -40,16 +41,23 @@ public static partial class RefServer
 
 	static RefServer()
 	{
-		foreach (PackedScene weaponScene in _weaponScenes.Values)
+		foreach (PackedScene weaponScene in WeaponScenes.Values)
 		{
 			Weapon weapon = weaponScene.Instantiate<Weapon>();
-			weapons.Add(weapon.WeaponEnum, weapon);
+			WeaponIcons.Add(weapon.WeaponEnum, (Texture2D)weapon.WeaponSprites[0].Texture.Duplicate());
+			weapon.QueueFree();
 		}
 
-		foreach (PackedScene abilityScene in _abilityScenes.Values)
+		foreach (PackedScene abilityScene in AbilityScenes.Values)
 		{
 			Ability ability = abilityScene.Instantiate<Ability>();
-			abilities.Add(ability.AbilityEnum, ability);
+			AbilityIcons.Add(ability.AbilityEnum, (Texture2D)ability.AbilityIcon.Duplicate());
+			ability.QueueFree();
+		}
+
+		foreach (FighterStats fighterStats in fighters.Values)
+		{
+			FighterIcons.Add(fighterStats.Fighter, fighterStats.FighterIcon);
 		}
 	}
 
