@@ -1,5 +1,5 @@
 using Godot;
-using TheLastColosseumFighters;
+using TheLastColosseum.Fighters;
 
 public partial class StatusBar : Sprite2D
 {

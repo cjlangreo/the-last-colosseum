@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://di8ipo13yul6a"
-path="res://.godot/imported/divineProtection.png-1569751720ad3c26cb6eb18abb9ac87a.ctex"
+uid="uid://17nftslqohki"
+path="res://.godot/imported/aDisciplinedStrike.png-edf492ced3cb123321be8fc8e2713772.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/abilities/DivineProtection/divineProtection.png"
-dest_files=["res://.godot/imported/divineProtection.png-1569751720ad3c26cb6eb18abb9ac87a.ctex"]
+source_file="res://src/abilities/DisciplinedStrike/aDisciplinedStrike.png"
+dest_files=["res://.godot/imported/aDisciplinedStrike.png-edf492ced3cb123321be8fc8e2713772.ctex"]
 
 [params]
 

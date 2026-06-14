@@ -1,6 +1,6 @@
 [gd_resource type="Theme" format=3 uid="uid://cptk3xsrgblp1"]
 
-[ext_resource type="FontFile" uid="uid://ydfcwg5nfgh1" path="res://assets/PublicPixel.ttf" id="1_e7bfs"]
+[ext_resource type="FontFile" uid="uid://ydfcwg5nfgh1" path="res://addons/the-last-colosseum-third-party/Assets/PublicPixel.ttf" id="1_e7bfs"]
 
 [resource]
 Label/font_sizes/font_size = 8

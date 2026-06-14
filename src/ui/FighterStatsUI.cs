@@ -1,9 +1,10 @@
 using Godot;
-using TheLastColosseumFighters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using TheLastColosseum.Fighters;
+using TheLastColosseum.Abilities;
+using TheLastColosseum.Weapons;
 
 public partial class FighterStatsUI : VBoxContainer
 {
@@ -15,10 +16,6 @@ public partial class FighterStatsUI : VBoxContainer
   [Export] public TextureRect FighterIcon;
   [Export] public TextureRect WeaponIcon;
   [Export] public TextureRect AbilityIcon;
-
-  [Export] public CompressedTexture2D[] FighterIconCollection;
-  [Export] public CompressedTexture2D[] WeaponIconCollection;
-  [Export] public CompressedTexture2D[] AbilityIconCollection;
 
   [Export] public PanelContainer AbilityFrameContainer;
   [Export] public PanelContainer WeaponFrameContainer;
@@ -87,7 +84,7 @@ public partial class FighterStatsUI : VBoxContainer
   {
     RotateTweenInit();
 
-    _fighter = team == Team.A ? EventBus.FighterA : EventBus.FighterB;
+    _fighter = team == Team.A ? RefServer.FighterA : RefServer.FighterB;
     _fighter.StatUpdated += OnStatUpdated;
 
     _weapon = _fighter.Weapon;
@@ -106,8 +103,8 @@ public partial class FighterStatsUI : VBoxContainer
     AbilityFrameContainer.AddThemeStyleboxOverride("panel", team == Team.A ? RedFrameStylebox : BlueFrameStylebox);
     WeaponFrameContainer.AddThemeStyleboxOverride("panel", team == Team.A ? RedFrameStylebox : BlueFrameStylebox);
 
-    FighterIcon.Texture = _fighter.r_Sprite.Texture;
-    WeaponIcon.Texture = _weapon.MainSprite.Texture;
+    FighterIcon.Texture = _fighter.Sprite.Texture;
+    WeaponIcon.Texture = _weapon.WeaponSprites[0].Texture;
     AbilityIcon.Texture = _ability?.AbilityIcon;
 
     FighterNameLabel.Text = _fighter.FighterName;
@@ -190,29 +187,29 @@ public partial class FighterStatsUI : VBoxContainer
 
   private async void SpinSlot(int spins, Slot spinIcon)
   {
-    List<CompressedTexture2D> shuffledList = [];
+    List<Texture2D> shuffledList = [];
     int currentIconIndex = 0;
     TextureRect textureRect = null;
     switch (spinIcon)
     {
       case Slot.Fighter:
-        shuffledList = [.. FighterIconCollection];
-        currentIconIndex = shuffledList.FindIndex(icon => icon == _fighter.r_Sprite.Texture);
+        shuffledList = [.. RefServer.FighterIcons.Values];
+        currentIconIndex = shuffledList.FindIndex(icon => icon == _fighter.Sprite.Texture);
         textureRect = FighterIcon;
         break;
       case Slot.Ability:
         if(!_fighter.HasAbility) return;
-        shuffledList = [.. AbilityIconCollection];
+        shuffledList = [.. RefServer.AbilityIcons.Values];
         currentIconIndex = shuffledList.FindIndex(icon => icon == _ability.AbilityIcon);
         textureRect = AbilityIcon;
         break;
       case Slot.Weapon:
-        shuffledList = [.. WeaponIconCollection];
-        currentIconIndex = shuffledList.FindIndex(icon => icon == _weapon.MainSprite.Texture);
+        shuffledList = [.. RefServer.WeaponIcons.Values];
+        currentIconIndex = shuffledList.FindIndex(icon => icon == _weapon.WeaponSprites[0].Texture);
         textureRect = WeaponIcon;
         break;
     }
-    CompressedTexture2D temp = shuffledList.ElementAt(currentIconIndex);
+    Texture2D temp = shuffledList.ElementAt(currentIconIndex);
     shuffledList.RemoveAt(currentIconIndex);
     shuffledList = [.. shuffledList.Shuffle().Prepend(temp)];
 
@@ -224,7 +221,7 @@ public partial class FighterStatsUI : VBoxContainer
     OnSpinDone(spinIcon);
   }
 
-  private void ChangeSlot(TextureRect textureRect, CompressedTexture2D texture, Slot spinIcon)
+  private void ChangeSlot(TextureRect textureRect, Texture2D texture, Slot spinIcon)
   {
     textureRect.Texture = texture;
     switch (spinIcon)
@@ -278,6 +275,8 @@ public partial class FighterStatsUI : VBoxContainer
 
   public override void _Process(double delta)
   {
+    if(_fighter == null) return;
+
     if (!Active)
     {
       WeaponShaderValue = 1.0;

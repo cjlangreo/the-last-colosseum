@@ -1,133 +1,153 @@
 using Godot;
 using System;
-using TheLastColosseumFighters;
-using System.Threading.Tasks;
+using TheLastColosseum.UI;
+using TheLastColosseum.Fighters;
 
 namespace TheLastColosseum;
+
 public partial class Main : Node2D
 {
-  [Export] public MeshInstance2D DissolveMesh;
-  [Export] public bool Random;
-  [Export] public FighterStatsUI FighterStatsUIA;
-  [Export] public FighterStatsUI FighterStatsUIB;
-  [Export] public Control FighterStatsUIContainer;
-  [Export] public Vector2 FighterStatsUIContainerFinalPos;
-  [Export] public CanvasLayer UI;
-
-  private Fighter _fighterA;
-  private Fighter _fighterB;
-
-  private ShaderMaterial BurnShader => (ShaderMaterial)DissolveMesh.Material;
-  private Tween _dissolveTween;
-  private Tween _statContainerTween;
-
-  private bool _teamASpinDone = false;
-  private bool _teamBSpinDone = false;
-  private const float TransitionDuration = 2.0f;
-  private float _startDelay = TransitionDuration - .5f;
-  
-  
-  [Signal] private delegate void FinishedEventHandler();
+	[Export] public bool Random;
+	[Export] public ColorRect DissolveColorRect;
+	[Export] public FighterStatsUI FighterStatsUIA;
+	[Export] public FighterStatsUI FighterStatsUIB;
+	[Export] public Control FighterStatsUIContainer;
+	[Export] public Vector2 FighterStatsUIContainerFinalPos;
+	[Export] public CanvasLayer UI;
+	[Export] public Title Title;
+	[Signal] private delegate void FinishedEventHandler();
 
 
-  public override async void _EnterTree()
-  {
-	GetTree().Paused = true;
-	FighterStatsUIContainer.Modulate = Colors.Transparent;
-	_statContainerTween = FighterStatsUIContainer.CreateTween();
-	_statContainerTween.TweenProperty(FighterStatsUIContainer, "modulate", Colors.White, 1);
+	private const float TransitionDuration = 2.0f;
+	private const float TitleTweenDuration = 1f;
+	private float _startDelay = TransitionDuration - .5f;
 
-  UI.Show();
+	private float _titleYOrigin;
+	private Fighter _fighterA;
+	private Fighter _fighterB;
+
+	private Tween _dissolveTween;
+	private Tween _statContainerTween;
+	private Tween _titleTween;
+
+	private bool _teamASpinDone = false;
+	private bool _teamBSpinDone = false;
+	private Vector2 centerCoord;
+
+	private ShaderMaterial BurnShader => (ShaderMaterial)DissolveColorRect.Material;
 
 
-	if (Random)
+
+	public override async void _EnterTree()
 	{
-	  FighterStatsUIA.RandomFighter = true;
-	  FighterStatsUIB.RandomFighter = true;
-	  FighterStatsUIA.SpinDone += () => OnSpinDone(Team.A);
-	  FighterStatsUIB.SpinDone += () => OnSpinDone(Team.B);
+		UI.Show();
+		centerCoord = GetViewportRect().Size / 2;
+
+
+		GetTree().Paused = true;
+		FighterStatsUIContainer.Modulate = Colors.Transparent;
+		_statContainerTween = FighterStatsUIContainer.CreateTween();
+		_statContainerTween.TweenProperty(FighterStatsUIContainer, "modulate", Colors.White, 1);
+
+		TweenTitle();
+
+		if (Random)
+		{
+			FighterStatsUIA.RandomFighter = true;
+			FighterStatsUIB.RandomFighter = true;
+			FighterStatsUIA.SpinDone += () => OnSpinDone(Team.A);
+			FighterStatsUIB.SpinDone += () => OnSpinDone(Team.B);
+		}
+		else
+		{
+			await ToSignal(GetTree().CreateTimer(_startDelay), SceneTreeTimer.SignalName.Timeout);
+			StartFight();
+		}
 	}
-	else
+
+	public override void _Ready()
 	{
-	  await ToSignal(GetTree().CreateTimer(_startDelay), SceneTreeTimer.SignalName.Timeout);
-	  StartFight();
+		_fighterA = (Fighter)GetTree().GetFirstNodeInGroup("Team A");
+		_fighterB = (Fighter)GetTree().GetFirstNodeInGroup("Team B");
+		_fighterA.Died += OnRoundEnd;
+		_fighterB.Died += OnRoundEnd;
 	}
-  }
 
-  public override void _Ready()
-  {
-	_fighterA = (Fighter)GetTree().GetFirstNodeInGroup("Team A");
-	_fighterB = (Fighter)GetTree().GetFirstNodeInGroup("Team B");
-	_fighterA.Died += OnRoundEnd;
-	_fighterB.Died += OnRoundEnd;
-  }
-
-  private async void OnRoundEnd()
-  {
-	await ToSignal(GetTree().CreateTimer(2), SceneTreeTimer.SignalName.Timeout);
-	FighterStatsUIContainer.ZIndex = -1;
-	StartDissolveTransition(0, 1);
-	await ToSignal(this, SignalName.Finished);
-	GetTree().Quit();
-  }
-
-  private async void StartFight()
-  {
-	StartDissolveTransition(1, 0);
-	await ToSignal(GetTree().CreateTimer(_startDelay), SceneTreeTimer.SignalName.Timeout);
-	SetFighterStatsUITextVisiblity(false);
-	MoveFighterUITop();
-	FighterStatsUIA.Active = true;
-	FighterStatsUIB.Active = true;
-	GetTree().Paused = false;
-  }
-
-  private void SetFighterStatsUITextVisiblity(bool value)
-  {
-	FighterStatsUIA.SetTextVisibility(value);
-	FighterStatsUIB.SetTextVisibility(value);
-  }
-
-  private async void OnSpinDone(Team team)
-  {
-	if (team == Team.A) _teamASpinDone = true;
-	else _teamBSpinDone = true;
-
-	if (_teamASpinDone && _teamBSpinDone)
+	private void TweenTitle()
 	{
-	  GD.Print("Spin done!");
-	  StartFight();
+		_titleYOrigin = Title.GlobalPosition.Y;
+		Title.GlobalPosition = centerCoord;
+		_titleTween = Title.CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
+		_titleTween.TweenProperty(Title, "global_position:y", _titleYOrigin, TitleTweenDuration);
 	}
-  }
 
-  private void MoveFighterUITop()
-  {
-	Tween.TransitionType transType = Tween.TransitionType.Circ;
-	Tween.EaseType easeType = Tween.EaseType.InOut;
-	Tween tween = CreateTween().SetEase(easeType).SetTrans(transType);
-	tween.TweenProperty(FighterStatsUIContainer, "global_position:y", FighterStatsUIContainerFinalPos.Y, 1);
-
-  }
-
-  private async void StartDissolveTransition(float from, float to)
-  {
-	if (IsInstanceValid(_dissolveTween))
+	private async void OnRoundEnd()
 	{
-	  _dissolveTween.Kill();
+		Title.GlobalPosition = centerCoord - Title.Size / 2;
+		await ToSignal(GetTree().CreateTimer(2), SceneTreeTimer.SignalName.Timeout);
+		FighterStatsUIContainer.ZIndex = -1;
+		StartDissolveTransition(0, 1);
+		await ToSignal(this, SignalName.Finished);
+		await ToSignal(GetTree().CreateTimer(2), SceneTreeTimer.SignalName.Timeout);
+		GetTree().Quit();
 	}
-	_dissolveTween = DissolveMesh.CreateTween();
-	_dissolveTween.TweenMethod(Callable.From<float>(SetDissolvePercentage), from, to, TransitionDuration);
-	await ToSignal(_dissolveTween, Tween.SignalName.Finished);
-	EmitSignal(SignalName.Finished);
-  }
 
-  private void SetDissolvePercentage(float percentage)
-  {
-	BurnShader.SetShaderParameter("percentage", percentage);
-  }
+	private async void StartFight()
+	{
+		StartDissolveTransition(1, 0);
+		await ToSignal(GetTree().CreateTimer(_startDelay), SceneTreeTimer.SignalName.Timeout);
+		SetFighterStatsUITextVisiblity(false);
+		MoveFighterUITop();
+		FighterStatsUIA.Active = true;
+		FighterStatsUIB.Active = true;
+		GetTree().Paused = false;
+	}
 
-  // Called every frame. 'delta' is the elapsed time since the previous frame.
-  public override void _Process(double delta)
-  {
-  }
+	private void SetFighterStatsUITextVisiblity(bool value)
+	{
+		FighterStatsUIA.SetTextVisibility(value);
+		FighterStatsUIB.SetTextVisibility(value);
+	}
+
+	private async void OnSpinDone(Team team)
+	{
+		if (team == Team.A) _teamASpinDone = true;
+		else _teamBSpinDone = true;
+
+		if (_teamASpinDone && _teamBSpinDone)
+		{
+			StartFight();
+		}
+	}
+
+	private void MoveFighterUITop()
+	{
+		Tween.TransitionType transType = Tween.TransitionType.Circ;
+		Tween.EaseType easeType = Tween.EaseType.InOut;
+		Tween tween = CreateTween().SetEase(easeType).SetTrans(transType);
+		tween.TweenProperty(FighterStatsUIContainer, "global_position:y", FighterStatsUIContainerFinalPos.Y, 1);
+
+	}
+
+	private async void StartDissolveTransition(float from, float to)
+	{
+		if (IsInstanceValid(_dissolveTween))
+		{
+			_dissolveTween.Kill();
+		}
+		_dissolveTween = DissolveColorRect.CreateTween();
+		_dissolveTween.TweenMethod(Callable.From<float>(SetDissolvePercentage), from, to, TransitionDuration);
+		await ToSignal(_dissolveTween, Tween.SignalName.Finished);
+		EmitSignal(SignalName.Finished);
+	}
+
+	private void SetDissolvePercentage(float percentage)
+	{
+		BurnShader.SetShaderParameter("percentage", percentage);
+	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+	}
 }

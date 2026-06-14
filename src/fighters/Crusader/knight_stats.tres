@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="FighterStats" format=3 uid="uid://bestvydmmqvt8"]
+
+[ext_resource type="Texture2D" uid="uid://cowoght32q2j7" path="res://src/fighters/Crusader/f_crusader_hand.png" id="1_g2utw"]
+[ext_resource type="Texture2D" uid="uid://crwgmllmetb2k" path="res://src/fighters/Crusader/f_crusader.png" id="2_53y88"]
+[ext_resource type="Script" uid="uid://dvk577x00eevx" path="res://src/fighters/FighterStats.cs" id="3_hupem"]
+
+[resource]
+script = ExtResource("3_hupem")
+Fighter = 2
+FighterIcon = ExtResource("2_53y88")
+FighterHands = ExtResource("1_g2utw")
+Strength = 3
+Agility = 3
+Intelligence = 3
+metadata/_custom_type_script = "uid://dvk577x00eevx"

@@ -4,17 +4,17 @@
 [ext_resource type="Script" uid="uid://s0vktmo3smqs" path="res://src/Camera.cs" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://hbvlp3j2l0rm" path="res://src/ui/fighter_stats_ui.tscn" id="3_4c57u"]
 [ext_resource type="Texture2D" uid="uid://84mch2jogimf" path="res://assets/walls.png" id="7_2cqfq"]
+[ext_resource type="Texture2D" uid="uid://dmd2f8h0whurq" path="res://assets/instagram_logo.svg" id="7_d3u4l"]
 [ext_resource type="Script" uid="uid://ds7ekv0i5wjot" path="res://src/TeamSpawner.cs" id="9_dg77c"]
-[ext_resource type="PackedScene" uid="uid://bfrclebkpbjo2" path="res://src/weapons/Greataxe/w_greataxe.tscn" id="10_2cqfq"]
-[ext_resource type="PackedScene" uid="uid://dwrtxb2jov3dq" path="res://src/abilities/SpiritOfTheOwl/a_spirit_of_the_owl.tscn" id="10_vivmo"]
-[ext_resource type="PackedScene" uid="uid://d3e0poyqwacgf" path="res://src/fighters/Ninja/ninja.tscn" id="11_2cqfq"]
+[ext_resource type="Texture2D" uid="uid://cx42mf5k1jkym" path="res://assets/tiktok_logo.png" id="9_mlv6i"]
 [ext_resource type="Shader" uid="uid://disydkqfjrafh" path="res://assets/shaders/burn_dissolve.gdshader" id="11_dg77c"]
 [ext_resource type="Shader" uid="uid://cuqyhrxrpgnr2" path="res://assets/shaders/crt.gdshader" id="11_efxa6"]
-[ext_resource type="PackedScene" uid="uid://cao3vxouldjfw" path="res://src/weapons/Katana/w_katana.tscn" id="12_vivmo"]
-[ext_resource type="PackedScene" uid="uid://b7vdewbdwy1up" path="res://src/abilities/SpiritOfTheSnake/a_spirit_of_the_snake.tscn" id="13_074og"]
+[ext_resource type="Texture2D" uid="uid://7gegm1jqvhoe" path="res://assets/title.png" id="14_tb146"]
 [ext_resource type="Texture2D" uid="uid://d4abjl3nfe7o2" path="res://assets/nns_logo.png" id="14_w48qg"]
 [ext_resource type="Texture2D" uid="uid://bdei1kymvn1ta" path="res://assets/IconGodotNode/facebook-logo.png" id="15_2cqfq"]
+[ext_resource type="Script" uid="uid://feuvv12flxog" path="res://src/Title.cs" id="15_e7lu8"]
 [ext_resource type="Texture2D" uid="uid://cj0q80m7p8om7" path="res://assets/youtube-logo.webp" id="16_2cqfq"]
+[ext_resource type="Texture2D" uid="uid://c1ivjjb6lo7ke" path="res://assets/title_randomizer.png" id="16_okx7f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7dm0k"]
 size = Vector2(14, 220)
@@ -36,8 +36,6 @@ shader_parameter/layer_2 = Color(0.61, 0.636, 1, 1)
 shader_parameter/size_2 = 0.05
 shader_parameter/layer_3 = Color(0.100000024, 0.100000024, 1, 1)
 shader_parameter/size_3 = 0.05
-
-[sub_resource type="QuadMesh" id="QuadMesh_efxa6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kek77"]
 shader = ExtResource("11_efxa6")
@@ -66,18 +64,21 @@ shader_parameter/glow_threshold = 0.65
 
 [sub_resource type="QuadMesh" id="QuadMesh_4c57u"]
 
-[node name="Main" type="Node2D" unique_id=1413481918 node_paths=PackedStringArray("DissolveMesh", "FighterStatsUIA", "FighterStatsUIB", "FighterStatsUIContainer", "UI")]
+[node name="Main" type="Node2D" unique_id=1413481918 node_paths=PackedStringArray("DissolveColorRect", "FighterStatsUIA", "FighterStatsUIB", "FighterStatsUIContainer", "UI", "Title")]
 script = ExtResource("1_ycdy4")
-DissolveMesh = NodePath("UI/DissolveMesh")
+DissolveColorRect = NodePath("UI/DissolveColorRect")
 FighterStatsUIA = NodePath("UI/FighterStatsUIContainer/FighterStatsUI")
 FighterStatsUIB = NodePath("UI/FighterStatsUIContainer/FighterStatsUI2")
 FighterStatsUIContainer = NodePath("UI/FighterStatsUIContainer")
 FighterStatsUIContainerFinalPos = Vector2(0, -6)
 UI = NodePath("UI")
+Title = NodePath("UI/DissolveColorRect/TitleSprite")
 metadata/_edit_horizontal_guides_ = [76.0, 160.0, 198.0]
 metadata/movie_file = "movie.avi"
+metadata/_edit_vertical_guides_ = [90.0]
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1259107346]
+z_index = -2
 offset_left = -184.0
 offset_top = -87.0
 offset_right = 352.0
@@ -85,46 +86,86 @@ offset_bottom = 407.0
 color = Color(0, 0, 0, 1)
 metadata/_edit_lock_ = true
 
-[node name="Socials" type="Node2D" parent="." unique_id=1226197249]
+[node name="Socials" type="VBoxContainer" parent="." unique_id=722578855]
 modulate = Color(1, 1, 1, 0.34509805)
-position = Vector2(0, -18)
+z_index = -2
+offset_left = 18.0
+offset_top = 118.0
+offset_right = 162.0
+offset_bottom = 279.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+alignment = 1
 
-[node name="NnsLogo" type="Sprite2D" parent="Socials" unique_id=1238353574]
-position = Vector2(90, 198)
-scale = Vector2(0.21669106, 0.1797235)
+[node name="Title" type="TextureRect" parent="Socials" unique_id=1266257084]
+use_parent_material = true
+layout_mode = 2
+texture = ExtResource("14_tb146")
+script = ExtResource("15_e7lu8")
+NormalSprite = ExtResource("14_tb146")
+RandomizerSprite = ExtResource("16_okx7f")
+
+[node name="NnsLogo" type="TextureRect" parent="Socials" unique_id=110935239]
+layout_mode = 2
 texture = ExtResource("14_w48qg")
+expand_mode = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Socials" unique_id=1804501480]
-offset_left = 17.0
-offset_top = 220.0
-offset_right = 161.0
-offset_bottom = 228.0
+[node name="Facebook" type="HBoxContainer" parent="Socials" unique_id=1804501480]
+layout_mode = 2
+alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Socials/HBoxContainer" unique_id=302403784]
+[node name="TextureRect" type="TextureRect" parent="Socials/Facebook" unique_id=302403784]
 custom_minimum_size = Vector2(12, 2)
 layout_mode = 2
 texture = ExtResource("15_2cqfq")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Socials/HBoxContainer" unique_id=1837031698]
+[node name="Label" type="Label" parent="Socials/Facebook" unique_id=1837031698]
 layout_mode = 2
 text = "Not Null Studios"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Socials" unique_id=881340056]
-offset_left = 23.0
-offset_top = 232.0
-offset_right = 159.0
-offset_bottom = 240.0
+[node name="Instagram" type="HBoxContainer" parent="Socials" unique_id=339923587]
+layout_mode = 2
+alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Socials/HBoxContainer2" unique_id=1963178649]
+[node name="TextureRect" type="TextureRect" parent="Socials/Instagram" unique_id=1545338448]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("7_d3u4l")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Socials/Instagram" unique_id=875482142]
+layout_mode = 2
+text = "studios.notnull"
+
+[node name="Youtube" type="HBoxContainer" parent="Socials" unique_id=881340056]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Socials/Youtube" unique_id=1963178649]
 custom_minimum_size = Vector2(12, 0)
 layout_mode = 2
 texture = ExtResource("16_2cqfq")
 expand_mode = 5
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Socials/HBoxContainer2" unique_id=1079174569]
+[node name="Label" type="Label" parent="Socials/Youtube" unique_id=1079174569]
+layout_mode = 2
+text = "@notnullstudios"
+
+[node name="TikTok" type="HBoxContainer" parent="Socials" unique_id=1866867834]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Socials/TikTok" unique_id=1649734495]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("9_mlv6i")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Socials/TikTok" unique_id=107165744]
 layout_mode = 2
 text = "@notnullstudios"
 
@@ -139,6 +180,7 @@ script = ExtResource("2_0xm2m")
 position = Vector2(90, 198)
 collision_layer = 16
 collision_mask = 0
+metadata/is_wall = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Walls" unique_id=497575979]
 texture = ExtResource("7_2cqfq")
@@ -164,41 +206,47 @@ shape = SubResource("RectangleShape2D_7dm0k")
 [node name="TeamASpawner" type="Marker2D" parent="." unique_id=973158779]
 position = Vector2(-3, 291)
 script = ExtResource("9_dg77c")
+fighter = 3
+weapon = 3
+ability = 4
 metadata/_custom_type_script = "uid://ds7ekv0i5wjot"
 metadata/_edit_lock_ = true
-
-[node name="FNinja" parent="TeamASpawner" unique_id=155666014 instance=ExtResource("11_2cqfq")]
-
-[node name="ASpiritOfTheOwl" parent="TeamASpawner/FNinja" unique_id=658220978 instance=ExtResource("10_vivmo")]
-
-[node name="WGreataxe" parent="TeamASpawner/FNinja" unique_id=880340592 node_paths=PackedStringArray("Hands") instance=ExtResource("10_2cqfq")]
-Hands = []
 
 [node name="TeamBSpawner" type="Marker2D" parent="." unique_id=484979622]
 position = Vector2(183, 105)
 script = ExtResource("9_dg77c")
 Team = 1
+fighter = 3
+weapon = 3
+ability = 4
 metadata/_custom_type_script = "uid://ds7ekv0i5wjot"
 metadata/_edit_lock_ = true
 
-[node name="FNinja" parent="TeamBSpawner" unique_id=1332521111 instance=ExtResource("11_2cqfq")]
-
-[node name="ASpiritOfTheSnake" parent="TeamBSpawner/FNinja" unique_id=1655741373 instance=ExtResource("13_074og")]
-
-[node name="WKatana" parent="TeamBSpawner/FNinja" unique_id=1823693304 node_paths=PackedStringArray("Hands") instance=ExtResource("12_vivmo")]
-Hands = []
-
 [node name="UI" type="CanvasLayer" parent="." unique_id=1619336283]
 process_mode = 3
-visible = false
 
-[node name="DissolveMesh" type="MeshInstance2D" parent="UI" unique_id=257214726]
-modulate = Color(0, 0, 0.38, 1)
+[node name="DissolveColorRect" type="ColorRect" parent="UI" unique_id=1363232809]
 material = SubResource("ShaderMaterial_vivmo")
-position = Vector2(94.49999, 178)
-scale = Vector2(265, 392.00003)
-mesh = SubResource("QuadMesh_efxa6")
-metadata/_edit_lock_ = true
+offset_left = -63.0
+offset_top = -30.0
+offset_right = 217.0
+offset_bottom = 341.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+color = Color(0, 0, 0.38039216, 1)
+
+[node name="TitleSprite" type="TextureRect" parent="UI/DissolveColorRect" unique_id=255484373]
+use_parent_material = true
+layout_mode = 0
+offset_left = 87.0
+offset_top = 78.0
+offset_right = 219.0
+offset_bottom = 133.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("14_tb146")
+script = ExtResource("15_e7lu8")
+NormalSprite = ExtResource("14_tb146")
+RandomizerSprite = ExtResource("16_okx7f")
+AnimateRotate = true
 
 [node name="FighterStatsUIContainer" type="Control" parent="UI" unique_id=2011100593]
 layout_mode = 3

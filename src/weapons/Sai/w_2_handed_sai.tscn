@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dladnw68amri6"]
 
-[ext_resource type="Script" uid="uid://c1gmc7u677lq2" path="res://src/fighters/Weapon.cs" id="1_48eqy"]
+[ext_resource type="Script" uid="uid://gjnh2h8ikisj" path="res://src/weapons/Weapon.cs" id="1_e1sid"]
 [ext_resource type="Resource" uid="uid://cwnaxej3dqpjv" path="res://src/weapons/Sai/sai_stats.tres" id="2_0rr50"]
 [ext_resource type="AudioStream" uid="uid://g48qoeft01op" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/Sai/sfx_sai_hit.mp3" id="2_vp8d7"]
 [ext_resource type="AudioStream" uid="uid://dih3tkjk2rkgi" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/Sai/sfx_sai_swing.mp3" id="4_u7ug3"]
@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://veni723qe1d5" path="res://src/weapons/Sai/sai.png" id="5_sabdw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_um2u5"]
-size = Vector2(70, 48)
+size = Vector2(59, 48)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q8l3v"]
 radius = 24.0
@@ -43,7 +43,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_kgvej"]
 resource_name = "attack"
-step = 0.05
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -99,16 +99,19 @@ tracks/4/path = NodePath("W2HandedSai")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.25, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0.049999997, 0.3, 0.35, 0.53),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "values": [{
-"args": [true],
+"args": [true, 0],
 "method": &"ToggleHitBox"
 }, {
-"args": [false],
+"args": [false, 0],
 "method": &"ToggleHitBox"
 }, {
-"args": [true],
+"args": [true, 1],
+"method": &"ToggleHitBox"
+}, {
+"args": [false, 1],
 "method": &"ToggleHitBox"
 }]
 }
@@ -119,7 +122,7 @@ tracks/5/path = NodePath("W2HandedSai")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.25, 0.5),
+"times": PackedFloat32Array(0.049999997, 0.35),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
@@ -136,10 +139,10 @@ _data = {
 &"attack": SubResource("Animation_kgvej")
 }
 
-[node name="W2HandedSai" type="Node2D" unique_id=185032968 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "MainSprite", "Hands")]
+[node name="W2HandedSai" type="Node2D" unique_id=185032968 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "WeaponSprites", "Hands", "WeaponTrailMarkers")]
 show_behind_parent = true
-script = ExtResource("1_48eqy")
-WeaponName = "Dual Wield Sai"
+script = ExtResource("1_e1sid")
+WeaponEnum = 2
 AtkAnimPlayer = NodePath("AnimationPlayer")
 AtkTrigger = NodePath("AttackTrigger")
 HitBox = NodePath("HitBox")
@@ -147,8 +150,11 @@ Stats = ExtResource("2_0rr50")
 HitSound = ExtResource("2_vp8d7")
 SwingSound = ExtResource("4_u7ug3")
 BlockSound = ExtResource("5_mhou7")
-MainSprite = NodePath("HandPivot/Hand/WeaponSprite")
+WeaponSprites = [NodePath("HandPivot/Hand/WeaponSprite"), NodePath("HandPivot/Hand2/WeaponSprite")]
 Hands = [NodePath("HandPivot/Hand"), NodePath("HandPivot/Hand2")]
+HasWeaponTrails = false
+WeaponTrailMarkers = [NodePath("HandPivot/Hand2/WeaponSprite/Marker2D"), NodePath("HandPivot/Hand/WeaponSprite/Marker2D")]
+WeaponTrailWidth = 4.0
 
 [node name="HandPivot" type="Node2D" parent="." unique_id=2131917866]
 
@@ -162,9 +168,12 @@ position = Vector2(16, 0)
 rotation = 1.5707964
 texture = ExtResource("5_sabdw")
 
+[node name="Marker2D" type="Marker2D" parent="HandPivot/Hand/WeaponSprite" unique_id=679415283]
+position = Vector2(0.0016379709, -19)
+gizmo_extents = 14.0
+
 [node name="Hand2" type="Sprite2D" parent="HandPivot" unique_id=1148665144 groups=["Hands"]]
-position = Vector2(1.595644, -19.468119)
-rotation = 0.012068004
+position = Vector2(0, -20)
 texture = ExtResource("4_w4gvr")
 
 [node name="WeaponSprite" type="Sprite2D" parent="HandPivot/Hand2" unique_id=1851987492]
@@ -173,6 +182,10 @@ position = Vector2(16, 0)
 rotation = 1.5707964
 texture = ExtResource("5_sabdw")
 
+[node name="Marker2D" type="Marker2D" parent="HandPivot/Hand2/WeaponSprite" unique_id=297076487]
+position = Vector2(-8.305164e-07, -19)
+gizmo_extents = 14.0
+
 [node name="AttackTrigger" type="Area2D" parent="." unique_id=1230634940]
 position = Vector2(38, 0)
 collision_layer = 0
@@ -180,12 +193,11 @@ collision_mask = 0
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackTrigger" unique_id=752189827]
-position = Vector2(14, 0)
+position = Vector2(8.5, 0)
 shape = SubResource("RectangleShape2D_um2u5")
 debug_color = Color(0.7, 0.45499998, 0, 0.41960785)
 
 [node name="HitBox" type="Area2D" parent="." unique_id=1990220965]
-visible = false
 position = Vector2(52, 0)
 collision_layer = 0
 collision_mask = 0

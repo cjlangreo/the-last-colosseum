@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+namespace TheLastColosseum.Abilities;
 public partial class ASpiritOfTheSnake : Ability
 {
   [Export] public int AgiBoost {set;get;} = 3;
