@@ -271,10 +271,11 @@ public partial class Weapon : Node2D
     weaponTrail.Width = WeaponTrailWidth;
     weaponTrail.TrailLifetime = AtkSpeed;
 
-    Gradient gradient = new();
-    gradient.SetColor(0, new(WeaponTrailColor, 0.0f));
+    Color transparentTrailColor = new(WeaponTrailColor, 0.0f);
+    Gradient gradient = weaponTrail.Gradient;
+    gradient.SetColor(0, transparentTrailColor);
     gradient.SetColor(1, WeaponTrailColor);
-    weaponTrail.Gradient = gradient;
+    gradient.SetColor(2, transparentTrailColor);
     AddChild(weaponTrail);
     return weaponTrail;
   }
