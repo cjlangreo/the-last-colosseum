@@ -48,7 +48,7 @@ public enum Stat
 public partial class Fighter : CharacterBody2D, ICanDie
 {
 
-  public string FighterName => FighterStats.FighterName;
+  public string FighterName => FighterStats.FighterNames[FighterStats.Fighter];
   public int Strength
   {
     get => FighterStats.Strength;
@@ -164,6 +164,14 @@ public partial class Fighter : CharacterBody2D, ICanDie
       Texture = FighterStats.FighterIcon,
       UseParentMaterial = true
     };
+
+    // Because the samurai icon is small
+    if(FighterStats.Fighter == FighterEnum.Samurai)
+    {
+      float scale = 1.3f;
+      Sprite.Scale = new(scale, scale);
+    }
+
     BloodSplatter = new()
     {
       Emitting = false,
@@ -175,7 +183,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
     };
     CollisionShape2D collisionShape = new()
     {
-      Shape = new CircleShape2D() { Radius = 16.0f }
+      Shape = new RectangleShape2D() { Size = new(){X = 16f, Y=16f} }
     };
     StatusBar = GD.Load<PackedScene>(StatusBarUID).Instantiate<StatusBar>();
 
@@ -432,10 +440,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
     if (collision != null)
     {
       Direction = Direction.Bounce(collision.GetNormal());
-      if((bool)collision.GetCollider().GetMeta("is_wall", false))
-      {
-        _audioManager.PlayRandomStoneImpact();
-      }
+      _audioManager.PlayRandomStoneImpact();
     }
     ;
   }
