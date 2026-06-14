@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("3_hupem")
-FighterName = "Knight"
+Fighter = 2
 FighterIcon = ExtResource("2_53y88")
 FighterHands = ExtResource("1_g2utw")
 Strength = 3

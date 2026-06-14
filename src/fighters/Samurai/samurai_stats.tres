@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("3_5e6tl")
-FighterName = "Samurai"
+Fighter = 3
 FighterIcon = ExtResource("2_deg4k")
 FighterHands = ExtResource("1_fqaxb")
 Strength = 4
