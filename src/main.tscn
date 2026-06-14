@@ -4,9 +4,9 @@
 [ext_resource type="Script" uid="uid://s0vktmo3smqs" path="res://src/Camera.cs" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://hbvlp3j2l0rm" path="res://src/ui/fighter_stats_ui.tscn" id="3_4c57u"]
 [ext_resource type="Texture2D" uid="uid://84mch2jogimf" path="res://assets/walls.png" id="7_2cqfq"]
-[ext_resource type="Texture2D" uid="uid://dmd2f8h0whurq" path="res://instagram_logo.svg" id="7_d3u4l"]
+[ext_resource type="Texture2D" uid="uid://dmd2f8h0whurq" path="res://assets/instagram_logo.svg" id="7_d3u4l"]
 [ext_resource type="Script" uid="uid://ds7ekv0i5wjot" path="res://src/TeamSpawner.cs" id="9_dg77c"]
-[ext_resource type="Texture2D" uid="uid://cx42mf5k1jkym" path="res://tiktok_logo.png" id="9_mlv6i"]
+[ext_resource type="Texture2D" uid="uid://cx42mf5k1jkym" path="res://assets/tiktok_logo.png" id="9_mlv6i"]
 [ext_resource type="Shader" uid="uid://disydkqfjrafh" path="res://assets/shaders/burn_dissolve.gdshader" id="11_dg77c"]
 [ext_resource type="Shader" uid="uid://cuqyhrxrpgnr2" path="res://assets/shaders/crt.gdshader" id="11_efxa6"]
 [ext_resource type="Texture2D" uid="uid://7gegm1jqvhoe" path="res://assets/title.png" id="14_tb146"]
@@ -78,6 +78,7 @@ metadata/movie_file = "movie.avi"
 metadata/_edit_vertical_guides_ = [90.0]
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1259107346]
+z_index = -2
 offset_left = -184.0
 offset_top = -87.0
 offset_right = 352.0
@@ -87,6 +88,7 @@ metadata/_edit_lock_ = true
 
 [node name="Socials" type="VBoxContainer" parent="." unique_id=722578855]
 modulate = Color(1, 1, 1, 0.34509805)
+z_index = -2
 offset_left = 18.0
 offset_top = 118.0
 offset_right = 162.0
@@ -97,7 +99,7 @@ alignment = 1
 [node name="Title" type="TextureRect" parent="Socials" unique_id=1266257084]
 use_parent_material = true
 layout_mode = 2
-texture = ExtResource("16_okx7f")
+texture = ExtResource("14_tb146")
 script = ExtResource("15_e7lu8")
 NormalSprite = ExtResource("14_tb146")
 RandomizerSprite = ExtResource("16_okx7f")
@@ -204,7 +206,8 @@ shape = SubResource("RectangleShape2D_7dm0k")
 [node name="TeamASpawner" type="Marker2D" parent="." unique_id=973158779]
 position = Vector2(-3, 291)
 script = ExtResource("9_dg77c")
-weapon = 2
+fighter = 3
+weapon = 3
 ability = 4
 metadata/_custom_type_script = "uid://ds7ekv0i5wjot"
 metadata/_edit_lock_ = true
@@ -213,14 +216,14 @@ metadata/_edit_lock_ = true
 position = Vector2(183, 105)
 script = ExtResource("9_dg77c")
 Team = 1
-fighter = 0
+fighter = 3
+weapon = 3
 ability = 4
 metadata/_custom_type_script = "uid://ds7ekv0i5wjot"
 metadata/_edit_lock_ = true
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1619336283]
 process_mode = 3
-visible = false
 
 [node name="DissolveColorRect" type="ColorRect" parent="UI" unique_id=1363232809]
 material = SubResource("ShaderMaterial_vivmo")
@@ -231,9 +234,14 @@ offset_bottom = 341.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 color = Color(0, 0, 0.38039216, 1)
 
-[node name="TitleSprite" type="Sprite2D" parent="UI/DissolveColorRect" unique_id=612309672]
+[node name="TitleSprite" type="TextureRect" parent="UI/DissolveColorRect" unique_id=255484373]
 use_parent_material = true
-position = Vector2(153, 106)
+layout_mode = 0
+offset_left = 87.0
+offset_top = 78.0
+offset_right = 219.0
+offset_bottom = 133.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("14_tb146")
 script = ExtResource("15_e7lu8")
 NormalSprite = ExtResource("14_tb146")
