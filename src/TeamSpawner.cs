@@ -16,11 +16,9 @@ public partial class TeamSpawner : Marker2D
   [Export] public WeaponEnum weapon = WeaponEnum.Greataxe;
   [Export] public AbilityEnum ability = AbilityEnum.MarkOfTheBear;
   private Fighter _fighter;
-  private Random _random;
 
   public override void _EnterTree()
   {
-    _random = new();
 
     Main main = GetNode<Main>("/root/Main");
     if (main.Random)
