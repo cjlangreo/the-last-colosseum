@@ -22,6 +22,7 @@ public partial class ADisciplinedStrike : Ability
   private float OriginCritChanceBase { set; get; }
   private float OriginAtkSpeedBase { set; get; }
   private float OriginDamageMultiBase {set;get;}
+  private float OriginWeaponTrailWidth {set;get;}
 
 
 
@@ -95,16 +96,17 @@ public partial class ADisciplinedStrike : Ability
     Fighter.Weapon.Stats.BaseDmg *= BonusDamage;
     Fighter.Weapon.AtkSpeedBase *= BonusAtkSpeed;
     Fighter.DamageMultiBase = NewDamageMultiBase;
+    Fighter.Weapon.WeaponTrailWidth *= ScaleAmount;
   }
 
   private void StoreOriginStats()
   {
-    Debug.PrintDebug("Storing Original Stats", $"{Fighter.Name}:{AbilityName}");
     OriginCritChanceBase = Fighter.CritChanceBase;
     OriginTrueStrikeBase = Fighter.TrueStrikeBase;
     OriginBaseDamage = Fighter.Weapon.Stats.BaseDmg;
     OriginAtkSpeedBase = Fighter.Weapon.AtkSpeedBase;
     OriginDamageMultiBase = Fighter.DamageMultiBase;
+    OriginWeaponTrailWidth = Fighter.Weapon.WeaponTrailWidth;
   }
 
   private void RestoreOriginStats()
@@ -114,6 +116,7 @@ public partial class ADisciplinedStrike : Ability
     Fighter.Weapon.Stats.BaseDmg = OriginBaseDamage;
     Fighter.Weapon.AtkSpeedBase = OriginAtkSpeedBase;
     Fighter.DamageMultiBase = OriginDamageMultiBase;
+    Fighter.Weapon.WeaponTrailWidth = OriginWeaponTrailWidth;
   }
 
   private void OnWeaponSwingEnd()
