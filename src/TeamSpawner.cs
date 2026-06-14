@@ -56,13 +56,13 @@ public partial class TeamSpawner : Marker2D
 
   private void AddWeapon(WeaponEnum weapon)
   {
-    Weapon _weapon = (Weapon)RefServer.weapons[weapon].Duplicate();
+    Weapon _weapon = (Weapon)RefServer.WeaponScenes[weapon].Instantiate();
     _fighter.AddChild(_weapon);
   }
 
   private void AddAbility(AbilityEnum ability)
   {
-    Ability _ability = (Ability)RefServer.abilities[ability].Duplicate();
+    Ability _ability = (Ability)RefServer.AbilityScenes[ability].Instantiate();
     _fighter.AddChild(_ability);
   }
 
