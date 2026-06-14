@@ -8,11 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://cowoght32q2j7" path="res://src/fighters/Crusader/f_crusader_hand.png" id="6_wjst6"]
 [ext_resource type="Texture2D" uid="uid://b71ftd6fk4w0h" path="res://src/weapons/Katana/w_katana.png" id="7_e38ot"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pxs0u"]
-size = Vector2(62, 17.999998)
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_0u74q"]
 radius = 52.538082
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pxs0u"]
+size = Vector2(62, 17.999998)
 
 [sub_resource type="Animation" id="Animation_3ypa3"]
 length = 0.001
@@ -159,13 +159,13 @@ tracks/5/path = NodePath(".")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.109999985, 0.59),
+"times": PackedFloat32Array(0.109999985, 0.45),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
-"args": [true],
+"args": [true, 0],
 "method": &"ToggleHitBox"
 }, {
-"args": [false],
+"args": [false, 0],
 "method": &"ToggleHitBox"
 }]
 }
@@ -190,7 +190,7 @@ tracks/7/path = NodePath("HandPivot/Hand/Katana:flip_h")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.45),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -202,7 +202,7 @@ _data = {
 &"attack": SubResource("Animation_qq641")
 }
 
-[node name="WKatana" type="Node2D" unique_id=1823693304 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "WeaponSprites", "Hands")]
+[node name="WKatana" type="Node2D" unique_id=1823693304 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "WeaponSprites", "Hands", "WeaponTrailMarkers")]
 show_behind_parent = true
 script = ExtResource("1_7fcvn")
 WeaponEnum = 3
@@ -210,11 +210,25 @@ AtkAnimPlayer = NodePath("AnimationPlayer")
 AtkTrigger = NodePath("AttackTrigger")
 HitBox = NodePath("HandPivot/Hand/Katana/HitBox")
 Stats = ExtResource("2_d4v6o")
+WeaponSprites = [NodePath("HandPivot/Hand/Katana")]
+Hands = [NodePath("HandPivot/Hand")]
 HitSound = ExtResource("3_k612y")
 SwingSound = ExtResource("4_4b8g2")
 BlockSound = ExtResource("5_tvjsj")
-WeaponSprites = [NodePath("HandPivot/Hand/Katana")]
-Hands = [NodePath("HandPivot/Hand")]
+WeaponTrailMarkers = [NodePath("HandPivot/Hand/Katana/Marker2D")]
+WeaponTrailWidth = 50.0
+WeaponTrailColor = Color(0.6392157, 0.2627451, 0.09411765, 1)
+
+[node name="AttackTrigger" type="Area2D" parent="." unique_id=822973807]
+position = Vector2(38, 0)
+collision_layer = 0
+collision_mask = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackTrigger" unique_id=564768366]
+position = Vector2(8, 0)
+shape = SubResource("CircleShape2D_0u74q")
+debug_color = Color(0.7, 0.45499998, 0, 0.41960785)
 
 [node name="HandPivot" type="Node2D" parent="." unique_id=2049837447]
 
@@ -228,8 +242,13 @@ position = Vector2(23, 0)
 rotation = 1.5707964
 texture = ExtResource("7_e38ot")
 
+[node name="Marker2D" type="Marker2D" parent="HandPivot/Hand/Katana" unique_id=1253674334]
+position = Vector2(4.6487284e-07, -10)
+rotation = -1.5707964
+
 [node name="HitBox" type="Area2D" parent="HandPivot/Hand/Katana" unique_id=2145997643]
 visible = false
+show_behind_parent = true
 position = Vector2(1.0000017, -1)
 rotation = -1.5707964
 collision_layer = 0
@@ -241,17 +260,6 @@ monitorable = false
 position = Vector2(9, -1.0000019)
 shape = SubResource("RectangleShape2D_pxs0u")
 debug_color = Color(0.9098039, 0.20784314, 0.20784314, 0.41960785)
-
-[node name="AttackTrigger" type="Area2D" parent="." unique_id=822973807]
-position = Vector2(38, 0)
-collision_layer = 0
-collision_mask = 0
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackTrigger" unique_id=564768366]
-position = Vector2(8, 0)
-shape = SubResource("CircleShape2D_0u74q")
-debug_color = Color(0.7, 0.45499998, 0, 0.41960785)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=148345807]
 libraries/ = SubResource("AnimationLibrary_f18uy")
