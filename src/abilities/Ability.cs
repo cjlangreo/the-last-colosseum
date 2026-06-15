@@ -17,9 +17,9 @@ namespace TheLastColosseum.Abilities;
 		DisciplinedStrike
 	}
 
-[Icon("res://assets/IconGodotNode/node/icon_ring.png")]
+[Icon("res://assets/IconGodotNode/node_2D/icon_ring.png")]
 [GlobalClass]
-public partial class Ability : Node
+public partial class Ability : Node2D
 {
   public string AbilityName => AbilityNames[AbilityEnum];
   [Export] public AbilityEnum AbilityEnum;

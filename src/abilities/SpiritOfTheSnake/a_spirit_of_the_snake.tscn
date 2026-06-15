@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b5q13k2jk6mch" path="res://src/abilities/SpiritOfTheSnake/ASpiritOfTheSnake.cs" id="1_hw4ms"]
 [ext_resource type="Texture2D" uid="uid://cbanvqm8i4vo1" path="res://src/abilities/SpiritOfTheSnake/spiritOfTheSnake.png" id="2_5vbbu"]
 
-[node name="ASpiritOfTheSnake" type="Node" unique_id=584125610]
+[node name="ASpiritOfTheSnake" type="Node2D" unique_id=2006598252]
 script = ExtResource("1_hw4ms")
 AbilityEnum = 3
 AbilityIcon = ExtResource("2_5vbbu")

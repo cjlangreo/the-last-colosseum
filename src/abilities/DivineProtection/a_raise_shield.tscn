@@ -4,10 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://baadbcertd0o8" path="res://src/abilities/DivineProtection/a_raise_shield_effect.png" id="2_mnket"]
 [ext_resource type="Texture2D" uid="uid://di8ipo13yul6a" path="res://src/abilities/DivineProtection/a_raise_shield_icon.png" id="3_u8gl7"]
 
-[node name="ARaiseShield" type="Node" unique_id=613260488]
+[node name="ARaiseShield" type="Node2D" unique_id=69839605]
 script = ExtResource("1_v6khn")
 _shieldTexture = ExtResource("2_mnket")
-AbilityName = "Raise Shield"
 AbilityIcon = ExtResource("3_u8gl7")
 AbDuration = 5.0
 HasBeforeDamageEffect = true
