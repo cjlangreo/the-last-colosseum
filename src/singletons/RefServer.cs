@@ -15,7 +15,8 @@ public static partial class RefServer
 		{FighterEnum.Knight, GD.Load<FighterStats>("uid://bestvydmmqvt8")},
 		{FighterEnum.Orc, GD.Load<FighterStats>("uid://drleqmgfq1f5y")},
 		{FighterEnum.Ninja, GD.Load<FighterStats>("uid://c823xunr1p5nm")},
-		{FighterEnum.Samurai, GD.Load<FighterStats>("uid://csa0caxug1vds")}
+		{FighterEnum.Samurai, GD.Load<FighterStats>("uid://csa0caxug1vds")},
+		{FighterEnum.Medjay, GD.Load<FighterStats>("uid://d6wurqt6vehg")},
 	};
 	public static Dictionary<FighterEnum, Texture2D> FighterIcons = new(){};
 
@@ -27,7 +28,8 @@ public static partial class RefServer
 		{WeaponEnum.DoubleSai, GD.Load<PackedScene>("uid://dladnw68amri6")},
 		{WeaponEnum.Greataxe, GD.Load<PackedScene>("uid://bfrclebkpbjo2")},
 		{WeaponEnum.IronSword, GD.Load<PackedScene>("uid://dp5ycbv4t5w65")},
-		{WeaponEnum.Katana, GD.Load<PackedScene>("uid://cao3vxouldjfw")}
+		{WeaponEnum.Katana, GD.Load<PackedScene>("uid://cao3vxouldjfw")},
+		{WeaponEnum.Khopesh, GD.Load<PackedScene>("uid://ci52gxmmbi0dv")},
 	};
 
 	public static Dictionary<AbilityEnum, PackedScene> AbilityScenes = new()
