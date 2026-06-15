@@ -12,7 +12,8 @@ public enum FighterEnum
   Orc,
   Ninja,
   Knight,
-  Samurai
+  Samurai,
+  Medjay
 }
 public enum Team
 {
@@ -165,10 +166,10 @@ public partial class Fighter : CharacterBody2D, ICanDie
       UseParentMaterial = true
     };
 
-    // Because the samurai icon is small
-    if(FighterStats.Fighter == FighterEnum.Samurai)
+    // Because the samurai and medjay icons are small
+    if(FighterStats.Fighter == FighterEnum.Samurai || FighterStats.Fighter == FighterEnum.Medjay)
     {
-      float scale = 1.3f;
+      float scale = 1.4f;
       Sprite.Scale = new(scale, scale);
     }
 

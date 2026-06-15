@@ -19,5 +19,6 @@ public partial class FighterStats : Resource
       {FighterEnum.Samurai, "Samurai"},
       {FighterEnum.Orc, "Orc"},
       {FighterEnum.Ninja, "Ninja"},
+      {FighterEnum.Medjay, "Medjay"},
     };
 }
