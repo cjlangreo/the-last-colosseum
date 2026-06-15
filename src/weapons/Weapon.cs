@@ -14,7 +14,8 @@ public enum WeaponEnum
   IronSword,
   Greataxe,
   DoubleSai,
-  Katana
+  Katana,
+  Khopesh
 }
 
 [GlobalClass]
@@ -48,6 +49,7 @@ public partial class Weapon : Node2D
     {WeaponEnum.IronSword, "Iron Sword"},
     {WeaponEnum.Greataxe, "Greataxe"},
     {WeaponEnum.Katana, "Katana"},
+    {WeaponEnum.Khopesh, "Khopesh"},
   };
 
   private const string WeaponTrailUID = "uid://7bsxdq00fhpx";
