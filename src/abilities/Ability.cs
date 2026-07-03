@@ -51,7 +51,21 @@ public partial class Ability : Node2D
   }
 
 
-  public Fighter Fighter => GetParent<Fighter>();
+  public Fighter Fighter
+  {
+    get
+    {
+      if (GetParent() is Fighter)
+      {
+        return GetParent<Fighter>();
+
+      }
+      else
+      {
+        return null;
+      }
+    }
+  }
   private ShaderMaterial BlinkShader => (ShaderMaterial)Fighter.Material;
   private Timer _abilityCooldownTimer;
   private Timer _abilityTimer;
