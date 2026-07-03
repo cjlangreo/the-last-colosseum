@@ -10,7 +10,6 @@ AbilityWaitTimer = NodePath("AbilityWaitTimer")
 ShakeShader = ExtResource("2_x3qj0")
 AbilityEnum = 4
 AbilityIcon = ExtResource("3_xcmk3")
-AbCooldownBase = 4.0
 
 [node name="AbilityWaitTimer" type="Timer" parent="." unique_id=1587032701]
 one_shot = true
