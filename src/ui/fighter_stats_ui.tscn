@@ -207,6 +207,7 @@ theme_override_styles/panel = ExtResource("13_gyojr")
 use_parent_material = true
 layout_mode = 2
 texture = ExtResource("8_77xx2")
+expand_mode = 1
 
 [node name="WeaponFrameContainer" type="PanelContainer" parent="HBoxContainer" unique_id=1185691720]
 material = SubResource("ShaderMaterial_xuqvo")
