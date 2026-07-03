@@ -5,8 +5,10 @@
 [ext_resource type="AudioStream" uid="uid://dwcd4vgktio03" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/IronSword/sfx_iron_sword_hit.mp3" id="3_k612y"]
 [ext_resource type="AudioStream" uid="uid://cnxd4yq640epu" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/IronSword/sfx_iron_sword_swing.mp3" id="4_4b8g2"]
 [ext_resource type="AudioStream" uid="uid://dxdxvpd4yfh3a" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/IronSword/sfx_iron_sword_block.mp3" id="5_tvjsj"]
+[ext_resource type="Script" uid="uid://cqapvnw4l8h2q" path="res://src/weapons/AttackTrigger.cs" id="6_6l14g"]
 [ext_resource type="Texture2D" uid="uid://cowoght32q2j7" path="res://src/fighters/Crusader/f_crusader_hand.png" id="6_wjst6"]
 [ext_resource type="Texture2D" uid="uid://b71ftd6fk4w0h" path="res://src/weapons/Katana/w_katana.png" id="7_e38ot"]
+[ext_resource type="Script" uid="uid://d3a6lvftlyspv" path="res://src/weapons/Hitbox.cs" id="8_lawn0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0u74q"]
 radius = 52.538082
@@ -31,58 +33,34 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("HandPivot/Hand/Katana/HitBox:monitoring")
+tracks/1/path = NodePath("HandPivot:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [0.0]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("HandPivot/Hand/Katana/HitBox:visible")
+tracks/2/path = NodePath("HandPivot:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("HandPivot:rotation")
+tracks/3/path = NodePath("HandPivot/Hand/Katana:flip_h")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("HandPivot:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("HandPivot/Hand/Katana:flip_h")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -106,59 +84,35 @@ tracks/0/keys = {
 }
 tracks/1/type = "value"
 tracks/1/imported = false
-tracks/1/enabled = false
-tracks/1/path = NodePath("HandPivot/Hand/Katana/HitBox:monitoring")
-tracks/1/interp = 1
+tracks/1/enabled = true
+tracks/1/path = NodePath("HandPivot:rotation")
+tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.13, 0.35),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = false
-tracks/2/path = NodePath("HandPivot/Hand/Katana/HitBox:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.13, 0.35),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("HandPivot:rotation")
-tracks/3/interp = 2
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.14, 0.45, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [0.0, -1.5707963267948966, -3.141592653589793, 0.0]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("HandPivot:position")
-tracks/4/interp = 2
-tracks/4/loop_wrap = true
-tracks/4/keys = {
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HandPivot:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.14, 0.45),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(11, 0), Vector2(0, 0)]
 }
-tracks/5/type = "method"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath(".")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0.109999985, 0.45),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
@@ -169,13 +123,13 @@ tracks/5/keys = {
 "method": &"ToggleHitBox"
 }]
 }
-tracks/6/type = "method"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath(".")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0.11),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -183,13 +137,13 @@ tracks/6/keys = {
 "method": &"PlaySwingSound"
 }]
 }
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("HandPivot/Hand/Katana:flip_h")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HandPivot/Hand/Katana:flip_h")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0, 0.45),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
@@ -202,13 +156,11 @@ _data = {
 &"attack": SubResource("Animation_qq641")
 }
 
-[node name="WKatana" type="Node2D" unique_id=1823693304 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "WeaponSprites", "Hands", "WeaponTrailMarkers")]
+[node name="WKatana" type="Node2D" unique_id=1823693304 node_paths=PackedStringArray("AtkAnimPlayer", "WeaponSprites", "Hands", "WeaponTrailMarkers")]
 show_behind_parent = true
 script = ExtResource("1_7fcvn")
 WeaponEnum = 3
 AtkAnimPlayer = NodePath("AnimationPlayer")
-AtkTrigger = NodePath("AttackTrigger")
-HitBox = NodePath("HandPivot/Hand/Katana/HitBox")
 Stats = ExtResource("2_d4v6o")
 WeaponSprites = [NodePath("HandPivot/Hand/Katana")]
 Hands = [NodePath("HandPivot/Hand")]
@@ -219,14 +171,12 @@ WeaponTrailMarkers = [NodePath("HandPivot/Hand/Katana/Marker2D")]
 WeaponTrailWidth = 50.0
 WeaponTrailColor = Color(0.6392157, 0.2627451, 0.09411765, 1)
 
-[node name="AttackTrigger" type="Area2D" parent="." unique_id=822973807]
-position = Vector2(38, 0)
-collision_layer = 0
-collision_mask = 0
-monitorable = false
+[node name="AttackTrigger" type="Area2D" parent="." unique_id=1533234450]
+script = ExtResource("6_6l14g")
+metadata/_custom_type_script = "uid://cqapvnw4l8h2q"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackTrigger" unique_id=564768366]
-position = Vector2(8, 0)
+position = Vector2(46, 0)
 shape = SubResource("CircleShape2D_0u74q")
 debug_color = Color(0.7, 0.45499998, 0, 0.41960785)
 
@@ -246,18 +196,13 @@ texture = ExtResource("7_e38ot")
 position = Vector2(4.6487284e-07, -10)
 rotation = -1.5707964
 
-[node name="HitBox" type="Area2D" parent="HandPivot/Hand/Katana" unique_id=2145997643]
-visible = false
-show_behind_parent = true
-position = Vector2(1.0000017, -1)
-rotation = -1.5707964
-collision_layer = 0
-collision_mask = 0
-monitoring = false
-monitorable = false
+[node name="Hitbox" type="Area2D" parent="HandPivot/Hand/Katana" unique_id=127426585]
+script = ExtResource("8_lawn0")
+metadata/_custom_type_script = "uid://d3a6lvftlyspv"
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="HandPivot/Hand/Katana/HitBox" unique_id=1744490889]
-position = Vector2(9, -1.0000019)
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HandPivot/Hand/Katana/Hitbox" unique_id=1744490889]
+position = Vector2(0, -10)
+rotation = -1.5707964
 shape = SubResource("RectangleShape2D_pxs0u")
 debug_color = Color(0.9098039, 0.20784314, 0.20784314, 0.41960785)
 

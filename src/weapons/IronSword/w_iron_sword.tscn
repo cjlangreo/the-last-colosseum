@@ -6,7 +6,9 @@
 [ext_resource type="AudioStream" uid="uid://cnxd4yq640epu" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/IronSword/sfx_iron_sword_swing.mp3" id="4_nofai"]
 [ext_resource type="AudioStream" uid="uid://dxdxvpd4yfh3a" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/IronSword/sfx_iron_sword_block.mp3" id="5_vfnmo"]
 [ext_resource type="Texture2D" uid="uid://cowoght32q2j7" path="res://src/fighters/Crusader/f_crusader_hand.png" id="6_4vak5"]
+[ext_resource type="Script" uid="uid://cqapvnw4l8h2q" path="res://src/weapons/AttackTrigger.cs" id="6_ils2y"]
 [ext_resource type="Texture2D" uid="uid://dpe5jcu5typ1b" path="res://src/weapons/IronSword/weapon_iron_sword.png" id="7_r4chl"]
+[ext_resource type="Script" uid="uid://d3a6lvftlyspv" path="res://src/weapons/Hitbox.cs" id="8_ogpkq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l3gly"]
 size = Vector2(70, 48)
@@ -31,46 +33,22 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("HandPivot/Hand/WeaponSprite/HitBox:monitoring")
+tracks/1/path = NodePath("HandPivot:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [0.0]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("HandPivot/Hand/WeaponSprite/HitBox:visible")
+tracks/2/path = NodePath("HandPivot:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("HandPivot:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("HandPivot:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -94,59 +72,35 @@ tracks/0/keys = {
 }
 tracks/1/type = "value"
 tracks/1/imported = false
-tracks/1/enabled = false
-tracks/1/path = NodePath("HandPivot/Hand/WeaponSprite/HitBox:monitoring")
-tracks/1/interp = 1
+tracks/1/enabled = true
+tracks/1/path = NodePath("HandPivot:rotation")
+tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.13, 0.35),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = false
-tracks/2/path = NodePath("HandPivot/Hand/WeaponSprite/HitBox:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.13, 0.35),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("HandPivot:rotation")
-tracks/3/interp = 2
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.14, 0.45, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [0.0, -1.5707963267948966, -3.141592653589793, 0.0]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("HandPivot:position")
-tracks/4/interp = 2
-tracks/4/loop_wrap = true
-tracks/4/keys = {
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HandPivot:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.14, 0.45),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(11, 0), Vector2(0, 0)]
 }
-tracks/5/type = "method"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath(".")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0.09, 0.45),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
@@ -157,13 +111,13 @@ tracks/5/keys = {
 "method": &"ToggleHitBox"
 }]
 }
-tracks/6/type = "method"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath(".")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0.09000002),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -178,12 +132,10 @@ _data = {
 &"attack": SubResource("Animation_qq641")
 }
 
-[node name="WIronSword" type="Node2D" unique_id=1230071005 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "WeaponSprites", "Hands", "WeaponTrailMarkers")]
+[node name="WIronSword" type="Node2D" unique_id=1230071005 node_paths=PackedStringArray("AtkAnimPlayer", "WeaponSprites", "Hands", "WeaponTrailMarkers")]
 show_behind_parent = true
 script = ExtResource("1_0tvvd")
 AtkAnimPlayer = NodePath("AnimationPlayer")
-AtkTrigger = NodePath("AttackTrigger")
-HitBox = NodePath("HandPivot/Hand/WeaponSprite/HitBox")
 Stats = ExtResource("2_ogpkq")
 WeaponSprites = [NodePath("HandPivot/Hand/WeaponSprite")]
 Hands = [NodePath("HandPivot/Hand")]
@@ -193,14 +145,12 @@ BlockSound = ExtResource("5_vfnmo")
 WeaponTrailMarkers = [NodePath("HandPivot/Hand/WeaponSprite/Marker2D")]
 WeaponTrailColor = Color(0.60784316, 0.6784314, 0.7176471, 1)
 
-[node name="AttackTrigger" type="Area2D" parent="." unique_id=1640839803]
-position = Vector2(38, 0)
-collision_layer = 0
-collision_mask = 0
-monitorable = false
+[node name="AttackTrigger" type="Area2D" parent="." unique_id=1839846109]
+script = ExtResource("6_ils2y")
+metadata/_custom_type_script = "uid://cqapvnw4l8h2q"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackTrigger" unique_id=1702611382]
-position = Vector2(14, 0)
+position = Vector2(52, 0)
 shape = SubResource("RectangleShape2D_l3gly")
 debug_color = Color(0.7, 0.45499998, 0, 0.41960785)
 
@@ -216,22 +166,18 @@ position = Vector2(17, 0)
 rotation = 1.5707964
 texture = ExtResource("7_r4chl")
 
-[node name="HitBox" type="Area2D" parent="HandPivot/Hand/WeaponSprite" unique_id=496576046]
-visible = false
-show_behind_parent = true
-rotation = -1.5707964
-collision_layer = 0
-collision_mask = 0
-monitoring = false
-monitorable = false
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="HandPivot/Hand/WeaponSprite/HitBox" unique_id=1903036087]
-position = Vector2(1.020462, -1.9073486e-06)
-shape = SubResource("RectangleShape2D_3ypa3")
-debug_color = Color(0.9098039, 0.20784314, 0.20784314, 0.41960785)
-
 [node name="Marker2D" type="Marker2D" parent="HandPivot/Hand/WeaponSprite" unique_id=552813925]
 position = Vector2(0.9999998, -5)
+
+[node name="Hitbox" type="Area2D" parent="HandPivot/Hand/WeaponSprite" unique_id=1208172676]
+script = ExtResource("8_ogpkq")
+metadata/_custom_type_script = "uid://d3a6lvftlyspv"
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HandPivot/Hand/WeaponSprite/Hitbox" unique_id=1903036087]
+position = Vector2(-1.9073486e-06, -1.020462)
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_3ypa3")
+debug_color = Color(0.9098039, 0.20784314, 0.20784314, 0.41960785)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1022535896]
 libraries/ = SubResource("AnimationLibrary_f18uy")

@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://ccn2wf3n5m7l5" path="res://src/fighters/Ninja/f_ninja_hand.png" id="4_w4gvr"]
 [ext_resource type="AudioStream" uid="uid://dfyg2gq55wt2x" path="res://addons/the-last-colosseum-third-party/Assets/Weapons/Sai/sfx_sai_block.mp3" id="5_mhou7"]
 [ext_resource type="Texture2D" uid="uid://veni723qe1d5" path="res://src/weapons/Sai/sai.png" id="5_sabdw"]
+[ext_resource type="Script" uid="uid://d3a6lvftlyspv" path="res://src/weapons/Hitbox.cs" id="8_mwdi6"]
+[ext_resource type="Script" uid="uid://cqapvnw4l8h2q" path="res://src/weapons/AttackTrigger.cs" id="8_xuxcr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_um2u5"]
 size = Vector2(59, 48)
@@ -139,19 +141,17 @@ _data = {
 &"attack": SubResource("Animation_kgvej")
 }
 
-[node name="W2HandedSai" type="Node2D" unique_id=185032968 node_paths=PackedStringArray("AtkAnimPlayer", "AtkTrigger", "HitBox", "WeaponSprites", "Hands", "WeaponTrailMarkers")]
+[node name="W2HandedSai" type="Node2D" unique_id=185032968 node_paths=PackedStringArray("AtkAnimPlayer", "WeaponSprites", "Hands", "WeaponTrailMarkers")]
 show_behind_parent = true
 script = ExtResource("1_e1sid")
 WeaponEnum = 2
 AtkAnimPlayer = NodePath("AnimationPlayer")
-AtkTrigger = NodePath("AttackTrigger")
-HitBox = NodePath("HitBox")
 Stats = ExtResource("2_0rr50")
+WeaponSprites = [NodePath("HandPivot/Hand/WeaponSprite"), NodePath("HandPivot/Hand2/WeaponSprite")]
+Hands = [NodePath("HandPivot/Hand"), NodePath("HandPivot/Hand2")]
 HitSound = ExtResource("2_vp8d7")
 SwingSound = ExtResource("4_u7ug3")
 BlockSound = ExtResource("5_mhou7")
-WeaponSprites = [NodePath("HandPivot/Hand/WeaponSprite"), NodePath("HandPivot/Hand2/WeaponSprite")]
-Hands = [NodePath("HandPivot/Hand"), NodePath("HandPivot/Hand2")]
 HasWeaponTrails = false
 WeaponTrailMarkers = [NodePath("HandPivot/Hand2/WeaponSprite/Marker2D"), NodePath("HandPivot/Hand/WeaponSprite/Marker2D")]
 WeaponTrailWidth = 4.0
@@ -186,25 +186,21 @@ texture = ExtResource("5_sabdw")
 position = Vector2(-8.305164e-07, -19)
 gizmo_extents = 14.0
 
-[node name="AttackTrigger" type="Area2D" parent="." unique_id=1230634940]
-position = Vector2(38, 0)
-collision_layer = 0
-collision_mask = 0
-monitorable = false
+[node name="AttackTrigger" type="Area2D" parent="." unique_id=1158378565]
+script = ExtResource("8_xuxcr")
+metadata/_custom_type_script = "uid://cqapvnw4l8h2q"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackTrigger" unique_id=752189827]
-position = Vector2(8.5, 0)
+position = Vector2(46.5, 0)
 shape = SubResource("RectangleShape2D_um2u5")
 debug_color = Color(0.7, 0.45499998, 0, 0.41960785)
 
-[node name="HitBox" type="Area2D" parent="." unique_id=1990220965]
-position = Vector2(52, 0)
-collision_layer = 0
-collision_mask = 0
-monitoring = false
-monitorable = false
+[node name="Hitbox" type="Area2D" parent="." unique_id=1127626009]
+script = ExtResource("8_mwdi6")
+metadata/_custom_type_script = "uid://d3a6lvftlyspv"
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitBox" unique_id=471409819]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitbox" unique_id=471409819]
+position = Vector2(52, 0)
 shape = SubResource("CircleShape2D_q8l3v")
 debug_color = Color(0.9098039, 0.20784314, 0.20784314, 0.41960785)
 
