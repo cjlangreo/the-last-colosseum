@@ -1,7 +1,4 @@
 using Godot;
-using System;
-using System.Linq;
-using System.Windows.Markup;
 using TheLastColosseum;
 using TheLastColosseum.Abilities;
 using TheLastColosseum.Fighters;
@@ -17,6 +14,7 @@ public partial class TeamSpawner : Marker2D
   [Export] public AbilityEnum ability = AbilityEnum.MarkOfTheBear;
   private Fighter _fighter;
 
+
   public override void _EnterTree()
   {
 
@@ -28,11 +26,11 @@ public partial class TeamSpawner : Marker2D
       ability = GetRandomEnumValue<AbilityEnum>();
     }
     
-    
     AddFighter(fighter);
     AddWeapon(weapon);
     AddAbility(ability);
   }
+
 
   private void AddFighter(FighterEnum fighter)
   {
@@ -54,6 +52,7 @@ public partial class TeamSpawner : Marker2D
     }
   }
 
+
   private void AddWeapon(WeaponEnum weapon)
   {
     Weapon _weapon = (Weapon)RefServer.WeaponScenes[weapon].Instantiate();
@@ -65,5 +64,6 @@ public partial class TeamSpawner : Marker2D
     Ability _ability = (Ability)RefServer.AbilityScenes[ability].Instantiate();
     _fighter.AddChild(_ability);
   }
+  
 
 }
