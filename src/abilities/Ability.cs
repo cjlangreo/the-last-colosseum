@@ -8,14 +8,15 @@ using static TheLastColosseum.Utils.Debug;
 
 namespace TheLastColosseum.Abilities;
 
-	public enum AbilityEnum
-	{
-		RaiseShield,
-		MarkOfTheBear,
-		MarkOfTheOwl,
-		MarkofTheSnake,
-		DisciplinedStrike
-	}
+public enum AbilityEnum
+{
+  RaiseShield,
+  MarkOfTheBear,
+  MarkOfTheOwl,
+  MarkofTheSnake,
+  DisciplinedStrike,
+  FanaxeSwing
+}
 
 [Icon("res://assets/IconGodotNode/node_2D/icon_ring.png")]
 [GlobalClass]
