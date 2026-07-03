@@ -166,7 +166,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
     // Because the samurai and medjay icons are small
     if(FighterStats.Fighter == FighterEnum.Samurai || FighterStats.Fighter == FighterEnum.Medjay)
     {
-      float scale = 1.4f;
+      float scale = 1.2f;
       Sprite.Scale = new(scale, scale);
     }
 
