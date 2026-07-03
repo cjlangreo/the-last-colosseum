@@ -93,7 +93,11 @@ public partial class Ability : Node2D
 
   public virtual void InitAbility()
   {
-    Debug.PrintDebug($"Initializing Ability", $"{Fighter.FighterName}:{AbilityName}");
+    if(Fighter == null)
+    {
+      return;
+    }
+    
     _abilityCooldownTimer = new() { Name = "AbilityCooldownTimer", OneShot = true };
     _abilityCooldownTimer.Timeout += UseAbility;
     AddChild(_abilityCooldownTimer);
