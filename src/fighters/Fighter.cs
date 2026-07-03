@@ -21,13 +21,6 @@ public enum Team
   B
 }
 
-public enum ColLayer
-{
-  A = 31,
-  B = 32,
-  Wall = 5
-}
-
 public enum HitStatus
 {
   Hit,
@@ -43,7 +36,11 @@ public enum Stat
   Intelligence
 }
 
-
+public enum ColLayer
+{
+  A = 31,
+  B = 32
+}
 
 
 public partial class Fighter : CharacterBody2D, ICanDie
