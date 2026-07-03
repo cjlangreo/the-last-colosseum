@@ -223,13 +223,13 @@ public partial class Fighter : CharacterBody2D, ICanDie
     Enemy.Died -= OnWin;
   }
 
+
   private void InitHealth()
   {
     Health = MaxHealth;
     StatusBar.Health = MaxHealth;
     StatusBar.SetMaxHealth(MaxHealth);
   }
-
 
 
   private void ValidateStats()
