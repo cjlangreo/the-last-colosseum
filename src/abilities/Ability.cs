@@ -24,7 +24,7 @@ public partial class Ability : Node2D
 {
   public string AbilityName => AbilityNames[AbilityEnum];
   [Export] public AbilityEnum AbilityEnum;
-  [Export] public CompressedTexture2D AbilityIcon {set;get;}
+  [Export] public CompressedTexture2D AbilityIcon { set; get; }
   [Export] public float AbCooldownBase { set; get; } = 10;
   [Export] public float AbDuration { set; get; } = 0;
 
@@ -34,7 +34,7 @@ public partial class Ability : Node2D
   private const string BlinkShaderUID = "uid://dyrxsvx04xljg";
 
 
-  public static Dictionary<AbilityEnum, string> AbilityNames = new (){
+  public static Dictionary<AbilityEnum, string> AbilityNames = new(){
       {AbilityEnum.DisciplinedStrike, "Disciplined Strike"},
       {AbilityEnum.MarkOfTheBear, "Mark of the Bear"},
       {AbilityEnum.MarkofTheSnake, "Mark of the Snake"},
@@ -66,7 +66,7 @@ public partial class Ability : Node2D
     set
     {
       field = value;
-      if(AbDuration > 0) BlinkShader.SetShaderParameter("on", value);
+      if (AbDuration > 0) BlinkShader.SetShaderParameter("on", value);
     }
   } = false;
 
