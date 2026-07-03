@@ -283,7 +283,7 @@ public partial class Fighter : CharacterBody2D, ICanDie
   {
     Dead = true;
     Weapon.Disable(true);
-    Ability?.FighterDie();
+    Ability?.DisableAbility();
     SetCollisionLayerValue((int)(team == Team.A ? ColLayer.A : ColLayer.B), false);
     SetCollisionMaskValue((int)(team == Team.A ? ColLayer.B : ColLayer.A), false);
     Sprite.Modulate = DeadColor;
