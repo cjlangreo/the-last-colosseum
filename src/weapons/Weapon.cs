@@ -171,14 +171,6 @@ public partial class Weapon : Node2D
     _teamAudioPlayer.SwingSoundPlayer.Play();
   }
 
-
-  private void SetCollisions(ColLayer layer)
-  {
-    AtkTrigger.SetCollisionMaskValue((int)layer, true);
-    HitBox.SetCollisionMaskValue((int)layer, true);
-  }
-
-
   private void ToggleHitBox(bool value, int index = 0)
   {
     Hitbox.ToggleListen(value);
