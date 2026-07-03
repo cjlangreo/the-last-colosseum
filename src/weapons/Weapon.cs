@@ -25,8 +25,8 @@ public partial class Weapon : Node2D
   public string WeaponName => WeaponNames[WeaponEnum];
   [Export] public WeaponEnum WeaponEnum;
   [Export] public AnimationPlayer AtkAnimPlayer;
-  [Export] public Area2D AtkTrigger;
-  [Export] public Area2D HitBox;
+  public AttackTrigger AtkTrigger;
+  public Hitbox Hitbox;
   [Export] public WeaponStats Stats;
   
   [ExportGroup("Sprites")]
@@ -87,13 +87,20 @@ public partial class Weapon : Node2D
 
   [Signal]
   public delegate void WeaponSwingEndEventHandler();
-  private bool _hasHitFighter = false;
 
   private AudioManager.Team _teamAudioPlayer;
   private bool _isCrit;
 
+
   public override void _Ready()
   {
+    GetNodeRefs();
+    Hitbox.Team = Fighter.team;
+    AtkTrigger.team = Fighter.team;
+    Hitbox.InitCollissions();
+    AtkTrigger.InitCollissions();
+
+
     ToggleHitBox(false);
 
     Fighter = GetParent<Fighter>();
@@ -116,7 +123,15 @@ public partial class Weapon : Node2D
 
     _random = new();
 
-    HitBox.BodyEntered += OnAttackHit;
+    Hitbox.Hit += OnAttackHit;
+  }
+
+  
+  private void GetNodeRefs()
+  {
+    Fighter = GetParent<Fighter>();
+    Hitbox = GetNode<Hitbox>("%Hitbox");
+    AtkTrigger = GetNode<AttackTrigger>("%AttackTrigger");
   }
 
   public void SetWeaponHandSprites(Texture2D texture)
@@ -130,8 +145,8 @@ public partial class Weapon : Node2D
 
   public override void _ExitTree()
   {
-    HitBox.BodyEntered -= OnAttackHit;
-    AtkAnimPlayer.AnimationFinished -= OnAttkAnimTimeout;
+    Hitbox.Hit -= OnAttackHit;
+    AtkAnimPlayer.AnimationFinished -= OnSwingEnd;
   }
 
 
@@ -177,11 +192,9 @@ public partial class Weapon : Node2D
 
   private void ToggleHitBox(bool value, int index = 0)
   {
-    HitBox.Monitoring = value;
-    HitBox.Visible = value;
+    Hitbox.ToggleListen(value);
     if (value == false)
     {
-      _hasHitFighter = false;
       if(IsInstanceValid(_currentTrail)) _currentTrail.Remove();
     }
     else
@@ -196,17 +209,11 @@ public partial class Weapon : Node2D
     return _random.NextDouble() <= Fighter.CritChance;
   }
 
-  public void OnAttackHit(Node2D _)
+  public void OnAttackHit(Fighter fighter)
   {
-    if (_hasHitFighter) return;
-    foreach (Fighter fighter in HitBox.GetOverlappingBodies().OfType<Fighter>())
-    {
-
       HitStatus hitStatus = fighter.HitRequest(_isCrit ? Damage * Stats.CritMult : Damage, _isCrit, Fighter.TrueStrike);
       PrintHitInfo(Damage);
-      PlaySound(hitStatus);
-      _hasHitFighter = true;
-    }
+      PlayHitSound(hitStatus);
   }
 
   public void SetWeaponSpriteShaders(ShaderMaterial shaderMaterial)
@@ -222,7 +229,7 @@ public partial class Weapon : Node2D
     Debug.PrintDebug($"Hit enemy with damage: {damage} crit: {Fighter.CritChance} truestrike: {Fighter.TrueStrike}", $"{Fighter.FighterName}:{WeaponName}");
   }
 
-  private void PlaySound(HitStatus hitStatus)
+  private  void PlayHitSound(HitStatus hitStatus)
   {
     if (hitStatus == HitStatus.Hit)
     {
@@ -239,25 +246,21 @@ public partial class Weapon : Node2D
   {
     if (!CanAttack) return;
 
-    if (_canAttack && AtkTrigger.Monitoring && AtkTrigger.HasOverlappingBodies())
+    if (_canAttack && AtkTrigger.EnemyDetected)
     {
-      foreach (Fighter fighter in AtkTrigger.GetOverlappingBodies().OfType<Fighter>())
-      {
-        if (!fighter.Dead) Attack();
-      }
+        Swing();
     }
   }
 
 
-  private void OnAttkAnimTimeout(StringName _)
+  private void OnSwingEnd(StringName _)
   {
     EmitSignal(SignalName.WeaponSwingEnd);
     _canAttack = true;
-    _hasHitFighter = false;
     Debug.PrintDebug("Weapon swing end", $"{Fighter.FighterName}:{WeaponName}");
   }
 
-  private void Attack()
+  private void Swing()
   {
     AtkAnimPlayer.SpeedScale = AtkSpeed;
     _isCrit = IsCrit();
