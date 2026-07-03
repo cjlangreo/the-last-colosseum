@@ -108,17 +108,7 @@ public partial class Weapon : Node2D
 
     SetWeaponHandSprites(Fighter.FighterStats.FighterHands);
     AtkAnimPlayer.SpeedScale = AtkSpeed;
-    AtkAnimPlayer.AnimationFinished += OnAttkAnimTimeout;
-
-    if (Fighter.team == Team.A)
-    {
-      SetCollisions(ColLayer.B);
-    }
-    else
-    {
-      SetCollisions(ColLayer.A);
-    }
-
+    AtkAnimPlayer.AnimationFinished += OnSwingEnd;
 
     _random = new();
 
