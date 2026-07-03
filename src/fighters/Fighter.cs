@@ -263,6 +263,8 @@ public partial class Fighter : CharacterBody2D, ICanDie
   {
     Debug.PrintDebug("Win!", FighterName);
     ZIndex = 1;
+    Weapon.Disable(false);
+    Ability.DisableAbility();
   }
 
   public void InitTeam(Team _team)
