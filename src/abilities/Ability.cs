@@ -40,6 +40,7 @@ public partial class Ability : Node2D
       {AbilityEnum.MarkofTheSnake, "Mark of the Snake"},
       {AbilityEnum.MarkOfTheOwl, "Mark of the Owl"},
       {AbilityEnum.RaiseShield, "Raise Shield"},
+      {AbilityEnum.FanaxeSwing, "Fanaxe Swing"},
   };
 
   public enum Trigger
