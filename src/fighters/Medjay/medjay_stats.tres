@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="FighterStats" format=3 uid="uid://d6wurqt6vehg"]
+
+[ext_resource type="Texture2D" uid="uid://dlp744bmtyn22" path="res://src/fighters/Medjay/hand.png" id="1_dyygm"]
+[ext_resource type="Texture2D" uid="uid://cvqxv2pkadhmy" path="res://src/fighters/Medjay/medjayegypt.png" id="2_osvdv"]
+[ext_resource type="Script" uid="uid://dvk577x00eevx" path="res://src/fighters/FighterStats.cs" id="3_3ra2g"]
+
+[resource]
+script = ExtResource("3_3ra2g")
+Fighter = 4
+FighterIcon = ExtResource("2_osvdv")
+FighterHands = ExtResource("1_dyygm")
+Strength = 2
+Agility = 4
+Intelligence = 3
+metadata/_custom_type_script = "uid://dvk577x00eevx"
