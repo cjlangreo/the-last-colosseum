@@ -39,6 +39,7 @@ public static partial class RefServer
 		{AbilityEnum.MarkOfTheOwl, GD.Load<PackedScene>("uid://dwrtxb2jov3dq")},
 		{AbilityEnum.MarkofTheSnake, GD.Load<PackedScene>("uid://b7vdewbdwy1up")},
 		{AbilityEnum.RaiseShield, GD.Load<PackedScene>("uid://cmmqc1o0t6nd6")},
+		{AbilityEnum.FanaxeSwing, GD.Load<PackedScene>("uid://uqxkoohi5n3n")}
 	};
 
 	static RefServer()
