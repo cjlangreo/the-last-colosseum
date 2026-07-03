@@ -275,7 +275,6 @@ public partial class Fighter : CharacterBody2D, ICanDie
     SetCollisionMaskValue((int)(team == Team.A ? ColLayer.B : ColLayer.A), false);
     SetCollisionLayerValue((int)(team == Team.A ? ColLayer.A : ColLayer.B), true);
     SetCollisionMaskValue((int)(team == Team.A ? ColLayer.B : ColLayer.A), true);
-    SetCollisionMaskValue((int)ColLayer.Wall, true);
   }
 
 
