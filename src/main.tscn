@@ -178,7 +178,6 @@ script = ExtResource("2_0xm2m")
 
 [node name="Walls" type="StaticBody2D" parent="." unique_id=532482603]
 position = Vector2(90, 198)
-collision_layer = 16
 collision_mask = 0
 metadata/is_wall = true
 
@@ -206,9 +205,9 @@ shape = SubResource("RectangleShape2D_7dm0k")
 [node name="TeamASpawner" type="Marker2D" parent="." unique_id=973158779]
 position = Vector2(-3, 291)
 script = ExtResource("9_dg77c")
-fighter = 3
-weapon = 3
-ability = 4
+fighter = 4
+weapon = 4
+ability = 5
 metadata/_custom_type_script = "uid://ds7ekv0i5wjot"
 metadata/_edit_lock_ = true
 
