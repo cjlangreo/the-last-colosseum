@@ -103,7 +103,6 @@ public partial class Weapon : Node2D
 
     ToggleHitBox(false);
 
-    Fighter = GetParent<Fighter>();
     InitSounds();
 
 
