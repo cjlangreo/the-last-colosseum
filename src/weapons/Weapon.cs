@@ -151,7 +151,7 @@ public partial class Weapon : Node2D
   {
     AtkTrigger.Monitoring = false;
     ToggleHitBox(false);
-    AtkAnimPlayer.Active = false;
+    // AtkAnimPlayer.Active = false;
     if (modulate) Modulate = Fighter.DeadColor;
     CanAttack = false;
   }
