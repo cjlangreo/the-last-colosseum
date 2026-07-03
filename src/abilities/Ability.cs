@@ -141,7 +141,7 @@ public partial class Ability : Node2D
     }
   }
 
-  public virtual void FighterDie()
+  public virtual void DisableAbility()
   {
     _abilityTimer?.Stop();
     _abilityCooldownTimer.Stop();
